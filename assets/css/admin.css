@@ -1,0 +1,13 @@
+.ssa-rows, .ssa-rows-static { max-width: 760px; margin-bottom: 6px; }
+.ssa-rows td, .ssa-rows-static td { vertical-align: middle; }
+.ssa-rows input[type="number"] { width: 90px; }
+.ssa-row-remove { color: #b32d2e; text-decoration: none; font-size: 18px; }
+.ssa-stat-cards { display: flex; gap: 14px; flex-wrap: wrap; margin: 14px 0; }
+.ssa-stat-card { background: #fff; border: 1px solid #dcdcde; border-radius: 6px; padding: 14px 18px; min-width: 180px; }
+.ssa-stat-card strong { display: block; font-size: 22px; margin-top: 4px; }
+.ssa-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #f0f0f1; }
+.ssa-badge-active, .ssa-badge-approved, .ssa-badge-paid { background: #d4f4dd; color: #0a5c2b; }
+.ssa-badge-pending, .ssa-badge-open { background: #fff3cd; color: #7a5b00; }
+.ssa-badge-void, .ssa-badge-rejected, .ssa-badge-paused { background: #f8d7da; color: #7a1c24; }
+.ssa-flag { color: #b32d2e; font-weight: 600; }
+.ssa-admin-box p { margin: 4px 0; }
