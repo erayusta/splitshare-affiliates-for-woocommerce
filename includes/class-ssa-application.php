@@ -50,6 +50,7 @@ class SSA_Application {
 			'legal'   => SSA_Settings::get( 'legal_notice' ),
 			'program' => SSA_Settings::get( 'program_name' ),
 		);
+		extract( $args, EXTR_SKIP ); // phpcs:ignore WordPress.PHP.DontExtract.extract_extract -- şablon değişkenleri
 		include $file;
 		return ob_get_clean();
 	}

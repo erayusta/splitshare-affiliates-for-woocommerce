@@ -70,6 +70,8 @@ class SSA_Partners {
 		$w = array( '1=1' );
 		if ( ! empty( $args['status'] ) ) {
 			$w[] = $wpdb->prepare( 'p.status = %s', $args['status'] );
+		} elseif ( ! empty( $args['exclude_pending'] ) ) {
+			$w[] = "p.status <> 'pending'";
 		}
 		if ( ! empty( $args['search'] ) ) {
 			$like = '%' . $wpdb->esc_like( $args['search'] ) . '%';

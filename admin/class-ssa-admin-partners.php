@@ -168,15 +168,13 @@ class SSA_Partners_Table extends WP_List_Table {
 		$per_page = 20;
 		$status   = isset( $_GET['status'] ) ? sanitize_key( $_GET['status'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$args     = array(
-			'status' => $status,
-			'search' => isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			'limit'  => $per_page,
-			'offset' => ( $this->get_pagenum() - 1 ) * $per_page,
+			'status'          => $status,
+			'exclude_pending' => '' === $status,
+			'search'          => isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'limit'           => $per_page,
+			'offset'          => ( $this->get_pagenum() - 1 ) * $per_page,
 		);
 		$this->items = SSA_Partners::query( $args );
-		if ( '' === $status ) {
-			$this->items = array_filter( $this->items, function ( $p ) { return 'pending' !== $p->status; } );
-		}
 		$this->_column_headers = array( $this->get_columns(), array(), array() );
 		$this->set_pagination_args( array( 'total_items' => SSA_Partners::count( $args ), 'per_page' => $per_page ) );
 	}
