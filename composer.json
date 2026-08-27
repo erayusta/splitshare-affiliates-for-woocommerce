@@ -1,0 +1,9 @@
+{
+    "name": "erayusta/splitshare-affiliates-for-woocommerce",
+    "description": "Influencer affiliate program for WooCommerce where partners split a fixed share between their commission and a follower discount.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "require": { "php": ">=7.4", "ext-json": "*" },
+    "require-dev": { "phpunit/phpunit": "^9.6" },
+    "scripts": { "test": "phpunit" }
+}
