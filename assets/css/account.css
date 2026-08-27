@@ -15,7 +15,8 @@
 .ssa-card__label { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #777; }
 .ssa-card__value { font-size: 22px; font-weight: 700; margin-top: 4px; }
 .ssa-card__hint { font-size: 12px; color: #888; margin-top: 4px; }
-.ssa-code { display: inline-flex; align-items: center; gap: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 20px; letter-spacing: .12em; padding: 8px 14px; border: 1px dashed #bbb; border-radius: 8px; background: #fafafa; }
+.ssa-code { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 18px; letter-spacing: .1em; padding: 6px 6px 6px 12px; border: 1px dashed #bbb; border-radius: 8px; background: #fafafa; }
+.ssa-code .ssa-copy { flex: 0 0 auto; padding: 6px 10px; }
 .ssa-copy { cursor: pointer; font-size: 12px; letter-spacing: 0; font-family: inherit; }
 .ssa-table { width: 100%; border-collapse: collapse; }
 .ssa-table th, .ssa-table td { padding: 10px 8px; border-bottom: 1px solid #eee; text-align: left; font-size: 14px; }

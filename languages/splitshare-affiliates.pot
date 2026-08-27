@@ -1,0 +1,1433 @@
+# Copyright (C) 2026 Eray Usta
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: SplitShare Affiliates for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/splitshare-affiliates-for-woocommerce\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-27T11:22:57+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Domain: splitshare-affiliates\n"
+
+#. Plugin Name of the plugin
+#: splitshare-affiliates-for-woocommerce.php
+msgid "SplitShare Affiliates for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: splitshare-affiliates-for-woocommerce.php
+msgid "https://github.com/erayusta/splitshare-affiliates-for-woocommerce"
+msgstr ""
+
+#. Description of the plugin
+#: splitshare-affiliates-for-woocommerce.php
+msgid "Influencer affiliate program: partners split a fixed share of each sale between their own commission and a follower discount. Coupon + link tracking, hold period, monthly payouts, My Account panel."
+msgstr ""
+
+#. Author of the plugin
+#: splitshare-affiliates-for-woocommerce.php
+msgid "Eray Usta"
+msgstr ""
+
+#. Author URI of the plugin
+#: splitshare-affiliates-for-woocommerce.php
+msgid "https://github.com/erayusta"
+msgstr ""
+
+#. translators: 1: name, 2: code
+#: admin/class-ssa-admin-applications.php:29
+msgid "%1$s approved. Code: %2$s"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:32
+msgid "Application declined."
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:38
+msgid "No pending applications."
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:41
+msgid "Applicant"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:41
+msgid "Details"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:41
+msgid "Applied"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:41
+msgid "Decision"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:53
+msgid "Code (optional, auto)"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:54
+msgid "Note (sent on decline)"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:55
+#: admin/class-ssa-admin-commissions.php:80
+msgid "Approve"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:56
+msgid "Decline this application?"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:56
+msgid "Decline"
+msgstr ""
+
+#. translators: %d: count
+#: admin/class-ssa-admin-commissions.php:34
+msgid "%d commission updated."
+msgid_plural "%d commissions updated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/class-ssa-admin-commissions.php:51
+#: admin/class-ssa-admin-partners.php:96
+msgid "All partners"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:55
+msgid "Filter"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:68
+#: templates/account/sales.php:16
+msgid "Order"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:69
+#: admin/class-ssa-admin-partners.php:144
+#: admin/class-ssa-admin-payouts.php:55
+#: admin/class-ssa-admin-reports.php:32
+msgid "Partner"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:70
+#: admin/class-ssa-settings-page.php:81
+msgid "Attribution"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:71
+msgid "Basis"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:72
+#: admin/class-ssa-admin-partners.php:112
+#: admin/class-ssa-admin-partners.php:146
+#: admin/class-ssa-settings-page.php:178
+msgid "Split"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:73
+#: admin/class-ssa-admin-reports.php:23
+#: admin/class-ssa-admin-reports.php:26
+#: admin/class-ssa-admin-reports.php:32
+#: admin/class-ssa-admin-reports.php:39
+#: templates/account/dashboard.php:49
+#: templates/account/sales.php:19
+msgid "Commission"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:74
+#: admin/class-ssa-admin-partners.php:148
+#: admin/class-ssa-admin-payouts.php:55
+#: templates/account/dashboard.php:49
+#: templates/account/earnings.php:24
+#: templates/account/sales.php:20
+msgid "Status"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:75
+#: templates/account/dashboard.php:49
+#: templates/account/sales.php:15
+msgid "Date"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:80
+#: admin/class-ssa-admin-commissions.php:93
+#: admin/class-ssa-admin-commissions.php:128
+msgid "Void"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:93
+#: admin/class-ssa-admin-partners.php:158
+#: admin/class-ssa-admin-payouts.php:46
+msgid "All"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:93
+#: admin/class-ssa-admin-partners.php:99
+#: includes/class-ssa-account.php:227
+#: templates/account/dashboard.php:26
+#: templates/account/earnings.php:17
+msgid "Pending"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:93
+#: admin/class-ssa-admin-partners.php:100
+#: includes/class-ssa-account.php:228
+msgid "Approved"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:93
+#: admin/class-ssa-admin-partners.php:101
+#: admin/class-ssa-admin-payouts.php:46
+#: includes/class-ssa-account.php:229
+msgid "Paid"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:125
+msgid "Approve now"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:130
+msgid "adjustment"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:135
+#: templates/account/sales.php:28
+msgid "returning customer"
+msgstr ""
+
+#: admin/class-ssa-admin-menu.php:21
+#: admin/class-ssa-admin-reports.php:26
+#: includes/class-ssa-plugin.php:65
+msgid "Partners"
+msgstr ""
+
+#: admin/class-ssa-admin-menu.php:22
+msgid "Applications"
+msgstr ""
+
+#: admin/class-ssa-admin-menu.php:23
+msgid "Commissions"
+msgstr ""
+
+#: admin/class-ssa-admin-menu.php:24
+#: admin/class-ssa-settings-page.php:87
+#: templates/account/earnings.php:21
+msgid "Payouts"
+msgstr ""
+
+#: admin/class-ssa-admin-menu.php:25
+msgid "Reports"
+msgstr ""
+
+#: admin/class-ssa-admin-menu.php:48
+#: admin/class-ssa-admin-menu.php:49
+#: admin/class-ssa-admin-menu.php:74
+#: admin/class-ssa-settings-page.php:13
+msgid "Affiliates"
+msgstr ""
+
+#: admin/class-ssa-admin-menu.php:80
+#: includes/class-ssa-plugin.php:66
+msgid "Settings"
+msgstr ""
+
+#: admin/class-ssa-admin-menu.php:87
+msgid "Coming soon."
+msgstr ""
+
+#: admin/class-ssa-admin-order.php:19
+msgid "Affiliate"
+msgstr ""
+
+#: admin/class-ssa-admin-order.php:30
+msgid "No affiliate attribution."
+msgstr ""
+
+#: admin/class-ssa-admin-order.php:35
+msgid "Partner:"
+msgstr ""
+
+#: admin/class-ssa-admin-order.php:36
+msgid "Code:"
+msgstr ""
+
+#: admin/class-ssa-admin-order.php:38
+msgid "Commission:"
+msgstr ""
+
+#: admin/class-ssa-admin-order.php:40
+msgid "Approves on %s"
+msgstr ""
+
+#: admin/class-ssa-admin-order.php:46
+msgid "Commission is recorded when the order is paid."
+msgstr ""
+
+#: admin/class-ssa-admin-order.php:49
+msgid "Recalculate"
+msgstr ""
+
+#: admin/class-ssa-admin-order.php:55
+msgid "Not allowed."
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:25
+msgid "Partner paused."
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:29
+msgid "Partner reactivated."
+msgstr ""
+
+#. translators: %s: new code
+#: admin/class-ssa-admin-partners.php:34
+msgid "New code issued: %s"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:38
+msgid "Split change unlocked."
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:54
+msgid "That code is not available."
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:64
+msgid "Partner saved."
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:80
+msgid "Search partners"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:88
+#: includes/class-ssa-partners.php:138
+#: includes/class-ssa-partners.php:199
+msgid "Partner not found."
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:102
+#: admin/class-ssa-admin-partners.php:149
+msgid "Approved sales"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:108
+#: includes/class-ssa-application.php:27
+msgid "E-mail"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:108
+msgid "user profile"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:109
+#: admin/class-ssa-admin-partners.php:145
+#: admin/class-ssa-admin-reports.php:47
+#: templates/account/sales.php:28
+msgid "Code"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:110
+msgid "Previous code %1$s valid until %2$s"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:111
+msgid "Issue a new code? The old one stays valid for the grace period."
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:111
+#: admin/class-ssa-admin-reports.php:49
+msgid "Rotate code"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:113
+msgid "commission"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:113
+msgid "discount"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:113
+msgid "share %s%%"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:114
+msgid "Partner can change again on %s."
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:114
+msgid "Unlock now"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:115
+#: admin/class-ssa-admin-partners.php:147
+msgid "Tier"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:116
+msgid "Application"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:117
+msgid "Payout details"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:118
+#: templates/account/earnings.php:39
+msgid "Account holder"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:118
+msgid "Company / tax office"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:118
+#: templates/account/earnings.php:39
+msgid "Tax / ID number"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:118
+msgid "Issues invoices? (yes/no)"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:121
+msgid "Admin note"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:124
+#: templates/account/earnings.php:43
+msgid "Save"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:126
+msgid "Pause partner"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:128
+#: admin/class-ssa-admin-partners.php:190
+msgid "Reactivate"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:150
+msgid "Approved / Paid"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:151
+msgid "Since"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:158
+msgid "Active"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:158
+msgid "Paused"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:158
+msgid "Rejected"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:186
+msgid "Edit"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:188
+msgid "Pause"
+msgstr ""
+
+#. translators: 1: created count, 2: carried count
+#: admin/class-ssa-admin-payouts.php:17
+msgid "Payout run finished: %1$d payouts created, %2$d partners carried over."
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:23
+msgid "Payout marked as paid and the partner has been notified."
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:40
+msgid "Create payouts now for all approved, unpaid commissions?"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:40
+msgid "Create payouts now"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:41
+msgid "Download open payouts (CSV)"
+msgstr ""
+
+#. translators: %s: date
+#: admin/class-ssa-admin-payouts.php:43
+msgid "Next scheduled run: %s"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:46
+msgid "Open"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:52
+msgid "No payouts."
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:55
+#: templates/account/earnings.php:24
+msgid "Period"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:55
+#: templates/account/earnings.php:35
+msgid "Bank details"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:55
+#: templates/account/earnings.php:24
+msgid "Amount"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:66
+msgid "Bank reference"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:66
+msgid "Mark paid"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:15
+#: templates/apply-form.php:47
+msgid "Apply"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:20
+#: admin/class-ssa-admin-reports.php:47
+msgid "New customer rate"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:20
+msgid "target ≥ 60%"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:21
+msgid "Effective cost rate"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:21
+msgid "(discount + commission) / attributed revenue · target ≤ share"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:22
+msgid "Attributed revenue"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:23
+msgid "Discounts: %s"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:26
+msgid "Split distribution"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:26
+msgid "Split (commission / discount)"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:26
+#: admin/class-ssa-admin-reports.php:32
+msgid "Revenue"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:32
+msgid "Top partners"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:32
+#: admin/class-ssa-admin-reports.php:47
+msgid "Orders"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:39
+msgid "Share groups"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:39
+msgid "Share"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:39
+msgid "Line items"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:46
+msgid "Code usage (last 30 days)"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:46
+msgid "Average %s orders per code. Codes with 3× the average and a low new-customer rate may have leaked to coupon sites."
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:49
+msgid "Suspicious"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:33
+msgid "Program"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:34
+msgid "Groups & Campaigns"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:35
+msgid "Attribution & Payouts"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:36
+msgid "Partner Panel"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:50
+msgid "Program rules"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:50
+msgid "A fixed share of every sale is set aside; the partner decides how much of it is commission and how much is a follower discount."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:51
+msgid "Program name"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:51
+msgid "Shown to partners in My Account and emails."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:52
+msgid "Default share (%)"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:53
+msgid "Default commission (%)"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:53
+msgid "Split assigned to newly approved partners. Discount = share − commission."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:54
+msgid "Minimum order total"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:54
+msgid "Commission and the partner code only apply to orders at or above this amount (after discount, excluding shipping)."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:55
+msgid "Commission cap per order"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:56
+msgid "Commission rounding"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:56
+msgid "Whole currency units"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:56
+msgid "Two decimals"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:57
+msgid "Split change interval (days)"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:57
+msgid "How often a partner may change their split. 0 = unlimited."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:58
+msgid "Returning customer factor"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:58
+msgid "Commission multiplier when the customer has ordered before (1 = full commission)."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:59
+msgid "Partner tiers"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:59
+msgid "Non-monetary statuses by number of approved sales."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:60
+msgid "Tier benefits text"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:61
+msgid "Legal notice for partners"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:68
+msgid "Product groups"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:68
+msgid "Categories with a share different from the default. Child categories inherit. If a product matches several rows, the lowest share wins."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:69
+msgid "Group shares"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:70
+msgid "Excluded categories"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:70
+msgid "No share and no partner discount (e.g. tobacco accessories, adult products)."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:72
+msgid "Campaigns & boosters"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:73
+msgid "Campaign periods"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:73
+msgid "Temporarily raise the share for all groups (e.g. back-to-school, New Year)."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:74
+msgid "Product boosters"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:74
+msgid "Extra share on selected products for a period; shown to partners as \"products earning extra this week\"."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:82
+msgid "Referral link validity (days)"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:83
+msgid "Code uses per customer"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:83
+msgid "0 = unlimited."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:84
+msgid "Code rotation (days)"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:84
+msgid "Automatically issue a new code after this many days (leak protection). 0 = off."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:85
+msgid "Old code grace (days)"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:88
+msgid "Hold period (days)"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:88
+msgid "Commissions are approved this many days after the order is completed (return window)."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:89
+msgid "Payout day of month"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:90
+msgid "Minimum payout"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:90
+msgid "Balances below this carry over to the next month."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:91
+msgid "Deduct refunds of paid commissions from the next payout"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:97
+msgid "— Select —"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:102
+msgid "Partner panel"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:103
+msgid "Application page"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:103
+msgid "Page containing the [ssa_apply] shortcode."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:104
+msgid "Show \"become a partner\" card in My Account"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:105
+msgid "Panel endpoints"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:105
+msgid "URL slugs under My Account."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:106
+msgid "Content kit media"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:106
+msgid "Images/videos partners can download."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:107
+msgid "Content kit texts"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:107
+msgid "Ready-made captions; separate entries with a blank line."
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:135
+msgid "Add row"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:144
+msgid "Category"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:144
+#: admin/class-ssa-settings-page.php:156
+msgid "Share (%)"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:156
+#: admin/class-ssa-settings-page.php:163
+msgid "From"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:156
+#: admin/class-ssa-settings-page.php:163
+msgid "To"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:163
+msgid "Product IDs (comma separated)"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:163
+msgid "Extra share (%)"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:171
+msgid "Tier name"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:171
+msgid "Min. approved sales"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:178
+msgid "Dashboard"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:178
+msgid "Sales"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:178
+#: includes/class-ssa-account.php:33
+#: includes/class-ssa-emails.php:100
+msgid "Earnings"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:178
+#: includes/class-ssa-account.php:35
+msgid "Links"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:178
+#: includes/class-ssa-account.php:36
+msgid "Content kit"
+msgstr ""
+
+#: admin/class-ssa-settings-page.php:190
+msgid "Select media"
+msgstr ""
+
+#: includes/class-ssa-account.php:32
+msgid "Partner sales"
+msgstr ""
+
+#: includes/class-ssa-account.php:34
+#: templates/account/dashboard.php:43
+msgid "Split my share"
+msgstr ""
+
+#: includes/class-ssa-account.php:89
+msgid "Copied!"
+msgstr ""
+
+#: includes/class-ssa-account.php:89
+#: templates/account/dashboard.php:17
+#: templates/account/kit.php:19
+msgid "Copy"
+msgstr ""
+
+#: includes/class-ssa-account.php:107
+msgid "This area is for program partners."
+msgstr ""
+
+#: includes/class-ssa-account.php:192
+msgid "Your split has been updated. Your code now gives the new discount."
+msgstr ""
+
+#: includes/class-ssa-account.php:198
+msgid "Payout details saved."
+msgstr ""
+
+#: includes/class-ssa-account.php:215
+msgid "your application is being reviewed."
+msgstr ""
+
+#: includes/class-ssa-account.php:221
+msgid "Create content, share your code and earn on every sale — you decide how to split your share between commission and follower discount."
+msgstr ""
+
+#: includes/class-ssa-account.php:221
+msgid "Apply now"
+msgstr ""
+
+#: includes/class-ssa-account.php:230
+msgid "Cancelled"
+msgstr ""
+
+#: includes/class-ssa-account.php:231
+msgid "Scheduled"
+msgstr ""
+
+#: includes/class-ssa-application.php:26
+msgid "Full name"
+msgstr ""
+
+#: includes/class-ssa-application.php:28
+msgid "Phone"
+msgstr ""
+
+#: includes/class-ssa-application.php:29
+msgid "City"
+msgstr ""
+
+#: includes/class-ssa-application.php:30
+msgid "Instagram profile"
+msgstr ""
+
+#: includes/class-ssa-application.php:31
+msgid "TikTok profile"
+msgstr ""
+
+#: includes/class-ssa-application.php:32
+msgid "YouTube channel"
+msgstr ""
+
+#: includes/class-ssa-application.php:33
+msgid "Total followers"
+msgstr ""
+
+#: includes/class-ssa-application.php:34
+msgid "What do you create?"
+msgstr ""
+
+#: includes/class-ssa-application.php:34
+msgid "e.g. recipes, coffee, lifestyle"
+msgstr ""
+
+#: includes/class-ssa-application.php:35
+msgid "Anything you want to add"
+msgstr ""
+
+#: includes/class-ssa-application.php:76
+msgid "Security check failed, please try again."
+msgstr ""
+
+#. translators: %s: field label
+#: includes/class-ssa-application.php:87
+msgid "%s is required."
+msgstr ""
+
+#: includes/class-ssa-application.php:91
+msgid "Please enter a valid e-mail address."
+msgstr ""
+
+#: includes/class-ssa-application.php:94
+msgid "Please accept the program terms."
+msgstr ""
+
+#. translators: 1: partner, 2: amount, 3: reason
+#: includes/class-ssa-commissions.php:103
+msgid "Affiliate commission recorded for %1$s: %2$s %3$s"
+msgstr ""
+
+#: includes/class-ssa-commissions.php:215
+msgid "Affiliate commission recalculated: %s"
+msgstr ""
+
+#: includes/class-ssa-commissions.php:239
+msgid "Affiliate: %s will be deducted from the partner's next payout (refund after payout)."
+msgstr ""
+
+#: includes/class-ssa-coupon.php:34
+msgid "Partner has no code."
+msgstr ""
+
+#: includes/class-ssa-coupon.php:40
+msgid "A coupon with this code already exists."
+msgstr ""
+
+#: includes/class-ssa-coupon.php:50
+msgid "Could not save the coupon."
+msgstr ""
+
+#. translators: 1: program name, 2: partner name
+#: includes/class-ssa-coupon.php:76
+msgid "%1$s partner code — %2$s (managed by SplitShare Affiliates, do not edit)."
+msgstr ""
+
+#: includes/class-ssa-coupon.php:120
+msgid "This coupon is a partner code managed by SplitShare Affiliates. Discount, usage and category rules are re-applied automatically; edit them from the Affiliates settings instead."
+msgstr ""
+
+#: includes/class-ssa-emails.php:30
+msgid "Affiliate: application received"
+msgstr ""
+
+#: includes/class-ssa-emails.php:30
+msgid "We received your {program} application"
+msgstr ""
+
+#: includes/class-ssa-emails.php:30
+msgid "Application received"
+msgstr ""
+
+#: includes/class-ssa-emails.php:31
+msgid "Affiliate: new application (admin)"
+msgstr ""
+
+#: includes/class-ssa-emails.php:31
+msgid "[{site_title}] New partner application: {partner_name}"
+msgstr ""
+
+#: includes/class-ssa-emails.php:31
+msgid "New partner application"
+msgstr ""
+
+#: includes/class-ssa-emails.php:32
+msgid "Affiliate: partner approved (welcome)"
+msgstr ""
+
+#: includes/class-ssa-emails.php:32
+msgid "Welcome to {program}! Your code: {code}"
+msgstr ""
+
+#: includes/class-ssa-emails.php:32
+msgid "Welcome aboard"
+msgstr ""
+
+#: includes/class-ssa-emails.php:33
+msgid "Affiliate: application declined"
+msgstr ""
+
+#: includes/class-ssa-emails.php:33
+msgid "About your {program} application"
+msgstr ""
+
+#: includes/class-ssa-emails.php:33
+msgid "Your application"
+msgstr ""
+
+#: includes/class-ssa-emails.php:34
+msgid "Affiliate: new partner code"
+msgstr ""
+
+#: includes/class-ssa-emails.php:34
+msgid "Your new {program} code: {code}"
+msgstr ""
+
+#: includes/class-ssa-emails.php:34
+msgid "Your code has been renewed"
+msgstr ""
+
+#: includes/class-ssa-emails.php:35
+msgid "Affiliate: payout sent"
+msgstr ""
+
+#: includes/class-ssa-emails.php:35
+msgid "Your {program} payout has been sent"
+msgstr ""
+
+#: includes/class-ssa-emails.php:35
+msgid "Payout sent"
+msgstr ""
+
+#. translators: %s: name
+#: includes/class-ssa-emails.php:56
+#: includes/class-ssa-emails.php:82
+#: includes/class-ssa-emails.php:89
+#: includes/class-ssa-emails.php:96
+msgid "Hello %s,"
+msgstr ""
+
+#. translators: %s: program name
+#: includes/class-ssa-emails.php:58
+msgid "Thank you for applying to %s. We review every application personally and will get back to you within a few days."
+msgstr ""
+
+#: includes/class-ssa-emails.php:61
+msgid "A new partner application was received from %1$s (%2$s)."
+msgstr ""
+
+#: includes/class-ssa-emails.php:70
+msgid "Welcome to the team, %s!"
+msgstr ""
+
+#. translators: 1: code, 2: commission pct, 3: discount pct
+#: includes/class-ssa-emails.php:72
+msgid "Your partner code is %1$s. Your current split is %2$s%% commission + %3$s%% follower discount — you can change it in your panel."
+msgstr ""
+
+#: includes/class-ssa-emails.php:73
+msgid "Your partner panel: %s"
+msgstr ""
+
+#: includes/class-ssa-emails.php:74
+msgid "First step: open \"Split\" in your panel and decide how much of your share goes to you and how much to your followers."
+msgstr ""
+
+#. translators: %s: amount
+#: includes/class-ssa-emails.php:76
+msgid "The code and commission apply to orders of %s and above. Payouts are sent monthly."
+msgstr ""
+
+#: includes/class-ssa-emails.php:83
+msgid "Thank you for your interest in %s. Unfortunately we cannot accept your application at this time."
+msgstr ""
+
+#: includes/class-ssa-emails.php:90
+msgid "For your protection we renew partner codes periodically. Your new code is %s."
+msgstr ""
+
+#: includes/class-ssa-emails.php:92
+msgid "Your previous code %1$s keeps working until %2$s."
+msgstr ""
+
+#: includes/class-ssa-emails.php:98
+msgid "Your payout for %1$s (%2$s) has been sent to your bank account. Reference: %3$s"
+msgstr ""
+
+#: includes/class-ssa-emails.php:100
+msgid "Details: %s"
+msgstr ""
+
+#: includes/class-ssa-install.php:111
+msgid "Affiliate Partner"
+msgstr ""
+
+#: includes/class-ssa-partners.php:100
+msgid "There is already an application or partner account for this user."
+msgstr ""
+
+#: includes/class-ssa-partners.php:113
+msgid "Could not save the application."
+msgstr ""
+
+#: includes/class-ssa-partners.php:142
+msgid "Partner user account not found."
+msgstr ""
+
+#: includes/class-ssa-partners.php:149
+msgid "This code is already in use."
+msgstr ""
+
+#. translators: %s: date
+#: includes/class-ssa-partners.php:205
+msgid "You can change your split again on %s."
+msgstr ""
+
+#: includes/class-ssa-plugin.php:27
+msgid "WooCommerce is required for this plugin to work."
+msgstr ""
+
+#: includes/class-ssa-tracking.php:118
+msgid "Affiliate: order placed by the partner themselves — no commission."
+msgstr ""
+
+#: templates/account/dashboard.php:16
+msgid "Your code"
+msgstr ""
+
+#: templates/account/dashboard.php:18
+msgid "%1$s%% commission + %2$s%% follower discount"
+msgstr ""
+
+#: templates/account/dashboard.php:21
+msgid "This month"
+msgstr ""
+
+#: templates/account/dashboard.php:23
+msgid "on %s sales"
+msgstr ""
+
+#: templates/account/dashboard.php:28
+msgid "approved %d days after delivery"
+msgstr ""
+
+#: templates/account/dashboard.php:31
+msgid "Ready for payout"
+msgstr ""
+
+#: templates/account/dashboard.php:33
+msgid "next payout %s"
+msgstr ""
+
+#: templates/account/dashboard.php:36
+#: templates/account/earnings.php:18
+msgid "Paid so far"
+msgstr ""
+
+#: templates/account/dashboard.php:38
+msgid "%d approved sales"
+msgstr ""
+
+#: templates/account/dashboard.php:43
+msgid "First step: decide how to split your share between your commission and your followers' discount."
+msgstr ""
+
+#: templates/account/dashboard.php:46
+msgid "Recent sales"
+msgstr ""
+
+#: templates/account/dashboard.php:49
+#: templates/account/sales.php:17
+msgid "Basket"
+msgstr ""
+
+#: templates/account/dashboard.php:56
+msgid "All sales"
+msgstr ""
+
+#: templates/account/dashboard.php:58
+msgid "No sales yet. Share your code or a link to get started."
+msgstr ""
+
+#: templates/account/dashboard.php:58
+msgid "Create a link"
+msgstr ""
+
+#: templates/account/earnings.php:16
+msgid "Balance"
+msgstr ""
+
+#: templates/account/earnings.php:16
+msgid "paid on the %1$s if ≥ %2$s"
+msgstr ""
+
+#: templates/account/earnings.php:24
+msgid "Paid on"
+msgstr ""
+
+#: templates/account/earnings.php:32
+msgid "No payouts yet."
+msgstr ""
+
+#: templates/account/earnings.php:39
+msgid "Company / tax office (if you issue invoices)"
+msgstr ""
+
+#: templates/account/earnings.php:42
+msgid "I issue invoices for my commission"
+msgstr ""
+
+#: templates/account/kit.php:15
+msgid "Ready-made captions"
+msgstr ""
+
+#: templates/account/kit.php:24
+msgid "Images & videos"
+msgstr ""
+
+#: templates/account/kit.php:39
+msgid "The content kit is being prepared."
+msgstr ""
+
+#: templates/account/links.php:12
+msgid "Clicks (30 days)"
+msgstr ""
+
+#: templates/account/links.php:13
+msgid "Orders from links (30 days)"
+msgstr ""
+
+#: templates/account/links.php:14
+msgid "Link validity"
+msgstr ""
+
+#: templates/account/links.php:14
+msgid "%d days"
+msgstr ""
+
+#: templates/account/links.php:14
+msgid "orders within this window count, even without the code"
+msgstr ""
+
+#: templates/account/links.php:17
+msgid "Link generator"
+msgstr ""
+
+#: templates/account/links.php:19
+msgid "Any page on the store"
+msgstr ""
+
+#: templates/account/links.php:20
+msgid "…or pick a category"
+msgstr ""
+
+#: templates/account/links.php:21
+msgid "Home page"
+msgstr ""
+
+#: templates/account/links.php:25
+#: templates/account/links.php:34
+msgid "Copy link"
+msgstr ""
+
+#: templates/account/links.php:26
+msgid "Tip: add ?ref=CODE to any product URL to make it your link."
+msgstr ""
+
+#: templates/account/links.php:30
+msgid "Products earning extra this week"
+msgstr ""
+
+#: templates/account/sales.php:11
+msgid "No sales yet."
+msgstr ""
+
+#: templates/account/sales.php:18
+msgid "Via"
+msgstr ""
+
+#: templates/account/sales.php:26
+msgid "refund adjustment"
+msgstr ""
+
+#: templates/account/sales.php:28
+msgid "Link"
+msgstr ""
+
+#: templates/account/sales.php:32
+msgid "below minimum basket"
+msgstr ""
+
+#: templates/account/split.php:14
+msgid "On every sale, %s%% of the basket is yours to split: keep it as commission, give it to your followers as a discount, or anything in between. The store's cost is the same either way."
+msgstr ""
+
+#: templates/account/split.php:21
+msgid "My commission"
+msgstr ""
+
+#: templates/account/split.php:22
+msgid "Follower discount"
+msgstr ""
+
+#: templates/account/split.php:24
+msgid "Presets:"
+msgstr ""
+
+#: templates/account/split.php:25
+msgid "Link only"
+msgstr ""
+
+#: templates/account/split.php:25
+msgid "Balanced"
+msgstr ""
+
+#: templates/account/split.php:25
+msgid "Even"
+msgstr ""
+
+#: templates/account/split.php:25
+msgid "Discount heavy"
+msgstr ""
+
+#: templates/account/split.php:30
+msgid "Save my split"
+msgstr ""
+
+#: templates/account/split.php:31
+msgid "You can change it once every %d days."
+msgstr ""
+
+#: templates/account/split.php:33
+msgid "You changed your split recently. Next change possible on %s."
+msgstr ""
+
+#: templates/account/split.php:38
+msgid "Share by product group"
+msgstr ""
+
+#: templates/account/split.php:39
+msgid "Some groups have a smaller share because of their margin; your discount is subtracted from that group's share, so your commission there can be lower."
+msgstr ""
+
+#: templates/account/split.php:42
+msgid "Default"
+msgstr ""
+
+#: templates/apply-form.php:13
+msgid "Your application is being reviewed. We will e-mail you as soon as it is approved."
+msgstr ""
+
+#: templates/apply-form.php:15
+msgid "You are already a partner."
+msgstr ""
+
+#: templates/apply-form.php:15
+msgid "Open your partner panel"
+msgstr ""
+
+#: templates/apply-form.php:17
+msgid "Your previous application was not approved. Please contact us if you think this is a mistake."
+msgstr ""
+
+#: templates/apply-form.php:20
+msgid "Thank you! Your application has been received. We will get back to you within a few days."
+msgstr ""
+
+#. translators: %s: program name
+#: templates/apply-form.php:44
+msgid "I accept the %s terms and will label sponsored posts as required by law."
+msgstr ""

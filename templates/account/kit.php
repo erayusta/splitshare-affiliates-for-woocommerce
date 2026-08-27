@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 <?php if ( $texts ) : ?>
 	<h3><?php esc_html_e( 'Ready-made captions', 'splitshare-affiliates' ); ?></h3>
 	<?php foreach ( $texts as $i => $text ) : ?>
-		<?php $text = str_replace( array( '{code}', '{discount}' ), array( $partner->code, wc_format_decimal( $partner->discount_pct, 1 ) . '%' ), $text ); ?>
+		<?php $text = str_replace( array( '{code}', '{discount}' ), array( $partner->code, wc_format_decimal( $partner->discount_pct, 1 ) ), $text ); ?>
 		<div class="ssa-kit-text" id="ssa-kit-text-<?php echo (int) $i; ?>"><?php echo esc_html( $text ); ?></div>
 		<p><button type="button" class="ssa-copy" data-copy-target="#ssa-kit-text-<?php echo (int) $i; ?>"><?php esc_html_e( 'Copy', 'splitshare-affiliates' ); ?></button></p>
 	<?php endforeach; ?>
