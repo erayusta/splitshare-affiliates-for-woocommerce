@@ -137,8 +137,7 @@ class SSA_Commissions {
 			$product  = $item->get_product();
 			$pid      = $product ? ( $product->is_type( 'variation' ) ? $product->get_parent_id() : $product->get_id() ) : (int) $item->get_product_id();
 			$paid     = (float) $order->get_line_total( $item, true, false );
-			$refunded = (float) $order->get_total_refunded_for_item( $item_id ) + (float) $order->get_tax_refunded_for_item( $item_id );
-			$paid     = max( 0.0, $paid - $refunded );
+			$paid     = max( 0.0, $paid - self::refunded_for_item( $order, $item_id ) );
 			if ( $paid <= 0 ) {
 				continue;
 			}
@@ -152,6 +151,19 @@ class SSA_Commissions {
 			$items[] = array( 'product_id' => $pid, 'category_ids' => array_values( array_unique( $cats ) ), 'paid_total' => round( $paid, 4 ) );
 		}
 		return $items;
+	}
+
+	/** Kalem için iade edilen tutar (KDV dahil). */
+	public static function refunded_for_item( WC_Order $order, $item_id ) {
+		$total = 0.0;
+		foreach ( $order->get_refunds() as $refund ) {
+			foreach ( $refund->get_items( 'line_item' ) as $ritem ) {
+				if ( (int) $ritem->get_meta( '_refunded_item_id' ) === (int) $item_id ) {
+					$total += abs( (float) $ritem->get_total() ) + abs( (float) $ritem->get_total_tax() );
+				}
+			}
+		}
+		return $total;
 	}
 
 	/** Müşterinin bu siparişten önce tamamlanmış siparişi yok mu? */
