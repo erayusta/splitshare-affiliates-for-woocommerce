@@ -1,0 +1,36 @@
+/* SplitShare Affiliates — ön yüz (başvuru formu + Hesabım paneli). Tema override edebilir. */
+.ssa-notice { padding: 12px 16px; border-radius: 8px; margin: 0 0 16px; border-left: 4px solid #999; background: #f6f6f6; }
+.ssa-notice-success { border-left-color: #2e8b57; background: #eef8f1; }
+.ssa-notice-error { border-left-color: #c0392b; background: #fdf0ee; }
+.ssa-notice-info { border-left-color: #2f80ed; background: #eef4fd; }
+.ssa-hp { position: absolute !important; left: -9999px !important; }
+.ssa-apply-form .ssa-field { margin-bottom: 14px; }
+.ssa-apply-form label { display: block; font-weight: 600; margin-bottom: 4px; }
+.ssa-apply-form input[type="text"], .ssa-apply-form input[type="email"], .ssa-apply-form input[type="tel"], .ssa-apply-form input[type="url"], .ssa-apply-form input[type="number"], .ssa-apply-form textarea { width: 100%; max-width: 520px; }
+.ssa-legal { font-size: 13px; color: #555; }
+
+.ssa-panel h2 { margin-top: 0; }
+.ssa-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin: 0 0 22px; }
+.ssa-card { border: 1px solid #e6e6e6; border-radius: 12px; padding: 14px 16px; background: #fff; }
+.ssa-card__label { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #777; }
+.ssa-card__value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+.ssa-card__hint { font-size: 12px; color: #888; margin-top: 4px; }
+.ssa-code { display: inline-flex; align-items: center; gap: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 20px; letter-spacing: .12em; padding: 8px 14px; border: 1px dashed #bbb; border-radius: 8px; background: #fafafa; }
+.ssa-copy { cursor: pointer; font-size: 12px; letter-spacing: 0; font-family: inherit; }
+.ssa-table { width: 100%; border-collapse: collapse; }
+.ssa-table th, .ssa-table td { padding: 10px 8px; border-bottom: 1px solid #eee; text-align: left; font-size: 14px; }
+.ssa-status { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; background: #eee; }
+.ssa-status-pending, .ssa-status-open { background: #fff3cd; color: #7a5b00; }
+.ssa-status-approved, .ssa-status-paid { background: #d4f4dd; color: #0a5c2b; }
+.ssa-status-void { background: #f8d7da; color: #7a1c24; }
+.ssa-split { max-width: 560px; }
+.ssa-split input[type="range"] { width: 100%; }
+.ssa-split__readout { display: flex; justify-content: space-between; font-weight: 600; margin: 8px 0 16px; }
+.ssa-link-generator input[type="url"], .ssa-link-generator select { width: 100%; max-width: 520px; }
+.ssa-link-generator output { display: block; margin: 10px 0; padding: 10px; background: #fafafa; border: 1px solid #e6e6e6; border-radius: 8px; word-break: break-all; font-size: 13px; }
+.ssa-kit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+.ssa-kit-grid img { width: 100%; height: auto; border-radius: 8px; }
+.ssa-kit-text { white-space: pre-wrap; background: #fafafa; border: 1px solid #e6e6e6; border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+.ssa-legal-box { border-left: 4px solid #e2001a; background: #fff5f5; padding: 10px 14px; border-radius: 6px; font-size: 13px; }
+.ssa-join-card { border: 1px dashed #f4811f; border-radius: 12px; padding: 16px; margin: 0 0 20px; background: #fff8f2; }
+.ssa-muted { color: #777; font-size: 13px; }
