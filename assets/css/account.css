@@ -148,3 +148,43 @@
 	.ssa-split__readout { flex-direction: column; gap: 4px; }
 	.ssa-table th, .ssa-table td { padding: 8px 6px; font-size: 13px; }
 }
+
+/* Kuponlar (1.2.0) */
+.ssa-hero__coupons { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; font-size: 14px; }
+.ssa-hero__coupons code { background: #f3f4f6; padding: 1px 6px; border-radius: 4px; font-size: 13px; }
+.ssa-code--link { font-size: 14px; letter-spacing: 0; word-break: break-all; }
+.ssa-code--sm { display: inline-flex; font-size: 15px; letter-spacing: .08em; padding: 4px 4px 4px 10px; }
+.ssa-code--sm .ssa-copy { padding: 3px 8px; font-size: 11px; }
+.ssa-coupon-form .ssa-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; margin-bottom: 14px; }
+.ssa-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.ssa-field label, .ssa-field .ssa-label { font-weight: 600; font-size: 14px; }
+.ssa-field input[type="text"], .ssa-field input[type="number"], .ssa-field input[type="date"], .ssa-field select { width: 100%; max-width: 100%; padding: 9px 12px; border: 1px solid var(--ssa-line); border-radius: 8px; font-size: 15px; background: #fff; box-sizing: border-box; }
+.ssa-code-input { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; }
+.ssa-field--discount { margin-bottom: 14px; }
+.ssa-discount-row { display: flex; align-items: center; gap: 12px; }
+.ssa-discount-row input[type="range"] { flex: 1 1 auto; accent-color: var(--ssa-d); }
+.ssa-discount-num { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
+.ssa-discount-num input { width: 84px !important; text-align: right; }
+.ssa-scope { display: flex; flex-wrap: wrap; gap: 8px; }
+.ssa-scope__opt { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid var(--ssa-line); border-radius: 8px; cursor: pointer; font-size: 14px; background: #fff; }
+.ssa-scope__opt:has(input:checked) { border-color: var(--ssa-c); box-shadow: 0 0 0 2px rgba(42,120,214,.15); }
+.ssa-scope-panel { display: none; margin-top: 8px; }
+.ssa-scope-panel.is-open { display: block; }
+.ssa-form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 4px 0 0; }
+.ssa-coupons td small { display: block; font-size: 11px; max-width: 220px; }
+.ssa-coupons td:first-child { min-width: 180px; }
+.ssa-coupons tr.is-muted td { opacity: .6; }
+.ssa-coupons tr.is-muted td.ssa-coupon-actions { opacity: 1; }
+.ssa-coupon-actions { white-space: nowrap; }
+.ssa-coupon-actions form { display: inline; }
+.ssa-linkbtn { background: none; border: 0; padding: 2px 4px; color: var(--ssa-c); cursor: pointer; font-size: 13px; text-decoration: underline; }
+.ssa-linkbtn--danger { color: #b32d2e; }
+.ssa-status-active { background: #e6f6e6; color: #1f6b2b; }
+.ssa-status-paused { background: #f0f0f1; color: #50575e; }
+.ssa-status-expired { background: #fbe6e6; color: #8a1f1f; }
+.ssa-kit-pick { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.ssa-kit-pick select { padding: 6px 10px; border-radius: 6px; border: 1px solid var(--ssa-line); }
+.ssa-panel .select2-container--default .select2-selection--multiple { border: 1px solid var(--ssa-line); border-radius: 8px; min-height: 42px; padding: 4px 6px; }
+@media (max-width: 640px) {
+	.ssa-coupon-form .ssa-form-grid { grid-template-columns: 1fr; }
+}

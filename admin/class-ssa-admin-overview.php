@@ -49,14 +49,14 @@ class SSA_Admin_Overview {
 			echo '<li class="' . ( $it[0] ? 'is-hot' : '' ) . '"><a href="' . esc_url( $it[2] ) . '">' . SSA_Admin_UI::icon( $it[3] ) . '<strong>' . (int) $it[0] . '</strong> ' . esc_html( $it[1] ) . '</a></li>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		echo '</ul>';
-		$b = SSA_Reports::split_buckets();
+		$b = SSA_Partner_Coupons::discount_buckets();
 		if ( array_sum( $b ) > 0 ) {
-			echo '<h3 class="ssa-subhead">' . esc_html__( 'How partners split their share', 'splitshare-affiliates' ) . '</h3>';
+			echo '<h3 class="ssa-subhead">' . esc_html__( 'Live coupons by discount', 'splitshare-affiliates' ) . '</h3>';
 			echo SSA_Charts::donut( array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				array( 'label' => __( 'Commission heavy', 'splitshare-affiliates' ), 'value' => $b['commission'] ),
-				array( 'label' => __( 'Balanced', 'splitshare-affiliates' ), 'value' => $b['balanced'] ),
-				array( 'label' => __( 'Discount heavy', 'splitshare-affiliates' ), 'value' => $b['discount'] ),
-			), array( 'size' => 150, 'center' => number_format_i18n( array_sum( $b ) ), 'center_label' => __( 'partners', 'splitshare-affiliates' ), 'title' => __( 'Split preferences', 'splitshare-affiliates' ) ) );
+				array( 'label' => __( 'Up to 5%', 'splitshare-affiliates' ), 'value' => $b['low'] ),
+				array( 'label' => __( '5–10%', 'splitshare-affiliates' ), 'value' => $b['mid'] ),
+				array( 'label' => __( 'Over 10%', 'splitshare-affiliates' ), 'value' => $b['high'] ),
+			), array( 'size' => 150, 'center' => number_format_i18n( array_sum( $b ) ), 'center_label' => __( 'coupons', 'splitshare-affiliates' ), 'title' => __( 'Coupon discounts', 'splitshare-affiliates' ) ) );
 		}
 		echo SSA_Admin_UI::card_close(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</div>';

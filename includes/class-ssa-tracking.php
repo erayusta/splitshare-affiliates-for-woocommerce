@@ -21,7 +21,7 @@ class SSA_Tracking {
 			return;
 		}
 		$code = strtoupper( sanitize_text_field( wp_unslash( $_GET['ref'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( preg_match( '/^[A-Z0-9]{4,12}$/', $code ) ) {
+		if ( preg_match( '/^[A-Z0-9]{4,20}$/', $code ) ) {
 			$partner = SSA_Partners::get_by_code( $code );
 			if ( $partner && $partner->is_active() ) {
 				self::set_cookie( $partner->code );
@@ -50,7 +50,7 @@ class SSA_Tracking {
 		$code  = strtoupper( $parts[0] );
 		$ts    = isset( $parts[1] ) ? (int) $parts[1] : 0;
 		$days  = max( 1, (int) SSA_Settings::get( 'cookie_days' ) );
-		if ( ! preg_match( '/^[A-Z0-9]{4,12}$/', $code ) || $ts + $days * DAY_IN_SECONDS < time() ) {
+		if ( ! preg_match( '/^[A-Z0-9]{4,20}$/', $code ) || $ts + $days * DAY_IN_SECONDS < time() ) {
 			return null;
 		}
 		return $code;
@@ -97,12 +97,14 @@ class SSA_Tracking {
 		$partner     = null;
 		$attribution = '';
 		$code        = '';
+		$coupon_id   = 0;
 
 		$coupon = SSA_Coupon::partner_coupon_in( $order->get_coupon_codes() );
 		if ( $coupon ) {
 			$partner     = SSA_Partners::get( $coupon['partner_id'] );
 			$attribution = 'coupon';
 			$code        = $coupon['code'];
+			$coupon_id   = (int) $coupon['coupon_id'];
 		} else {
 			$ref = self::current_ref();
 			if ( $ref ) {
@@ -121,6 +123,10 @@ class SSA_Tracking {
 		$order->update_meta_data( '_ssa_partner_id', $partner->id );
 		$order->update_meta_data( '_ssa_code', $code );
 		$order->update_meta_data( '_ssa_attribution', $attribution );
+		$order->update_meta_data( '_ssa_coupon_id', $coupon_id );
+		if ( $coupon_id ) {
+			SSA_Partner_Coupons::bump_uses( $coupon_id );
+		}
 		if ( 'link' === $attribution ) {
 			self::mark_conversion( $partner->id, $order->get_id() );
 		}

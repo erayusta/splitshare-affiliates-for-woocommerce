@@ -16,17 +16,13 @@ class SSA_Admin_Applications {
 		check_admin_referer( 'ssa_application_' . $action . '_' . $id );
 		$note = isset( $_REQUEST['note'] ) ? sanitize_textarea_field( wp_unslash( $_REQUEST['note'] ) ) : '';
 		if ( 'approve' === $action ) {
-			$opts = array( 'note' => $note );
-			if ( ! empty( $_REQUEST['code'] ) ) {
-				$opts['code'] = sanitize_text_field( wp_unslash( $_REQUEST['code'] ) );
-			}
-			$r = SSA_Partners::approve( $id, $opts );
+			$r = SSA_Partners::approve( $id, array( 'note' => $note ) );
 			if ( is_wp_error( $r ) ) {
 				SSA_Admin_Menu::redirect_with( 'applications', $r->get_error_message(), 'error' );
 			}
 			$p = SSA_Partners::get( $id );
-			/* translators: 1: name, 2: code */
-			SSA_Admin_Menu::redirect_with( 'applications', sprintf( __( '%1$s approved. Code: %2$s', 'splitshare-affiliates' ), $p->display_name(), $p->code ) );
+			/* translators: 1: name, 2: link code */
+			SSA_Admin_Menu::redirect_with( 'applications', sprintf( __( '%1$s approved. Link code: %2$s — they can now create coupons from My Account.', 'splitshare-affiliates' ), $p->display_name(), $p->code ) );
 		}
 		SSA_Partners::reject( $id, $note );
 		SSA_Admin_Menu::redirect_with( 'applications', __( 'Application declined.', 'splitshare-affiliates' ) );
@@ -63,8 +59,6 @@ class SSA_Admin_Applications {
 			}
 			echo '<form method="post" action="' . esc_url( SSA_Admin_Menu::url( 'applications' ) ) . '">';
 			echo '<input type="hidden" name="id" value="' . (int) $p->id . '" />';
-			echo '<input type="text" name="code" placeholder="' . esc_attr__( 'Code (optional, auto)', 'splitshare-affiliates' ) . '" pattern="[A-Za-z0-9]{4,12}" />';
-			echo '<span class="ssa-muted" style="font-size:12px;align-self:center">' . esc_html( sprintf( __( 'Default split: %1$s%% + %2$s%%', 'splitshare-affiliates' ), SSA_Settings::get( 'default_commission_pct' ), (float) SSA_Settings::get( 'default_share' ) - (float) SSA_Settings::get( 'default_commission_pct' ) ) ) . '</span>';
 			echo '<textarea name="note" placeholder="' . esc_attr__( 'Note (sent on decline)', 'splitshare-affiliates' ) . '"></textarea>';
 			echo '<div class="ssa-actions"><button class="button button-primary" name="action" value="approve" formaction="' . esc_url( wp_nonce_url( SSA_Admin_Menu::url( 'applications' ), 'ssa_application_approve_' . $p->id ) ) . '">' . esc_html__( 'Approve', 'splitshare-affiliates' ) . '</button>';
 			echo '<button class="button ssa-confirm" data-confirm="' . esc_attr__( 'Decline this application?', 'splitshare-affiliates' ) . '" name="action" value="reject" formaction="' . esc_url( wp_nonce_url( SSA_Admin_Menu::url( 'applications' ), 'ssa_application_reject_' . $p->id ) ) . '">' . esc_html__( 'Decline', 'splitshare-affiliates' ) . '</button></div>';

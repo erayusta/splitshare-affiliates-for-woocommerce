@@ -33,14 +33,16 @@ class SSA_Admin_Order {
 		$partner    = SSA_Partners::get( $partner_id );
 		$commission = class_exists( 'SSA_Commissions' ) ? SSA_Commissions::for_order( $order->get_id() ) : null;
 		echo '<p><strong>' . esc_html__( 'Partner:', 'splitshare-affiliates' ) . '</strong> ' . ( $partner ? SSA_Admin_Menu::partner_link( $partner ) : '#' . (int) $partner_id ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo '<p><strong>' . esc_html__( 'Code:', 'splitshare-affiliates' ) . '</strong> <code>' . esc_html( $order->get_meta( '_ssa_code' ) ) . '</code> · ' . esc_html( $order->get_meta( '_ssa_attribution' ) ) . '</p>';
+		$attr = (string) $order->get_meta( '_ssa_attribution' );
+		$row  = (int) $order->get_meta( '_ssa_coupon_id' ) ? SSA_Partner_Coupons::get( (int) $order->get_meta( '_ssa_coupon_id' ) ) : null;
+		echo '<p><strong>' . esc_html( 'coupon' === $attr ? __( 'Coupon:', 'splitshare-affiliates' ) : __( 'Link code:', 'splitshare-affiliates' ) ) . '</strong> <code>' . esc_html( $order->get_meta( '_ssa_code' ) ) . '</code>' . ( $row ? ' · ' . esc_html( wc_format_decimal( $row->discount_pct, 1 ) . '% · ' . SSA_Partner_Coupons::scope_label( $row ) ) : '' ) . '</p>';
 		if ( $commission ) {
 			echo '<p><strong>' . esc_html__( 'Commission:', 'splitshare-affiliates' ) . '</strong> ' . wp_kses_post( wc_price( $commission->amount ) ) . ' ' . SSA_Admin_Menu::badge( $commission->status ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			if ( $commission->available_at && 'pending' === $commission->status ) {
 				echo '<p class="ssa-muted">' . esc_html( sprintf( __( 'Approves on %s', 'splitshare-affiliates' ), date_i18n( get_option( 'date_format' ), strtotime( $commission->available_at ) ) ) ) . '</p>';
 			}
 			if ( $commission->reason ) {
-				echo '<p class="ssa-muted">' . esc_html( $commission->reason ) . '</p>';
+				echo '<p class="ssa-muted">' . esc_html( SSA_Commissions::reason_label( $commission->reason ) ) . '</p>';
 			}
 		} else {
 			echo '<p class="ssa-muted">' . esc_html__( 'Commission is recorded when the order is paid.', 'splitshare-affiliates' ) . '</p>';

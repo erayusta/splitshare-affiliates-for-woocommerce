@@ -2,8 +2,9 @@
 /**
  * Saf komisyon hesaplayıcı — WordPress'e bağımlı değildir, WP'siz test edilir.
  *
- * Model: her kalem için grup payı (kategoriye göre) bulunur; kod kullanıldıysa ortağın
- * seçtiği indirim yüzdesi paydan düşülür; ortağın komisyon yüzdesi bu kalanla sınırlanır.
+ * Model: her kalem için grup payı (kategoriye göre) bulunur.
+ *  - Ortağın kuponu kalemi kapsıyorsa: komisyon oranı = pay − kupon indirimi.
+ *  - Kapsam dışı kalem veya kuponsuz (link) sipariş: komisyon oranı = min(link oranı, pay).
  * Sipariş bazında minimum sepet eşiği, tekrar müşteri faktörü ve tavan uygulanır.
  */
 
@@ -34,8 +35,30 @@ class SSA_Calculator {
 	}
 
 	/**
+	 * Kupon bu kalemi kapsıyor mu?
+	 *
+	 * @param array|null $coupon       discount_pct, scope_type (all|products|categories), scope_ids (int[]).
+	 * @param int        $product_id   Ana ürün id'si.
+	 * @param int[]      $category_ids Kategoriler + ataları.
+	 */
+	public static function covers( $coupon, $product_id, array $category_ids ) {
+		if ( ! $coupon ) {
+			return false;
+		}
+		$type = isset( $coupon['scope_type'] ) ? (string) $coupon['scope_type'] : 'all';
+		$ids  = array_map( 'intval', (array) ( isset( $coupon['scope_ids'] ) ? $coupon['scope_ids'] : array() ) );
+		if ( 'products' === $type ) {
+			return in_array( (int) $product_id, $ids, true );
+		}
+		if ( 'categories' === $type ) {
+			return (bool) array_intersect( array_map( 'intval', $category_ids ), $ids );
+		}
+		return true;
+	}
+
+	/**
 	 * @param array $items Her biri: product_id, category_ids (int[]), paid_total (indirim sonrası, KDV dahil).
-	 * @param array $ctx   commission_pct, discount_pct, discount_applied, order_base_total, is_new_customer, rules.
+	 * @param array $ctx   coupon (null|array), link_commission_pct, order_base_total, is_new_customer, rules.
 	 * @return array amount, base_total, reason, breakdown[], factors{returning, capped}
 	 */
 	public static function calculate( array $items, array $ctx ) {
@@ -54,8 +77,10 @@ class SSA_Calculator {
 			return $out;
 		}
 
-		$deduct = ! empty( $ctx['discount_applied'] ) ? (float) $ctx['discount_pct'] : 0.0;
-		$total  = 0.0;
+		$coupon   = ! empty( $ctx['coupon'] ) ? (array) $ctx['coupon'] : null;
+		$discount = $coupon ? (float) $coupon['discount_pct'] : 0.0;
+		$link_pct = isset( $ctx['link_commission_pct'] ) ? (float) $ctx['link_commission_pct'] : 0.0;
+		$total    = 0.0;
 
 		foreach ( $items as $it ) {
 			$share = self::share_for( (array) $it['category_ids'], $rules );
@@ -67,12 +92,14 @@ class SSA_Calculator {
 					$share += (float) $b['pct'];
 				}
 			}
-			$eff = max( 0.0, min( (float) $ctx['commission_pct'], $share - $deduct ) );
-			$amt = (float) $it['paid_total'] * $eff / 100;
+			$covered = self::covers( $coupon, (int) $it['product_id'], (array) $it['category_ids'] );
+			$eff     = $covered ? max( 0.0, $share - $discount ) : max( 0.0, min( $link_pct, $share ) );
+			$amt     = (float) $it['paid_total'] * $eff / 100;
 
 			$out['breakdown'][] = array(
 				'product_id'    => (int) $it['product_id'],
 				'share'         => $share,
+				'covered'       => $covered,
 				'effective_pct' => $eff,
 				'amount'        => round( $amt, 4 ),
 			);

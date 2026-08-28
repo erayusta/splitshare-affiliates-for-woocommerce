@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit;
 
 class SSA_Install {
 
-	const DB_VERSION = '1.0.0';
+	const DB_VERSION = '1.2.0';
 	const ROLE       = 'ssa_partner';
 
 	/** Tam tablo adları. */
@@ -18,6 +18,7 @@ class SSA_Install {
 			'commissions' => $wpdb->prefix . 'ssa_commissions',
 			'payouts'     => $wpdb->prefix . 'ssa_payouts',
 			'clicks'      => $wpdb->prefix . 'ssa_clicks',
+			'coupons'     => $wpdb->prefix . 'ssa_coupons',
 		);
 	}
 
@@ -30,14 +31,14 @@ class SSA_Install {
 			'min_order'                      => 750,
 			'max_commission_per_order'       => 10000,
 			'rounding'                       => 'lira',
-			'default_commission_pct'         => 10,
-			'default_discount_pct'           => 5,
-			'split_change_interval_days'     => 30,
+			'link_commission_pct'            => 10,   // kuponsuz (link) siparişte komisyon %
+			'min_coupon_discount'            => 5,
+			'max_coupon_discount'            => '',   // '' = pay
+			'coupon_code_min_len'            => 4,
+			'coupon_code_max_len'            => 20,
 			'returning_customer_factor'      => 0.5,
 			'cookie_days'                    => 15,
 			'coupon_usage_limit_per_user'    => 1,
-			'code_rotation_days'             => 90,
-			'code_grace_days'                => 7,
 			'hold_days'                      => 21,
 			'payout_day'                     => 15,
 			'min_payout'                     => 500,
@@ -45,32 +46,48 @@ class SSA_Install {
 			'campaign_periods'               => array(), // [ {from, to, share} ]
 			'boosters'                       => array(), // [ {product_ids[], pct, from, to} ]
 			'tiers'                          => array(
-				array( 'name' => __( 'Partner', 'splitshare-affiliates' ), 'min_sales' => 1 ),
-				array( 'name' => __( 'Active Partner', 'splitshare-affiliates' ), 'min_sales' => 26 ),
-				array( 'name' => __( 'Ambassador', 'splitshare-affiliates' ), 'min_sales' => 51 ),
+				array( 'name' => 'Partner', 'min_sales' => 1 ),
+				array( 'name' => 'Active Partner', 'min_sales' => 26 ),
+				array( 'name' => 'Ambassador', 'min_sales' => 51 ),
 			),
 			'tier_benefits'                  => '',
 			'apply_page_id'                  => 0,
 			'show_join_card'                 => 'yes',
-			'legal_notice'                   => __( 'Posts must carry an "Ad" / "Sponsored" label and tag our account. Posts without the label do not earn commission.', 'splitshare-affiliates' ),
+			'legal_notice'                   => 'Posts must carry an "Ad" / "Sponsored" label and tag our account. Posts without the label do not earn commission.',
 			'kit_attachments'                => array(),
 			'kit_texts'                      => '',
 			'endpoints'                      => array(
 				'dashboard' => 'partner',
 				'sales'     => 'partner-sales',
 				'earnings'  => 'partner-earnings',
-				'split'     => 'partner-split',
+				'coupons'   => 'partner-coupons',
 				'links'     => 'partner-links',
 				'kit'       => 'partner-kit',
 			),
-			'program_name'                   => __( 'Partner Program', 'splitshare-affiliates' ),
+			'program_name'                   => 'Partner Program',
 		);
+	}
+
+	/**
+	 * Varsayılanların çevrilmiş hâli — yalnızca etkinleştirmede (init sonrası) çağrılır;
+	 * default_options() plugins_loaded'da kullanıldığı için çeviri içermez (WP 6.7 JIT).
+	 */
+	public static function localized_defaults() {
+		$d = self::default_options();
+		$d['program_name'] = __( 'Partner Program', 'splitshare-affiliates' );
+		$d['legal_notice'] = __( 'Posts must carry an "Ad" / "Sponsored" label and tag our account. Posts without the label do not earn commission.', 'splitshare-affiliates' );
+		$d['tiers']        = array(
+			array( 'name' => __( 'Partner', 'splitshare-affiliates' ), 'min_sales' => 1 ),
+			array( 'name' => __( 'Active Partner', 'splitshare-affiliates' ), 'min_sales' => 26 ),
+			array( 'name' => __( 'Ambassador', 'splitshare-affiliates' ), 'min_sales' => 51 ),
+		);
+		return $d;
 	}
 
 	public static function activate() {
 		self::create_tables();
 		self::create_role();
-		add_option( 'ssa_settings', self::default_options() );
+		add_option( 'ssa_settings', did_action( 'init' ) ? self::localized_defaults() : self::default_options() );
 		self::schedule_cron();
 		update_option( 'ssa_db_version', self::DB_VERSION );
 		if ( class_exists( 'SSA_Account' ) ) {
@@ -86,12 +103,62 @@ class SSA_Install {
 	}
 
 	public static function maybe_upgrade() {
-		if ( version_compare( (string) get_option( 'ssa_db_version', '0' ), self::DB_VERSION, '<' ) ) {
+		$installed = (string) get_option( 'ssa_db_version', '0' );
+		if ( version_compare( $installed, self::DB_VERSION, '<' ) ) {
 			self::activate();
+			if ( '0' !== $installed && version_compare( $installed, '1.2.0', '<' ) ) {
+				self::migrate_120();
+			}
 		}
 		if ( ! wp_next_scheduled( 'ssa_daily' ) ) {
 			self::schedule_cron();
 		}
+	}
+
+	/**
+	 * 1.2.0: ortak başına tek kod/dağılım → ortak kuponları. Mevcut kod, "tüm mağaza" kapsamlı
+	 * bir kupona dönüşür (indirim = eski indirim %'si); ortağa yeni bir link kodu üretilir.
+	 */
+	public static function migrate_120() {
+		global $wpdb;
+		$t = self::tables();
+		$rows = (array) $wpdb->get_results( "SELECT * FROM {$t['partners']} WHERE code <> ''" ); // phpcs:ignore WordPress.DB
+		foreach ( $rows as $r ) {
+			$p = new SSA_Partner( $r );
+			if ( $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$t['coupons']} WHERE code = %s", $p->code ) ) ) { // phpcs:ignore WordPress.DB
+				continue;
+			}
+			$now = current_time( 'mysql' );
+			$wpdb->insert( $t['coupons'], array( // phpcs:ignore WordPress.DB
+				'partner_id'   => $p->id,
+				'wc_coupon_id' => (int) SSA_Coupon::coupon_id( $p->code ),
+				'code'         => $p->code,
+				'name'         => 'Main code',
+				'discount_pct' => (float) $p->discount_pct,
+				'scope_type'   => 'all',
+				'scope_ids'    => '[]',
+				'status'       => in_array( $p->status, array( 'active', 'paused' ), true ) ? 'active' : 'paused',
+				'expires_at'   => null,
+				'uses'         => 0,
+				'created_at'   => $p->approved_at ? $p->approved_at : $now,
+				'updated_at'   => $now,
+			) );
+			$cid = (int) $wpdb->insert_id;
+			$wpdb->update( $t['partners'], array( 'code' => SSA_Partners::generate_code( $p->display_name() ) ), array( 'id' => $p->id ) ); // phpcs:ignore WordPress.DB
+			$row = SSA_Partner_Coupons::get( $cid );
+			if ( $row ) {
+				SSA_Coupon::sync( $row );
+			}
+		}
+		$s = (array) get_option( 'ssa_settings', array() );
+		if ( isset( $s['endpoints'] ) && is_array( $s['endpoints'] ) ) {
+			if ( empty( $s['endpoints']['coupons'] ) ) {
+				$s['endpoints']['coupons'] = 'partner-coupons';
+			}
+			unset( $s['endpoints']['split'] );
+			update_option( 'ssa_settings', $s );
+		}
+		flush_rewrite_rules();
 	}
 
 	public static function schedule_cron() {
@@ -188,6 +255,25 @@ class SSA_Install {
 			PRIMARY KEY  (id),
 			KEY partner_period (partner_id,period),
 			KEY status (status)
+		) $collate;" );
+
+		dbDelta( "CREATE TABLE {$t['coupons']} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			partner_id bigint(20) unsigned NOT NULL,
+			wc_coupon_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			code varchar(20) NOT NULL,
+			name varchar(120) NOT NULL DEFAULT '',
+			discount_pct decimal(5,2) NOT NULL DEFAULT 0,
+			scope_type varchar(20) NOT NULL DEFAULT 'all',
+			scope_ids longtext NULL,
+			status varchar(20) NOT NULL DEFAULT 'active',
+			expires_at datetime NULL,
+			uses int(11) NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY code (code),
+			KEY partner_status (partner_id,status)
 		) $collate;" );
 
 		dbDelta( "CREATE TABLE {$t['clicks']} (

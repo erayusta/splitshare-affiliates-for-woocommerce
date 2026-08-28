@@ -1,6 +1,6 @@
 <?php
 /**
- * Ortak repository: sorgu, başvuru, onay/red, dağılım, kod üretimi/rotasyonu, statü.
+ * Ortak repository: sorgu, başvuru, onay/red, link kodu üretimi, statü.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -28,22 +28,30 @@ class SSA_Partners {
 		return $row ? new SSA_Partner( $row ) : null;
 	}
 
-	/** Kod veya süresi dolmamış eski kodla ortak. @return SSA_Partner|null */
-	public static function get_by_code( $code ) {
+	/** Link koduyla ortak (tam eşleşme). @return SSA_Partner|null */
+	public static function get_by_link_code( $code ) {
 		global $wpdb;
 		$code = strtoupper( sanitize_text_field( (string) $code ) );
 		if ( '' === $code ) {
 			return null;
 		}
-		$row = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . self::table() . ' WHERE code = %s OR previous_code = %s ORDER BY (code = %s) DESC LIMIT 1', $code, $code, $code ) ); // phpcs:ignore WordPress.DB
-		if ( ! $row ) {
-			return null;
+		$row = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . self::table() . ' WHERE code = %s LIMIT 1', $code ) ); // phpcs:ignore WordPress.DB
+		return $row ? new SSA_Partner( $row ) : null;
+	}
+
+	/** ?ref= kodu: link kodu, yoksa ortağın bir kupon kodu (eski ana kodlar). @return SSA_Partner|null */
+	public static function get_by_code( $code ) {
+		$p = self::get_by_link_code( $code );
+		if ( $p ) {
+			return $p;
 		}
-		$p = new SSA_Partner( $row );
-		if ( strtoupper( $p->code ) !== $code && ! $p->previous_code_valid() ) {
-			return null;
+		if ( class_exists( 'SSA_Partner_Coupons' ) ) {
+			$c = SSA_Partner_Coupons::get_by_code( $code );
+			if ( $c ) {
+				return self::get( $c->partner_id );
+			}
 		}
-		return $p;
+		return null;
 	}
 
 	/** Liste sorgusu. $args: status, search, orderby, order, limit, offset. @return SSA_Partner[] */
@@ -129,7 +137,7 @@ class SSA_Partners {
 	}
 
 	/**
-	 * Onay: rol, kod, varsayılan dağılım, kupon.
+	 * Onay: rol + link kodu. Kuponları ortak panelden kendisi oluşturur.
 	 * @return true|WP_Error
 	 */
 	public static function approve( $id, array $opts = array() ) {
@@ -141,28 +149,16 @@ class SSA_Partners {
 		if ( ! $user ) {
 			return new WP_Error( 'ssa_user', __( 'Partner user account not found.', 'splitshare-affiliates' ) );
 		}
-		$share      = (float) SSA_Settings::get( 'default_share' );
-		$commission = isset( $opts['commission_pct'] ) ? (float) $opts['commission_pct'] : (float) SSA_Settings::get( 'default_commission_pct' );
-		$commission = max( 0.0, min( $share, $commission ) );
-		$code       = ! empty( $opts['code'] ) ? strtoupper( sanitize_text_field( $opts['code'] ) ) : ( '' !== $p->code ? $p->code : self::generate_code( $p->display_name() ) );
-		if ( ! self::code_available( $code, $p->id ) ) {
-			return new WP_Error( 'ssa_code', __( 'This code is already in use.', 'splitshare-affiliates' ) );
-		}
-
+		$code = '' !== $p->code ? $p->code : self::generate_code( $p->display_name() );
 		$user->add_role( SSA_Install::ROLE );
 		self::update( $p->id, array(
-			'status'         => 'active',
-			'code'           => $code,
-			'commission_pct' => $commission,
-			'discount_pct'   => $share - $commission,
-			'approved_at'    => $p->approved_at ? $p->approved_at : current_time( 'mysql' ),
-			'admin_note'     => isset( $opts['note'] ) ? sanitize_textarea_field( $opts['note'] ) : $p->admin_note,
+			'status'      => 'active',
+			'code'        => $code,
+			'approved_at' => $p->approved_at ? $p->approved_at : current_time( 'mysql' ),
+			'admin_note'  => isset( $opts['note'] ) ? sanitize_textarea_field( $opts['note'] ) : $p->admin_note,
 		) );
 		$p = self::get( $p->id );
-		$coupon = SSA_Coupon::sync( $p );
-		if ( is_wp_error( $coupon ) ) {
-			return $coupon;
-		}
+		SSA_Partner_Coupons::resync_partner( $p->id );
 		do_action( 'ssa_partner_approved', $p );
 		return true;
 	}
@@ -182,45 +178,8 @@ class SSA_Partners {
 			return false;
 		}
 		self::update( $id, array( 'status' => $status ) );
-		$p = self::get( $id );
-		if ( $p ) {
-			SSA_Coupon::sync( $p );
-		}
+		SSA_Partner_Coupons::resync_partner( (int) $id );
 		return true;
-	}
-
-	/**
-	 * Dağılım değişikliği (komisyon %; indirim = pay − komisyon).
-	 * @return true|WP_Error
-	 */
-	public static function set_split( $id, $commission_pct, $force = false ) {
-		$p = self::get( $id );
-		if ( ! $p ) {
-			return new WP_Error( 'ssa_missing', __( 'Partner not found.', 'splitshare-affiliates' ) );
-		}
-		$interval = (int) SSA_Settings::get( 'split_change_interval_days' );
-		if ( ! $force && ! $p->can_change_split( $interval ) ) {
-			return new WP_Error( 'ssa_locked', sprintf(
-				/* translators: %s: date */
-				__( 'You can change your split again on %s.', 'splitshare-affiliates' ),
-				date_i18n( get_option( 'date_format' ), $p->next_split_change_at( $interval ) )
-			) );
-		}
-		$share      = (float) SSA_Settings::get( 'default_share' );
-		$commission = round( max( 0.0, min( $share, (float) $commission_pct ) ), 2 );
-		self::update( $id, array(
-			'commission_pct'   => $commission,
-			'discount_pct'     => round( $share - $commission, 2 ),
-			'split_changed_at' => current_time( 'mysql' ),
-		) );
-		$p = self::get( $id );
-		SSA_Coupon::sync( $p );
-		do_action( 'ssa_split_changed', $p );
-		return true;
-	}
-
-	public static function unlock_split( $id ) {
-		return self::update( $id, array( 'split_changed_at' => null ) );
 	}
 
 	public static function update_payout_details( $id, array $details ) {
@@ -257,61 +216,21 @@ class SSA_Partners {
 		return $code;
 	}
 
+	/** Link kodu uygun mu? (ortak link kodları, ortak kuponları, WC kuponları) */
 	public static function code_available( $code, $except_id = 0 ) {
 		global $wpdb;
 		$code = strtoupper( (string) $code );
-		if ( ! preg_match( '/^[A-Z0-9]{4,12}$/', $code ) ) {
+		if ( ! preg_match( '/^[A-Z0-9]{4,20}$/', $code ) ) {
 			return false;
 		}
-		$taken = (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . self::table() . ' WHERE (code = %s OR previous_code = %s) AND id <> %d', $code, $code, (int) $except_id ) ); // phpcs:ignore WordPress.DB
+		$taken = (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . self::table() . ' WHERE code = %s AND id <> %d', $code, (int) $except_id ) ); // phpcs:ignore WordPress.DB
 		if ( $taken ) {
 			return false;
 		}
-		// Ortak olmayan bir kuponla çakışmasın.
-		$coupon_id = SSA_Coupon::coupon_id( $code );
-		if ( $coupon_id ) {
-			$owner = (int) get_post_meta( $coupon_id, '_ssa_partner_id', true );
-			if ( ! $owner || ( $except_id && $owner !== (int) $except_id ) ) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/** Kod rotasyonu: yeni kod, eski kod grace süresince geçerli. */
-	public static function rotate_code( $id, $grace_days = null ) {
-		$p = self::get( $id );
-		if ( ! $p ) {
+		if ( class_exists( 'SSA_Partner_Coupons' ) && SSA_Partner_Coupons::get_by_code( $code ) ) {
 			return false;
 		}
-		$grace_days = null === $grace_days ? (int) SSA_Settings::get( 'code_grace_days' ) : (int) $grace_days;
-		$new        = self::generate_code( $p->display_name() );
-		self::update( $id, array(
-			'previous_code'         => $p->code,
-			'previous_code_expires' => gmdate( 'Y-m-d H:i:s', current_time( 'timestamp' ) + $grace_days * DAY_IN_SECONDS ),
-			'code'                  => $new,
-			'code_rotated_at'       => current_time( 'mysql' ),
-		) );
-		$p = self::get( $id );
-		SSA_Coupon::sync( $p );
-		SSA_Coupon::expire_previous( $p );
-		do_action( 'ssa_code_rotated', $p );
-		return $new;
-	}
-
-	/** Rotasyon süresi dolan aktif ortaklar (cron). */
-	public static function rotate_due() {
-		global $wpdb;
-		$days = (int) SSA_Settings::get( 'code_rotation_days' );
-		if ( $days <= 0 ) {
-			return 0;
-		}
-		$cutoff = gmdate( 'Y-m-d H:i:s', current_time( 'timestamp' ) - $days * DAY_IN_SECONDS );
-		$ids    = $wpdb->get_col( $wpdb->prepare( 'SELECT id FROM ' . self::table() . " WHERE status = 'active' AND COALESCE(code_rotated_at, approved_at) <= %s", $cutoff ) ); // phpcs:ignore WordPress.DB
-		foreach ( $ids as $id ) {
-			self::rotate_code( (int) $id );
-		}
-		return count( $ids );
+		return ! SSA_Coupon::coupon_id( $code );
 	}
 
 	/** Statüleri onaylı/ödenmiş satış sayısına göre güncelle (cron). */

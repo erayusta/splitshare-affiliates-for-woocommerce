@@ -47,14 +47,13 @@ class SSA_Settings_Page extends WC_Settings_Page {
 
 	public function get_settings_for_default_section() {
 		return array(
-			array( 'title' => __( 'Program rules', 'splitshare-affiliates' ), 'type' => 'title', 'id' => 'ssa_program', 'desc' => __( 'A fixed share of every sale is set aside; the partner decides how much of it is commission and how much is a follower discount.', 'splitshare-affiliates' ) ),
+			array( 'title' => __( 'Program rules', 'splitshare-affiliates' ), 'type' => 'title', 'id' => 'ssa_program', 'desc' => __( 'A fixed share of every sale is set aside. Partners create their own coupons: the discount they give comes out of that share and the rest is their commission. Orders through a referral link without a coupon earn the link rate.', 'splitshare-affiliates' ) ),
 			$this->f( 'program_name', array( 'title' => __( 'Program name', 'splitshare-affiliates' ), 'type' => 'text', 'desc_tip' => __( 'Shown to partners in My Account and emails.', 'splitshare-affiliates' ) ) ),
 			$this->f( 'default_share', array( 'title' => __( 'Default share (%)', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0, 'max' => 100, 'step' => '0.5' ) ) ),
-			$this->f( 'default_commission_pct', array( 'title' => __( 'Default commission (%)', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0, 'max' => 100, 'step' => '0.5' ), 'desc_tip' => __( 'Split assigned to newly approved partners. Discount = share − commission.', 'splitshare-affiliates' ) ) ),
+			$this->f( 'link_commission_pct', array( 'title' => __( 'Link commission (%)', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0, 'max' => 100, 'step' => '0.5' ), 'desc_tip' => __( 'Commission on orders that come through a referral link without a partner coupon (capped by the group share).', 'splitshare-affiliates' ) ) ),
 			$this->f( 'min_order', array( 'title' => __( 'Minimum order total', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0, 'step' => '0.01' ), 'desc_tip' => __( 'Commission and the partner code only apply to orders at or above this amount (after discount, excluding shipping).', 'splitshare-affiliates' ) ) ),
 			$this->f( 'max_commission_per_order', array( 'title' => __( 'Commission cap per order', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0, 'step' => '0.01' ) ) ),
 			$this->f( 'rounding', array( 'title' => __( 'Commission rounding', 'splitshare-affiliates' ), 'type' => 'select', 'options' => array( 'lira' => __( 'Whole currency units', 'splitshare-affiliates' ), 'kurus' => __( 'Two decimals', 'splitshare-affiliates' ) ) ) ),
-			$this->f( 'split_change_interval_days', array( 'title' => __( 'Split change interval (days)', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0 ), 'desc_tip' => __( 'How often a partner may change their split. 0 = unlimited.', 'splitshare-affiliates' ) ) ),
 			$this->f( 'returning_customer_factor', array( 'title' => __( 'Returning customer factor', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0, 'max' => 1, 'step' => '0.05' ), 'desc_tip' => __( 'Commission multiplier when the customer has ordered before (1 = full commission).', 'splitshare-affiliates' ) ) ),
 			$this->f( 'tiers', array( 'title' => __( 'Partner tiers', 'splitshare-affiliates' ), 'type' => 'ssa_tiers', 'desc' => __( 'Non-monetary statuses by number of approved sales.', 'splitshare-affiliates' ) ) ),
 			$this->f( 'tier_benefits', array( 'title' => __( 'Tier benefits text', 'splitshare-affiliates' ), 'type' => 'textarea', 'css' => 'width:100%;max-width:600px;height:80px' ) ),
@@ -78,11 +77,13 @@ class SSA_Settings_Page extends WC_Settings_Page {
 
 	public function get_settings_for_payouts_section() {
 		return array(
-			array( 'title' => __( 'Attribution', 'splitshare-affiliates' ), 'type' => 'title', 'id' => 'ssa_attr' ),
+			array( 'title' => __( 'Coupons & links', 'splitshare-affiliates' ), 'type' => 'title', 'id' => 'ssa_attr', 'desc' => __( 'Partners create their own coupons from My Account. Each coupon is a real WooCommerce coupon with these limits.', 'splitshare-affiliates' ) ),
+			$this->f( 'min_coupon_discount', array( 'title' => __( 'Minimum coupon discount (%)', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0, 'max' => 100, 'step' => '0.5' ), 'desc_tip' => __( 'Lowest discount a partner may set. Share − this = the highest coupon commission.', 'splitshare-affiliates' ) ) ),
+			$this->f( 'max_coupon_discount', array( 'title' => __( 'Maximum coupon discount (%)', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0, 'max' => 100, 'step' => '0.5' ), 'desc_tip' => __( 'Leave empty to allow up to the full share.', 'splitshare-affiliates' ) ) ),
+			$this->f( 'coupon_code_min_len', array( 'title' => __( 'Coupon code length (min)', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 2, 'max' => 20 ) ) ),
+			$this->f( 'coupon_code_max_len', array( 'title' => __( 'Coupon code length (max)', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 4, 'max' => 20 ) ) ),
 			$this->f( 'cookie_days', array( 'title' => __( 'Referral link validity (days)', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 1 ) ) ),
-			$this->f( 'coupon_usage_limit_per_user', array( 'title' => __( 'Code uses per customer', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0 ), 'desc_tip' => __( '0 = unlimited.', 'splitshare-affiliates' ) ) ),
-			$this->f( 'code_rotation_days', array( 'title' => __( 'Code rotation (days)', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0 ), 'desc_tip' => __( 'Automatically issue a new code after this many days (leak protection). 0 = off.', 'splitshare-affiliates' ) ) ),
-			$this->f( 'code_grace_days', array( 'title' => __( 'Old code grace (days)', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0 ) ) ),
+			$this->f( 'coupon_usage_limit_per_user', array( 'title' => __( 'Coupon uses per customer', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0 ), 'desc_tip' => __( '0 = unlimited.', 'splitshare-affiliates' ) ) ),
 			array( 'type' => 'sectionend', 'id' => 'ssa_attr' ),
 			array( 'title' => __( 'Payouts', 'splitshare-affiliates' ), 'type' => 'title', 'id' => 'ssa_pay' ),
 			$this->f( 'hold_days', array( 'title' => __( 'Hold period (days)', 'splitshare-affiliates' ), 'type' => 'number', 'custom_attributes' => array( 'min' => 0 ), 'desc_tip' => __( 'Commissions are approved this many days after the order is completed (return window).', 'splitshare-affiliates' ) ) ),
@@ -175,7 +176,7 @@ class SSA_Settings_Page extends WC_Settings_Page {
 	}
 
 	public function render_endpoints( $field ) {
-		$labels = array( 'dashboard' => __( 'Dashboard', 'splitshare-affiliates' ), 'sales' => __( 'Sales', 'splitshare-affiliates' ), 'earnings' => __( 'Earnings', 'splitshare-affiliates' ), 'split' => __( 'Split', 'splitshare-affiliates' ), 'links' => __( 'Links', 'splitshare-affiliates' ), 'kit' => __( 'Content kit', 'splitshare-affiliates' ) );
+		$labels = array( 'dashboard' => __( 'Dashboard', 'splitshare-affiliates' ), 'sales' => __( 'Sales', 'splitshare-affiliates' ), 'earnings' => __( 'Earnings', 'splitshare-affiliates' ), 'coupons' => __( 'Coupons', 'splitshare-affiliates' ), 'links' => __( 'Links', 'splitshare-affiliates' ), 'kit' => __( 'Content kit', 'splitshare-affiliates' ) );
 		$eps    = (array) SSA_Settings::get( 'endpoints', array() );
 		echo '<tr valign="top"><th scope="row" class="titledesc"><label>' . esc_html( $field['title'] ) . '</label></th><td class="forminp"><table class="widefat ssa-rows-static"><tbody>';
 		foreach ( $labels as $key => $label ) {

@@ -41,11 +41,6 @@ msgstr "Eray Usta"
 msgid "https://github.com/erayusta"
 msgstr "https://github.com/erayusta"
 
-#. translators: 1: name, 2: code
-#: admin/class-ssa-admin-applications.php:29
-msgid "%1$s approved. Code: %2$s"
-msgstr "%1$s onaylandı. Kod: %2$s"
-
 #: admin/class-ssa-admin-applications.php:32
 msgid "Application declined."
 msgstr "Başvuru reddedildi."
@@ -70,14 +65,6 @@ msgstr "Şehir"
 #: admin/class-ssa-admin-applications.php:55
 msgid "Creates"
 msgstr "İçerik"
-
-#: admin/class-ssa-admin-applications.php:66
-msgid "Code (optional, auto)"
-msgstr "Kod (isteğe bağlı, otomatik)"
-
-#: admin/class-ssa-admin-applications.php:67
-msgid "Default split: %1$s%% + %2$s%%"
-msgstr "Varsayılan dağılım: %%%1$s + %%%2$s"
 
 #: admin/class-ssa-admin-applications.php:68
 msgid "Note (sent on decline)"
@@ -322,10 +309,6 @@ msgstr "Ortaklık atfı yok."
 msgid "Partner:"
 msgstr "Ortak:"
 
-#: admin/class-ssa-admin-order.php:36
-msgid "Code:"
-msgstr "Kod:"
-
 #: admin/class-ssa-admin-order.php:38
 msgid "Commission:"
 msgstr "Komisyon:"
@@ -434,38 +417,6 @@ msgstr "açık hakediş (%s)"
 msgid "suspicious codes"
 msgstr "şüpheli kod"
 
-#: admin/class-ssa-admin-overview.php:54
-#: admin/class-ssa-admin-reports.php:39
-msgid "How partners split their share"
-msgstr "Ortaklar payını nasıl bölüyor"
-
-#: admin/class-ssa-admin-overview.php:56
-#: admin/class-ssa-admin-reports.php:42
-msgid "Commission heavy"
-msgstr "Komisyon ağırlıklı"
-
-#: admin/class-ssa-admin-overview.php:57
-#: admin/class-ssa-admin-reports.php:43
-#: templates/account/split.php:29
-msgid "Balanced"
-msgstr "Dengeli"
-
-#: admin/class-ssa-admin-overview.php:58
-#: admin/class-ssa-admin-reports.php:44
-#: templates/account/split.php:29
-msgid "Discount heavy"
-msgstr "İndirim ağırlıklı"
-
-#: admin/class-ssa-admin-overview.php:59
-#: admin/class-ssa-admin-reports.php:45
-msgid "partners"
-msgstr "ortak"
-
-#: admin/class-ssa-admin-overview.php:59
-#: admin/class-ssa-admin-reports.php:45
-msgid "Split preferences"
-msgstr "Dağılım tercihleri"
-
 #: admin/class-ssa-admin-overview.php:66
 #: admin/class-ssa-admin-reports.php:56
 msgid "Top partners"
@@ -498,26 +449,9 @@ msgstr "Tüm komisyonlar"
 msgid "No commissions yet"
 msgstr "Henüz komisyon yok"
 
-#: admin/class-ssa-admin-partners.php:25
-msgid "Partner paused."
-msgstr "Ortak duraklatıldı."
-
 #: admin/class-ssa-admin-partners.php:29
 msgid "Partner reactivated."
 msgstr "Ortak yeniden etkinleştirildi."
-
-#. translators: %s: new code
-#: admin/class-ssa-admin-partners.php:34
-msgid "New code issued: %s"
-msgstr "Yeni kod verildi: %s"
-
-#: admin/class-ssa-admin-partners.php:38
-msgid "Split change unlocked."
-msgstr "Dağılım değişikliği kilidi açıldı."
-
-#: admin/class-ssa-admin-partners.php:54
-msgid "That code is not available."
-msgstr "Bu kod kullanılamaz."
 
 #: admin/class-ssa-admin-partners.php:64
 msgid "Partner saved."
@@ -551,10 +485,6 @@ msgid "No partners yet"
 msgstr "Henüz ortak yok"
 
 #: admin/class-ssa-admin-partners.php:92
-msgid "Approved applications appear here with their code, split and earnings."
-msgstr "Onaylanan başvurular burada kod, dağılım ve kazançlarıyla listelenir."
-
-#: admin/class-ssa-admin-partners.php:92
 msgid "Review applications"
 msgstr "Başvuruları incele"
 
@@ -572,10 +502,6 @@ msgstr "kullanıcı profili"
 msgid "since %s"
 msgstr "%s tarihinden beri"
 
-#: admin/class-ssa-admin-partners.php:116
-msgid "previous %1$s until %2$s"
-msgstr "önceki kod %1$s, %2$s tarihine kadar geçerli"
-
 #: admin/class-ssa-admin-partners.php:120
 #: admin/class-ssa-admin-partners.php:242
 msgid "Pause"
@@ -585,15 +511,6 @@ msgstr "Duraklat"
 #: admin/class-ssa-admin-partners.php:244
 msgid "Reactivate"
 msgstr "Yeniden etkinleştir"
-
-#: admin/class-ssa-admin-partners.php:124
-msgid "Issue a new code? The old one stays valid for the grace period."
-msgstr "Yeni kod verilsin mi? Eski kod ek süre boyunca geçerli kalır."
-
-#: admin/class-ssa-admin-partners.php:124
-#: admin/class-ssa-admin-reports.php:87
-msgid "Rotate code"
-msgstr "Kodu yenile"
 
 #: admin/class-ssa-admin-partners.php:128
 #: templates/account/dashboard.php:25
@@ -638,11 +555,6 @@ msgstr "Satışlar"
 #: admin/class-ssa-admin-partners.php:135
 msgid "Details & bank"
 msgstr "Bilgiler ve banka"
-
-#: admin/class-ssa-admin-partners.php:135
-#: admin/class-ssa-admin-partners.php:193
-msgid "Split & code"
-msgstr "Dağılım ve kod"
 
 #: admin/class-ssa-admin-partners.php:139
 msgid "Commission, last 12 months"
@@ -693,10 +605,6 @@ msgstr "Henüz hakediş yok."
 msgid "Application"
 msgstr "Başvuru"
 
-#: admin/class-ssa-admin-partners.php:186
-msgid "Bank details & notes"
-msgstr "Banka bilgileri ve notlar"
-
 #: admin/class-ssa-admin-partners.php:187
 #: templates/account/earnings.php:54
 msgid "Account holder"
@@ -726,21 +634,9 @@ msgid "Save"
 msgstr "Kaydet"
 
 #: admin/class-ssa-admin-partners.php:195
-msgid "Commission %% (share %s%%)"
-msgstr "Komisyon %% (pay %%%s)"
-
-#: admin/class-ssa-admin-partners.php:195
 #: includes/class-ssa-charts.php:192
 msgid "discount"
 msgstr "indirim"
-
-#: admin/class-ssa-admin-partners.php:197
-msgid "Partner can change again on %s."
-msgstr "Ortak %s tarihinde yeniden değiştirebilir."
-
-#: admin/class-ssa-admin-partners.php:197
-msgid "Unlock now"
-msgstr "Kilidi şimdi aç"
 
 #: admin/class-ssa-admin-partners.php:216
 msgid "Last 6 months"
@@ -849,10 +745,6 @@ msgstr "Tekrar"
 msgid "Orders by customer type"
 msgstr "Müşteri türüne göre sipariş"
 
-#: admin/class-ssa-admin-reports.php:52
-msgid "No active partners yet"
-msgstr "Henüz aktif ortak yok"
-
 #: admin/class-ssa-admin-reports.php:72
 msgid "Commission by share group"
 msgstr "Pay grubuna göre komisyon"
@@ -934,10 +826,6 @@ msgstr "Ortak Paneli"
 msgid "Program rules"
 msgstr "Program kuralları"
 
-#: admin/class-ssa-settings-page.php:50
-msgid "A fixed share of every sale is set aside; the partner decides how much of it is commission and how much is a follower discount."
-msgstr "Her satışta sabit bir pay ayrılır; ortak bu payın ne kadarının komisyon, ne kadarının takipçi indirimi olacağına kendisi karar verir."
-
 #: admin/class-ssa-settings-page.php:51
 msgid "Program name"
 msgstr "Program adı"
@@ -949,14 +837,6 @@ msgstr "Ortaklara Hesabım'da ve e-postalarda gösterilir."
 #: admin/class-ssa-settings-page.php:52
 msgid "Default share (%)"
 msgstr "Varsayılan pay (%)"
-
-#: admin/class-ssa-settings-page.php:53
-msgid "Default commission (%)"
-msgstr "Varsayılan komisyon (%)"
-
-#: admin/class-ssa-settings-page.php:53
-msgid "Split assigned to newly approved partners. Discount = share − commission."
-msgstr "Yeni onaylanan ortaklara atanan dağılım. İndirim = pay − komisyon."
 
 #: admin/class-ssa-settings-page.php:54
 msgid "Minimum order total"
@@ -981,14 +861,6 @@ msgstr "Tam lira"
 #: admin/class-ssa-settings-page.php:56
 msgid "Two decimals"
 msgstr "Kuruş hassasiyeti"
-
-#: admin/class-ssa-settings-page.php:57
-msgid "Split change interval (days)"
-msgstr "Dağılım değiştirme aralığı (gün)"
-
-#: admin/class-ssa-settings-page.php:57
-msgid "How often a partner may change their split. 0 = unlimited."
-msgstr "Ortak dağılımını ne sıklıkla değiştirebilir. 0 = sınırsız."
 
 #: admin/class-ssa-settings-page.php:58
 msgid "Returning customer factor"
@@ -1059,24 +931,8 @@ msgid "Referral link validity (days)"
 msgstr "Takip linki geçerliliği (gün)"
 
 #: admin/class-ssa-settings-page.php:83
-msgid "Code uses per customer"
-msgstr "Müşteri başına kod kullanımı"
-
-#: admin/class-ssa-settings-page.php:83
 msgid "0 = unlimited."
 msgstr "0 = sınırsız."
-
-#: admin/class-ssa-settings-page.php:84
-msgid "Code rotation (days)"
-msgstr "Kod rotasyonu (gün)"
-
-#: admin/class-ssa-settings-page.php:84
-msgid "Automatically issue a new code after this many days (leak protection). 0 = off."
-msgstr "Bu kadar gün sonra otomatik yeni kod verilir (sızıntı önlemi). 0 = kapalı."
-
-#: admin/class-ssa-settings-page.php:85
-msgid "Old code grace (days)"
-msgstr "Eski kod ek süresi (gün)"
 
 #: admin/class-ssa-settings-page.php:88
 msgid "Hold period (days)"
@@ -1209,11 +1065,6 @@ msgstr "Medya seç"
 msgid "Partner sales"
 msgstr "Satışlarım"
 
-#: includes/class-ssa-account.php:34
-#: templates/account/dashboard.php:48
-msgid "Split my share"
-msgstr "Payımı böl"
-
 #: includes/class-ssa-account.php:96
 msgid "Copied!"
 msgstr "Kopyalandı!"
@@ -1222,10 +1073,6 @@ msgstr "Kopyalandı!"
 msgid "This area is for program partners."
 msgstr "Bu alan program ortaklarına özeldir."
 
-#: includes/class-ssa-account.php:203
-msgid "Your split has been updated. Your code now gives the new discount."
-msgstr "Dağılımın güncellendi. Kodun artık yeni indirimi veriyor."
-
 #: includes/class-ssa-account.php:209
 msgid "Payout details saved."
 msgstr "Ödeme bilgileri kaydedildi."
@@ -1233,10 +1080,6 @@ msgstr "Ödeme bilgileri kaydedildi."
 #: includes/class-ssa-account.php:226
 msgid "your application is being reviewed."
 msgstr "başvurun inceleniyor."
-
-#: includes/class-ssa-account.php:232
-msgid "Create content, share your code and earn on every sale — you decide how to split your share between commission and follower discount."
-msgstr "İçerik üret, kodunu paylaş, her satıştan kazan — payını komisyon ve takipçi indirimi arasında nasıl böleceğine sen karar ver."
 
 #: includes/class-ssa-account.php:232
 msgid "Apply now"
@@ -1333,10 +1176,6 @@ msgstr "Ortaklık komisyonu yeniden hesaplandı: %s"
 msgid "Affiliate: %s will be deducted from the partner's next payout (refund after payout)."
 msgstr "Ortaklık: %s ortağın bir sonraki hakedişinden düşülecek (ödeme sonrası iade)."
 
-#: includes/class-ssa-coupon.php:34
-msgid "Partner has no code."
-msgstr "Ortağın kodu yok."
-
 #: includes/class-ssa-coupon.php:40
 msgid "A coupon with this code already exists."
 msgstr "Bu kodla bir kupon zaten var."
@@ -1344,15 +1183,6 @@ msgstr "Bu kodla bir kupon zaten var."
 #: includes/class-ssa-coupon.php:50
 msgid "Could not save the coupon."
 msgstr "Kupon kaydedilemedi."
-
-#. translators: 1: program name, 2: partner name
-#: includes/class-ssa-coupon.php:76
-msgid "%1$s partner code — %2$s (managed by SplitShare Affiliates, do not edit)."
-msgstr "%1$s ortak kodu — %2$s (SplitShare Affiliates yönetir, düzenlemeyin)."
-
-#: includes/class-ssa-coupon.php:120
-msgid "This coupon is a partner code managed by SplitShare Affiliates. Discount, usage and category rules are re-applied automatically; edit them from the Affiliates settings instead."
-msgstr "Bu kupon SplitShare Affiliates tarafından yönetilen bir ortak kodudur. İndirim, kullanım ve kategori kuralları otomatik olarak yeniden uygulanır; bunları Lezzet Ortakları ayarlarından düzenleyin."
 
 #: includes/class-ssa-emails.php:30
 msgid "Affiliate: application received"
@@ -1402,18 +1232,6 @@ msgstr "{program} başvurun hakkında"
 msgid "Your application"
 msgstr "Başvurun"
 
-#: includes/class-ssa-emails.php:34
-msgid "Affiliate: new partner code"
-msgstr "Ortaklık: yeni ortak kodu"
-
-#: includes/class-ssa-emails.php:34
-msgid "Your new {program} code: {code}"
-msgstr "Yeni {program} kodun: {code}"
-
-#: includes/class-ssa-emails.php:34
-msgid "Your code has been renewed"
-msgstr "Kodun yenilendi"
-
 #: includes/class-ssa-emails.php:35
 msgid "Affiliate: payout sent"
 msgstr "Ortaklık: hakediş ödendi"
@@ -1447,35 +1265,13 @@ msgstr "%1$s (%2$s) tarafından yeni bir ortak başvurusu alındı."
 msgid "Welcome to the team, %s!"
 msgstr "Aramıza hoş geldin %s!"
 
-#. translators: 1: code, 2: commission pct, 3: discount pct
-#: includes/class-ssa-emails.php:72
-msgid "Your partner code is %1$s. Your current split is %2$s%% commission + %3$s%% follower discount — you can change it in your panel."
-msgstr "Ortak kodun: %1$s. Mevcut dağılımın %%%2$s komisyon + %%%3$s takipçi indirimi — panelinden değiştirebilirsin."
-
 #: includes/class-ssa-emails.php:73
 msgid "Your partner panel: %s"
 msgstr "Ortak panelin: %s"
 
-#: includes/class-ssa-emails.php:74
-msgid "First step: open \"Split\" in your panel and decide how much of your share goes to you and how much to your followers."
-msgstr "İlk adım: panelde \"Payımı böl\" bölümüne gir ve payının ne kadarının sana, ne kadarının takipçilerine gideceğini seç."
-
-#. translators: %s: amount
-#: includes/class-ssa-emails.php:76
-msgid "The code and commission apply to orders of %s and above. Payouts are sent monthly."
-msgstr "Kod ve komisyon %s ve üzeri siparişlerde geçerlidir. Ödemeler aylık yapılır."
-
 #: includes/class-ssa-emails.php:83
 msgid "Thank you for your interest in %s. Unfortunately we cannot accept your application at this time."
 msgstr "%s programına ilgin için teşekkürler. Ne yazık ki başvurunu şu an kabul edemiyoruz."
-
-#: includes/class-ssa-emails.php:90
-msgid "For your protection we renew partner codes periodically. Your new code is %s."
-msgstr "Güvenliğin için ortak kodlarını düzenli olarak yeniliyoruz. Yeni kodun: %s."
-
-#: includes/class-ssa-emails.php:92
-msgid "Your previous code %1$s keeps working until %2$s."
-msgstr "Önceki kodun %1$s, %2$s tarihine kadar çalışmaya devam eder."
 
 #: includes/class-ssa-emails.php:98
 msgid "Your payout for %1$s (%2$s) has been sent to your bank account. Reference: %3$s"
@@ -1501,15 +1297,6 @@ msgstr "Başvuru kaydedilemedi."
 msgid "Partner user account not found."
 msgstr "Ortağın kullanıcı hesabı bulunamadı."
 
-#: includes/class-ssa-partners.php:149
-msgid "This code is already in use."
-msgstr "Bu kod zaten kullanımda."
-
-#. translators: %s: date
-#: includes/class-ssa-partners.php:205
-msgid "You can change your split again on %s."
-msgstr "Dağılımını %s tarihinde yeniden değiştirebilirsin."
-
 #: includes/class-ssa-plugin.php:33
 msgid "WooCommerce is required for this plugin to work."
 msgstr "Bu eklentinin çalışması için WooCommerce gereklidir."
@@ -1517,14 +1304,6 @@ msgstr "Bu eklentinin çalışması için WooCommerce gereklidir."
 #: includes/class-ssa-tracking.php:118
 msgid "Affiliate: order placed by the partner themselves — no commission."
 msgstr "Ortaklık: sipariş ortağın kendisine ait — komisyon yok."
-
-#: templates/account/dashboard.php:18
-msgid "Your code"
-msgstr "Kodun"
-
-#: templates/account/dashboard.php:21
-msgid "Change my split"
-msgstr "Dağılımımı değiştir"
 
 #: templates/account/dashboard.php:27
 msgid "%1$s paid · %2$s ready for payout"
@@ -1549,10 +1328,6 @@ msgstr "Sonraki ödeme"
 #: templates/account/dashboard.php:42
 msgid "minimum %s, the rest carries over"
 msgstr "minimum %s, kalanı devreder"
-
-#: templates/account/dashboard.php:48
-msgid "First step: decide how to split your share between your commission and your followers' discount."
-msgstr "İlk adım: payını komisyonun ve takipçilerinin indirimi arasında nasıl böleceğine karar ver."
 
 #: templates/account/dashboard.php:53
 msgid "Traffic, last 30 days"
@@ -1761,26 +1536,9 @@ msgstr "%s kesinleşir"
 msgid "below minimum basket"
 msgstr "minimum sepetin altında"
 
-#: templates/account/split.php:15
-msgid "On every sale, %s%% of the basket is yours to split: keep it as commission, give it to your followers as a discount, or anything in between. The store's cost is the same either way."
-msgstr "Her satışta sepetin %%%s'i senin payın: tamamını komisyon olarak alabilir, takipçilerine indirim olarak verebilir ya da ikisi arasında bölebilirsin. Mağazanın maliyeti her durumda aynıdır."
-
-#: templates/account/split.php:23
-#: templates/account/split.php:25
-msgid "My commission"
-msgstr "Komisyonum"
-
 #: templates/account/split.php:26
 msgid "Follower discount"
 msgstr "Takipçi indirimi"
-
-#: templates/account/split.php:29
-msgid "Link only"
-msgstr "Sadece link"
-
-#: templates/account/split.php:29
-msgid "Even"
-msgstr "Eşit"
 
 #: templates/account/split.php:35
 msgid "Example: a %s basket"
@@ -1794,29 +1552,9 @@ msgstr "Takipçin öder"
 msgid "You earn"
 msgstr "Sen kazanırsın"
 
-#: templates/account/split.php:38
-msgid "Without your code (link only), you earn"
-msgstr "Kodun kullanılmazsa (sadece link) kazancın"
-
-#: templates/account/split.php:42
-msgid "Save my split"
-msgstr "Dağılımımı kaydet"
-
-#: templates/account/split.php:43
-msgid "You can change it once every %d days."
-msgstr "%d günde bir değiştirebilirsin."
-
-#: templates/account/split.php:45
-msgid "You changed your split recently. Next change possible on %s."
-msgstr "Dağılımını yakın zamanda değiştirdin. Bir sonraki değişiklik: %s."
-
 #: templates/account/split.php:51
 msgid "Share by product group"
 msgstr "Ürün grubuna göre pay"
-
-#: templates/account/split.php:52
-msgid "Some groups have a smaller share because of their margin; your discount is subtracted from that group's share, so your commission there can be lower."
-msgstr "Bazı grupların marjı dar olduğu için payı daha düşüktür; indirimin o grubun payından düşülür, bu yüzden komisyonun orada daha az olabilir."
 
 #: templates/account/split.php:55
 msgid "Default"
@@ -1886,3 +1624,479 @@ msgstr "Paylaşımlarında \"Reklam\" veya \"Tanıtım\" ibaresi ve hesabımız�
 #: includes/class-ssa-install.php:66
 msgid "Partner Program"
 msgstr "Ortaklık Programı"
+
+#. translators: 1: name, 2: link code
+#: admin/class-ssa-admin-applications.php:25
+msgid "%1$s approved. Link code: %2$s — they can now create coupons from My Account."
+msgstr "%1$s onaylandı. Link kodu: %2$s — artık Hesabım'dan kupon oluşturabilir."
+
+#: admin/class-ssa-admin-order.php:38
+msgid "Coupon:"
+msgstr "Kupon:"
+
+#: admin/class-ssa-admin-order.php:38
+msgid "Link code:"
+msgstr "Link kodu:"
+
+#: admin/class-ssa-admin-overview.php:54
+#: admin/class-ssa-admin-reports.php:45
+msgid "Live coupons by discount"
+msgstr "İndirime göre aktif kuponlar"
+
+#: admin/class-ssa-admin-overview.php:56
+#: admin/class-ssa-admin-reports.php:42
+msgid "Up to 5%"
+msgstr "%5'e kadar"
+
+#: admin/class-ssa-admin-overview.php:57
+#: admin/class-ssa-admin-reports.php:43
+msgid "5–10%"
+msgstr "%5–10"
+
+#: admin/class-ssa-admin-overview.php:58
+#: admin/class-ssa-admin-reports.php:44
+msgid "Over 10%"
+msgstr "%10 üzeri"
+
+#: admin/class-ssa-admin-overview.php:59
+#: admin/class-ssa-admin-reports.php:45
+msgid "coupons"
+msgstr "kupon"
+
+#: admin/class-ssa-admin-overview.php:59
+msgid "Coupon discounts"
+msgstr "Kupon indirimleri"
+
+#: admin/class-ssa-admin-partners.php:25
+msgid "Partner paused. Their coupons are disabled until reactivated."
+msgstr "Ortak duraklatıldı. Yeniden etkinleştirilene kadar kuponları çalışmaz."
+
+#: admin/class-ssa-admin-partners.php:37
+#: includes/class-ssa-account.php:286
+#: includes/class-ssa-partner-coupons.php:325
+msgid "Coupon not found."
+msgstr "Kupon bulunamadı."
+
+#: admin/class-ssa-admin-partners.php:41
+#: includes/class-ssa-account.php:289
+msgid "Coupon deleted."
+msgstr "Kupon silindi."
+
+#: admin/class-ssa-admin-partners.php:44
+msgid "Coupon paused."
+msgstr "Kupon durduruldu."
+
+#: admin/class-ssa-admin-partners.php:44
+#: includes/class-ssa-account.php:292
+msgid "Coupon is live again."
+msgstr "Kupon yeniden yayında."
+
+#: admin/class-ssa-admin-partners.php:60
+msgid "That link code is not available."
+msgstr "Bu link kodu kullanılamıyor."
+
+#: admin/class-ssa-admin-partners.php:94
+msgid "Approved applications appear here with their coupons and earnings."
+msgstr "Onaylanan başvurular kuponları ve kazançlarıyla burada listelenir."
+
+#: admin/class-ssa-admin-partners.php:119
+#: admin/class-ssa-admin-partners.php:233
+msgid "Link code"
+msgstr "Link kodu"
+
+#: admin/class-ssa-admin-partners.php:119
+#: templates/account/dashboard.php:20
+msgid "%d live coupon"
+msgid_plural "%d live coupons"
+msgstr[0] "%d aktif kupon"
+msgstr[1] "%d aktif kupon"
+
+#: admin/class-ssa-admin-partners.php:136
+#: admin/class-ssa-admin-partners.php:232
+#: admin/class-ssa-admin-reports.php:46
+#: admin/class-ssa-settings-page.php:179
+msgid "Coupons"
+msgstr "Kuponlar"
+
+#: admin/class-ssa-admin-partners.php:139
+msgid "Partner coupons"
+msgstr "Ortak kuponları"
+
+#: admin/class-ssa-admin-partners.php:139
+msgid "Share %1$s%% · link rate %2$s%%"
+msgstr "Pay %%%1$s · link oranı %%%2$s"
+
+#: admin/class-ssa-admin-partners.php:141
+msgid "Campaign"
+msgstr "Kampanya"
+
+#: admin/class-ssa-admin-partners.php:141
+#: admin/class-ssa-admin-reports.php:46
+msgid "Discount / commission"
+msgstr "İndirim / komisyon"
+
+#: admin/class-ssa-admin-partners.php:141
+#: templates/account/coupons.php:118
+msgid "Applies to"
+msgstr "Kapsam"
+
+#: admin/class-ssa-admin-partners.php:141
+#: templates/account/coupons.php:121
+msgid "Ends"
+msgstr "Bitiş"
+
+#: admin/class-ssa-admin-partners.php:149
+#: templates/account/coupons.php:142
+msgid "Resume"
+msgstr "Sürdür"
+
+#: admin/class-ssa-admin-partners.php:151
+msgid "Delete this coupon? Past commissions are kept."
+msgstr "Bu kupon silinsin mi? Geçmiş komisyonlar korunur."
+
+#: admin/class-ssa-admin-partners.php:151
+#: templates/account/coupons.php:144
+msgid "Delete"
+msgstr "Sil"
+
+#: admin/class-ssa-admin-partners.php:153
+msgid "WC coupon"
+msgstr "WC kuponu"
+
+#: admin/class-ssa-admin-partners.php:159
+msgid "This partner has not created any coupons yet."
+msgstr "Bu ortak henüz kupon oluşturmadı."
+
+#: admin/class-ssa-admin-partners.php:178
+#: templates/account/coupons.php:116
+msgid "Coupon"
+msgstr "Kupon"
+
+#: admin/class-ssa-admin-partners.php:212
+msgid "Bank details, link code & notes"
+msgstr "Banka bilgileri, link kodu ve notlar"
+
+#: admin/class-ssa-admin-partners.php:216
+msgid "Link code (?ref=)"
+msgstr "Link kodu (?ref=)"
+
+#: admin/class-ssa-admin-partners.php:269
+msgid "none"
+msgstr "yok"
+
+#: admin/class-ssa-admin-reports.php:39
+msgid "Coupons by discount"
+msgstr "İndirime göre kuponlar"
+
+#: admin/class-ssa-admin-reports.php:52
+msgid "No coupons yet"
+msgstr "Henüz kupon yok"
+
+#: admin/class-ssa-admin-reports.php:52
+msgid "Partners create coupons from My Account; their discount choices show up here."
+msgstr "Ortaklar kuponlarını Hesabım'dan oluşturur; indirim tercihleri burada görünür."
+
+#: admin/class-ssa-admin-reports.php:59
+#: templates/account/coupons.php:28
+msgid "Live coupons"
+msgstr "Aktif kuponlar"
+
+#: admin/class-ssa-admin-reports.php:87
+msgid "Manage coupons"
+msgstr "Kuponları yönet"
+
+#: admin/class-ssa-settings-page.php:50
+msgid "A fixed share of every sale is set aside. Partners create their own coupons: the discount they give comes out of that share and the rest is their commission. Orders through a referral link without a coupon earn the link rate."
+msgstr "Her satışta sabit bir pay ayrılır. Ortaklar kendi kuponlarını oluşturur: verdikleri indirim bu paydan düşer, kalanı komisyonlarıdır. Kuponsuz referans linki siparişleri link oranından kazandırır."
+
+#: admin/class-ssa-settings-page.php:53
+msgid "Link commission (%)"
+msgstr "Link komisyonu (%)"
+
+#: admin/class-ssa-settings-page.php:53
+msgid "Commission on orders that come through a referral link without a partner coupon (capped by the group share)."
+msgstr "Ortak kuponu olmadan referans linkiyle gelen siparişlerin komisyonu (grup payıyla sınırlı)."
+
+#: admin/class-ssa-settings-page.php:80
+msgid "Coupons & links"
+msgstr "Kuponlar ve linkler"
+
+#: admin/class-ssa-settings-page.php:80
+msgid "Partners create their own coupons from My Account. Each coupon is a real WooCommerce coupon with these limits."
+msgstr "Ortaklar kuponlarını Hesabım'dan oluşturur. Her kupon, bu sınırlarla gerçek bir WooCommerce kuponudur."
+
+#: admin/class-ssa-settings-page.php:81
+msgid "Minimum coupon discount (%)"
+msgstr "Minimum kupon indirimi (%)"
+
+#: admin/class-ssa-settings-page.php:81
+msgid "Lowest discount a partner may set. Share − this = the highest coupon commission."
+msgstr "Ortağın verebileceği en düşük indirim. Pay − bu değer = en yüksek kupon komisyonu."
+
+#: admin/class-ssa-settings-page.php:82
+msgid "Maximum coupon discount (%)"
+msgstr "Maksimum kupon indirimi (%)"
+
+#: admin/class-ssa-settings-page.php:82
+msgid "Leave empty to allow up to the full share."
+msgstr "Boş bırakılırsa payın tamamına kadar izin verilir."
+
+#: admin/class-ssa-settings-page.php:83
+msgid "Coupon code length (min)"
+msgstr "Kupon kodu uzunluğu (min)"
+
+#: admin/class-ssa-settings-page.php:84
+msgid "Coupon code length (max)"
+msgstr "Kupon kodu uzunluğu (maks)"
+
+#: admin/class-ssa-settings-page.php:86
+msgid "Coupon uses per customer"
+msgstr "Müşteri başına kupon kullanımı"
+
+#: includes/class-ssa-account.php:52
+#: templates/account/coupons.php:112
+#: templates/account/kit.php:27
+msgid "My coupons"
+msgstr "Kuponlarım"
+
+#: includes/class-ssa-account.php:120
+msgid "No products found"
+msgstr "Ürün bulunamadı"
+
+#. translators: %s: coupon code
+#: includes/class-ssa-account.php:277
+msgid "Coupon %s is live. Share it with your followers!"
+msgstr "%s kuponu yayında. Takipçilerinle paylaş!"
+
+#: includes/class-ssa-account.php:292
+msgid "Coupon paused. It no longer works at checkout."
+msgstr "Kupon durduruldu. Artık ödeme adımında çalışmaz."
+
+#: includes/class-ssa-account.php:323
+msgid "Create content, share your own coupons and links, and earn on every sale — you decide how much of your share goes to your followers as a discount."
+msgstr "İçerik üret, kendi kuponlarını ve linklerini paylaş, her satıştan kazan — payının ne kadarının takipçilerine indirim olacağına sen karar verirsin."
+
+#: includes/class-ssa-account.php:334
+msgid "Live"
+msgstr "Yayında"
+
+#: includes/class-ssa-account.php:336
+msgid "Expired"
+msgstr "Süresi doldu"
+
+#. translators: 1: program name, 2: partner name, 3: campaign name
+#: includes/class-ssa-coupon.php:70
+msgid "%1$s partner coupon — %2$s%3$s (managed by SplitShare Affiliates, do not edit)."
+msgstr "%1$s ortak kuponu — %2$s%3$s (SplitShare Affiliates yönetir, düzenlemeyin)."
+
+#: includes/class-ssa-coupon.php:124
+msgid "This coupon belongs to an affiliate partner and is managed by SplitShare Affiliates. Discount, usage, scope and category rules are re-applied automatically; manage it from the partner profile instead."
+msgstr "Bu kupon bir satış ortağına aittir ve SplitShare Affiliates tarafından yönetilir. İndirim, kullanım, kapsam ve kategori kuralları otomatik yeniden uygulanır; ortak profilinden yönetin."
+
+#. translators: 1: share pct, 2: link commission pct
+#: includes/class-ssa-emails.php:83
+msgid "On every sale %1$s%% of the basket is your share. Create coupons in your panel: the discount you give your followers comes out of that share and the rest is your commission. Orders that come through your link without a coupon earn %2$s%%."
+msgstr "Her satışta sepetin %%%1$s'i senin payın. Panelinden kupon oluştur: takipçilerine verdiğin indirim bu paydan düşer, kalanı senin komisyonun. Kuponsuz, linkinle gelen siparişler %%%2$s kazandırır."
+
+#: includes/class-ssa-emails.php:85
+msgid "First step: open \"Coupons\" in your panel and create your first campaign coupon. Your referral link: %s"
+msgstr "İlk adım: panelinde \"Kuponlarım\"ı aç ve ilk kampanya kuponunu oluştur. Referans linkin: %s"
+
+#. translators: %s: amount
+#: includes/class-ssa-emails.php:87
+msgid "Coupons and commission apply to orders of %s and above. Payouts are sent monthly."
+msgstr "Kuponlar ve komisyon %s ve üzeri siparişlerde geçerlidir. Hakedişler aylık ödenir."
+
+#: includes/class-ssa-install.php:120
+msgid "Main code"
+msgstr "Ana kod"
+
+#. translators: %d: number of products
+#: includes/class-ssa-partner-coupons.php:153
+msgid "%d product"
+msgid_plural "%d products"
+msgstr[0] "%d ürün"
+msgstr[1] "%d ürün"
+
+#. translators: %d: number of categories
+#: includes/class-ssa-partner-coupons.php:157
+msgid "%d category"
+msgid_plural "%d categories"
+msgstr[0] "%d kategori"
+msgstr[1] "%d kategori"
+
+#: includes/class-ssa-partner-coupons.php:159
+#: templates/account/coupons.php:69
+msgid "Whole store"
+msgstr "Tüm mağaza"
+
+#: includes/class-ssa-partner-coupons.php:244
+msgid "Enter a coupon code."
+msgstr "Bir kupon kodu gir."
+
+#: includes/class-ssa-partner-coupons.php:247
+msgid "The code may only contain letters A–Z and digits."
+msgstr "Kod yalnızca A–Z harfleri ve rakamlardan oluşabilir."
+
+#. translators: 1: min, 2: max
+#: includes/class-ssa-partner-coupons.php:251
+msgid "The code must be %1$d–%2$d characters long."
+msgstr "Kod %1$d–%2$d karakter olmalı."
+
+#: includes/class-ssa-partner-coupons.php:254
+msgid "This code is already in use. Try another one."
+msgstr "Bu kod zaten kullanımda. Başka bir tane dene."
+
+#. translators: 1: min, 2: max
+#: includes/class-ssa-partner-coupons.php:260
+msgid "The discount must be between %1$s%% and %2$s%%."
+msgstr "İndirim %%%1$s ile %%%2$s arasında olmalı."
+
+#: includes/class-ssa-partner-coupons.php:267
+msgid "Choose at least one product."
+msgstr "En az bir ürün seç."
+
+#: includes/class-ssa-partner-coupons.php:267
+msgid "Choose at least one category."
+msgstr "En az bir kategori seç."
+
+#: includes/class-ssa-partner-coupons.php:273
+msgid "Invalid end date."
+msgstr "Geçersiz bitiş tarihi."
+
+#: includes/class-ssa-partner-coupons.php:276
+msgid "The end date must be today or later."
+msgstr "Bitiş tarihi bugün veya sonrası olmalı."
+
+#: includes/class-ssa-partner-coupons.php:287
+msgid "Your partnership is paused; you cannot create coupons right now."
+msgstr "Ortaklığın duraklatılmış; şu anda kupon oluşturamazsın."
+
+#: templates/account/coupons.php:29
+msgid "Coupon orders, 30 days"
+msgstr "Kuponlu sipariş, 30 gün"
+
+#: templates/account/coupons.php:30
+msgid "Coupon earnings, 30 days"
+msgstr "Kupon kazancı, 30 gün"
+
+#: templates/account/coupons.php:34
+#: templates/account/dashboard.php:52
+msgid "Create a coupon"
+msgstr "Kupon oluştur"
+
+#: templates/account/coupons.php:35
+msgid "%1$s%% of every sale is your share. The discount you give comes out of it and the rest is your commission — the store's cost is the same either way. Orders through your link without a coupon earn %2$s%%."
+msgstr "Her satışın %%%1$s'i senin payın. Verdiğin indirim bu paydan düşer, kalanı senin komisyonun — mağazanın maliyeti her durumda aynıdır. Kuponsuz, linkinle gelen siparişler %%%2$s kazandırır."
+
+#: templates/account/coupons.php:43
+msgid "Coupon code"
+msgstr "Kupon kodu"
+
+#: templates/account/coupons.php:45
+msgid "Letters and digits, %1$d–%2$d characters. Your followers type this at checkout."
+msgstr "Harf ve rakam, %1$d–%2$d karakter. Takipçilerin ödeme adımında bunu yazar."
+
+#: templates/account/coupons.php:48
+msgid "Campaign name (optional)"
+msgstr "Kampanya adı (isteğe bağlı)"
+
+#: templates/account/coupons.php:49
+msgid "e.g. Instagram reel, September"
+msgstr "örn. Instagram reel, Eylül"
+
+#: templates/account/coupons.php:61
+msgid "Your commission"
+msgstr "Senin komisyonun"
+
+#: templates/account/coupons.php:67
+msgid "Where does it apply?"
+msgstr "Nerede geçerli?"
+
+#: templates/account/coupons.php:70
+msgid "Selected products"
+msgstr "Seçili ürünler"
+
+#: templates/account/coupons.php:71
+msgid "Selected categories"
+msgstr "Seçili kategoriler"
+
+#: templates/account/coupons.php:74
+msgid "Search products…"
+msgstr "Ürün ara…"
+
+#: templates/account/coupons.php:79
+msgid "The discount applies only to these products; other items in the basket earn your link rate."
+msgstr "İndirim yalnızca bu ürünlerde geçerlidir; sepetteki diğer ürünler link oranından kazandırır."
+
+#: templates/account/coupons.php:82
+msgid "Choose categories…"
+msgstr "Kategori seç…"
+
+#: templates/account/coupons.php:92
+msgid "End date (optional)"
+msgstr "Bitiş tarihi (isteğe bağlı)"
+
+#: templates/account/coupons.php:94
+msgid "Leave empty for an open-ended coupon. You can pause or delete it any time."
+msgstr "Süresiz kupon için boş bırak. İstediğin zaman durdurabilir veya silebilirsin."
+
+#: templates/account/coupons.php:100
+msgid "Through your link, without a coupon"
+msgstr "Linkinle, kuponsuz"
+
+#: templates/account/coupons.php:105
+msgid "Create coupon"
+msgstr "Kuponu oluştur"
+
+#: templates/account/coupons.php:106
+msgid "Each customer can use a coupon %d time(s). Coupons work on baskets of %s and above."
+msgstr "Her müşteri bir kuponu %d kez kullanabilir. Kuponlar %s ve üzeri sepetlerde çalışır."
+
+#: templates/account/coupons.php:117
+msgid "Discount"
+msgstr "İndirim"
+
+#: templates/account/coupons.php:120
+msgid "Earned"
+msgstr "Kazanç"
+
+#: templates/account/coupons.php:133
+msgid "you: %s%%"
+msgstr "sen: %%%s"
+
+#: templates/account/coupons.php:144
+msgid "Delete this coupon? It stops working immediately; past earnings are kept."
+msgstr "Bu kupon silinsin mi? Hemen çalışmayı bırakır; geçmiş kazançlar korunur."
+
+#: templates/account/coupons.php:151
+msgid "No coupons yet — create your first campaign above. Each coupon can have its own discount and product scope."
+msgstr "Henüz kuponun yok — ilk kampanyanı yukarıdan oluştur. Her kuponun kendi indirimi ve ürün kapsamı olabilir."
+
+#: templates/account/coupons.php:158
+msgid "Some groups have a smaller share because of their margin; your coupon discount is subtracted from that group's share, so your commission there can be lower."
+msgstr "Bazı grupların marjı dar olduğu için payı daha düşüktür; kupon indirimin o grubun payından düşülür, bu yüzden komisyonun orada daha az olabilir."
+
+#: templates/account/dashboard.php:17
+msgid "Your referral link"
+msgstr "Referans linkin"
+
+#: templates/account/dashboard.php:22
+msgid "best: %1$s (%2$s%% off)"
+msgstr "en iyi: %1$s (%%%2$s indirim)"
+
+#: templates/account/dashboard.php:25
+msgid "Manage my coupons"
+msgstr "Kuponlarımı yönet"
+
+#: templates/account/dashboard.php:52
+msgid "First step: create a coupon for your next post — pick the discount your followers get and where it applies."
+msgstr "İlk adım: bir sonraki paylaşımın için kupon oluştur — takipçilerinin alacağı indirimi ve nerede geçerli olacağını seç."
+
+#: templates/account/kit.php:19
+msgid "Fill in with coupon:"
+msgstr "Kuponla doldur:"
+
+#: templates/account/kit.php:27
+msgid "Create a coupon first so the captions can include your code."
+msgstr "Metinlerde kodun yer alsın diye önce bir kupon oluştur."

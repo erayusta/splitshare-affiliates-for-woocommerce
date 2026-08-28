@@ -69,27 +69,8 @@ class SSA_Partner {
 		return in_array( $this->status, array( 'active', 'paused' ), true );
 	}
 
-	public function can_change_split( $interval_days, $now = null ) {
-		$interval_days = (int) $interval_days;
-		if ( $interval_days <= 0 || empty( $this->split_changed_at ) ) {
-			return true;
-		}
-		$now = $now ? (int) $now : time();
-		return ( strtotime( $this->split_changed_at ) + $interval_days * DAY_IN_SECONDS ) <= $now;
-	}
-
-	public function next_split_change_at( $interval_days ) {
-		if ( empty( $this->split_changed_at ) ) {
-			return 0;
-		}
-		return strtotime( $this->split_changed_at ) + (int) $interval_days * DAY_IN_SECONDS;
-	}
-
-	/** Eski kod hâlâ geçerli mi? */
-	public function previous_code_valid( $now = null ) {
-		if ( '' === $this->previous_code || empty( $this->previous_code_expires ) ) {
-			return false;
-		}
-		return strtotime( $this->previous_code_expires ) > ( $now ? (int) $now : time() );
+	/** Referans linki (?ref=KOD). */
+	public function link( $base = '' ) {
+		return SSA_Tracking::link( $this->code, $base );
 	}
 }

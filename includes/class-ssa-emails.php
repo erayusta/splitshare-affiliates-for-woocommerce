@@ -32,7 +32,6 @@ class SSA_Emails {
 			'application_admin'    => 'ssa_application_received',
 			'partner_approved'     => 'ssa_partner_approved',
 			'partner_rejected'     => 'ssa_partner_rejected',
-			'code_rotated'         => 'ssa_code_rotated',
 			'payout_paid'          => 'ssa_payout_paid',
 		);
 	}
@@ -44,7 +43,6 @@ class SSA_Emails {
 			'application_admin'    => array( 'hook' => 'ssa_application_received', 'to' => 'admin', 'title' => __( 'Affiliate: new application (admin)', 'splitshare-affiliates' ), 'subject' => __( '[{site_title}] New partner application: {partner_name}', 'splitshare-affiliates' ), 'heading' => __( 'New partner application', 'splitshare-affiliates' ) ),
 			'partner_approved'     => array( 'hook' => 'ssa_partner_approved', 'to' => 'partner', 'title' => __( 'Affiliate: partner approved (welcome)', 'splitshare-affiliates' ), 'subject' => __( 'Welcome to {program}! Your code: {code}', 'splitshare-affiliates' ), 'heading' => __( 'Welcome aboard', 'splitshare-affiliates' ) ),
 			'partner_rejected'     => array( 'hook' => 'ssa_partner_rejected', 'to' => 'partner', 'title' => __( 'Affiliate: application declined', 'splitshare-affiliates' ), 'subject' => __( 'About your {program} application', 'splitshare-affiliates' ), 'heading' => __( 'Your application', 'splitshare-affiliates' ) ),
-			'code_rotated'         => array( 'hook' => 'ssa_code_rotated', 'to' => 'partner', 'title' => __( 'Affiliate: new partner code', 'splitshare-affiliates' ), 'subject' => __( 'Your new {program} code: {code}', 'splitshare-affiliates' ), 'heading' => __( 'Your code has been renewed', 'splitshare-affiliates' ) ),
 			'payout_paid'          => array( 'hook' => 'ssa_payout_paid', 'to' => 'partner', 'title' => __( 'Affiliate: payout sent', 'splitshare-affiliates' ), 'subject' => __( 'Your {program} payout has been sent', 'splitshare-affiliates' ), 'heading' => __( 'Payout sent', 'splitshare-affiliates' ) ),
 		);
 	}
@@ -81,12 +79,12 @@ class SSA_Emails {
 				break;
 			case 'partner_approved':
 				$p[] = sprintf( __( 'Welcome to the team, %s!', 'splitshare-affiliates' ), $name );
-				/* translators: 1: code, 2: commission pct, 3: discount pct */
-				$p[] = sprintf( __( 'Your partner code is %1$s. Your current split is %2$s%% commission + %3$s%% follower discount — you can change it in your panel.', 'splitshare-affiliates' ), '<strong>' . $partner->code . '</strong>', wc_format_decimal( $partner->commission_pct, 1 ), wc_format_decimal( $partner->discount_pct, 1 ) );
+				/* translators: 1: share pct, 2: link commission pct */
+				$p[] = sprintf( __( 'On every sale %1$s%% of the basket is your share. Create coupons in your panel: the discount you give your followers comes out of that share and the rest is your commission. Orders that come through your link without a coupon earn %2$s%%.', 'splitshare-affiliates' ), wc_format_decimal( SSA_Settings::get( 'default_share' ), 1 ), wc_format_decimal( SSA_Settings::get( 'link_commission_pct' ), 1 ) );
 				$p[] = sprintf( __( 'Your partner panel: %s', 'splitshare-affiliates' ), '<a href="' . esc_url( $panel ) . '">' . esc_html( $panel ) . '</a>' );
-				$p[] = __( 'First step: open "Split" in your panel and decide how much of your share goes to you and how much to your followers.', 'splitshare-affiliates' );
+				$p[] = sprintf( __( 'First step: open "Coupons" in your panel and create your first campaign coupon. Your referral link: %s', 'splitshare-affiliates' ), '<a href="' . esc_url( $partner->link() ) . '">' . esc_html( $partner->link() ) . '</a>' );
 				/* translators: %s: amount */
-				$p[] = sprintf( __( 'The code and commission apply to orders of %s and above. Payouts are sent monthly.', 'splitshare-affiliates' ), wp_strip_all_tags( wc_price( SSA_Settings::get( 'min_order' ) ) ) );
+				$p[] = sprintf( __( 'Coupons and commission apply to orders of %s and above. Payouts are sent monthly.', 'splitshare-affiliates' ), wp_strip_all_tags( wc_price( SSA_Settings::get( 'min_order' ) ) ) );
 				if ( SSA_Settings::get( 'legal_notice' ) ) {
 					$p[] = SSA_Settings::get( 'legal_notice' );
 				}
@@ -96,13 +94,6 @@ class SSA_Emails {
 				$p[] = sprintf( __( 'Thank you for your interest in %s. Unfortunately we cannot accept your application at this time.', 'splitshare-affiliates' ), $program );
 				if ( '' !== (string) $partner->admin_note ) {
 					$p[] = $partner->admin_note;
-				}
-				break;
-			case 'code_rotated':
-				$p[] = sprintf( __( 'Hello %s,', 'splitshare-affiliates' ), $name );
-				$p[] = sprintf( __( 'For your protection we renew partner codes periodically. Your new code is %s.', 'splitshare-affiliates' ), '<strong>' . $partner->code . '</strong>' );
-				if ( $partner->previous_code_valid() ) {
-					$p[] = sprintf( __( 'Your previous code %1$s keeps working until %2$s.', 'splitshare-affiliates' ), $partner->previous_code, date_i18n( get_option( 'date_format' ), strtotime( $partner->previous_code_expires ) ) );
 				}
 				break;
 			case 'payout_paid':

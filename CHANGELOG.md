@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.0 — 2026-08-28
+- **Partner coupons.** Partners create their own campaign coupons from My Account ("My coupons"): code, optional campaign name, discount (between the configured min/max, taken out of the share), scope (whole store / selected products / selected categories), optional end date. Each is a real WooCommerce coupon (individual use, per-customer limit, minimum basket, excluded categories, scope restrictions). Partners can pause, resume and delete; admins manage them from the partner profile.
+- **Commission model.** Per line item: covered by the coupon → `share − discount`; not covered, or no coupon (referral link) → `min(link rate, share)`. New settings: link commission %, min/max coupon discount, coupon code length. Removed: default split, split-change interval, code rotation/grace.
+- Removed the single partner code + "Split my share" page; the partner keeps an auto-generated **link code** for `?ref=` only (admin-editable).
+- Content kit captions pick a coupon to fill `{code}` / `{discount}`; dashboard hero shows the referral link and live coupons.
+- Admin: partners list shows live coupons and best code; profile has a Coupons tab; overview/report donut shows live coupons by discount; anomaly report per coupon code; order box shows the coupon.
+- Migration (`ssa_db_version` 1.2.0): every existing partner code becomes a "Main code" whole-store coupon with the old discount; partners get a new link code; old codes keep working in `?ref=` links. Endpoint `split` → `coupons`.
+- Default options no longer call `__()` at load time (WP 6.7 JIT translation); translated defaults are stored at activation.
+
 ## 1.1.1 — 2026-08-28
 - Fix: column charts are now HTML/CSS — axis labels stay crisp at every width (SVG scaling made them tiny and blurry)
 - Fix: e-mail titles were translated before `init` (WordPress 6.7+ just-in-time loading) and showed up in English; hook registration no longer translates

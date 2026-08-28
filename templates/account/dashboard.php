@@ -1,13 +1,12 @@
 <?php
 /**
- * Panel — Pano: hero (kod + dağılım), kesin/tahmini kazanç, trafik grafiği, son satışlar.
+ * Panel — Pano: hero (link kodu + kuponlar), kesin/tahmini kazanç, trafik grafiği, son satışlar.
  * Override: yourtheme/woocommerce/splitshare-affiliates/account/dashboard.php
  *
- * @var SSA_Partner $partner; array $settings, $earnings, $traffic, $recent, $notices, $monthly; int $next_payout
+ * @var SSA_Partner $partner; array $settings, $earnings, $traffic, $recent, $notices, $monthly, $coupons; int $next_payout
  */
 
 defined( 'ABSPATH' ) || exit;
-$share = (float) $settings['default_share'];
 ?>
 <?php foreach ( $notices as $n ) : ?>
 	<p class="ssa-notice ssa-notice-<?php echo esc_attr( $n['type'] ); ?>"><?php echo esc_html( $n['message'] ); ?></p>
@@ -15,10 +14,15 @@ $share = (float) $settings['default_share'];
 
 <section class="ssa-hero">
 	<div class="ssa-hero__code">
-		<span class="ssa-card__label"><?php esc_html_e( 'Your code', 'splitshare-affiliates' ); ?></span>
-		<div class="ssa-code"><span><?php echo esc_html( $partner->code ); ?></span><button type="button" class="ssa-copy" data-copy="<?php echo esc_attr( $partner->code ); ?>"><?php esc_html_e( 'Copy', 'splitshare-affiliates' ); ?></button></div>
-		<?php echo SSA_Charts::split_bar( $partner->commission_pct, $partner->discount_pct, $share, array( 'size' => 'lg' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-		<a class="ssa-hero__link" href="<?php echo esc_url( SSA_Account::url( 'split' ) ); ?>"><?php esc_html_e( 'Change my split', 'splitshare-affiliates' ); ?> →</a>
+		<span class="ssa-card__label"><?php esc_html_e( 'Your referral link', 'splitshare-affiliates' ); ?></span>
+		<div class="ssa-code ssa-code--link"><span><?php echo esc_html( preg_replace( '#^https?://#', '', $partner->link() ) ); ?></span><button type="button" class="ssa-copy" data-copy="<?php echo esc_attr( $partner->link() ); ?>"><?php esc_html_e( 'Copy', 'splitshare-affiliates' ); ?></button></div>
+		<div class="ssa-hero__coupons">
+			<strong><?php printf( esc_html( _n( '%d live coupon', '%d live coupons', (int) $coupons['active'], 'splitshare-affiliates' ) ), (int) $coupons['active'] ); ?></strong>
+			<?php if ( $coupons['best'] ) : ?>
+				<span class="ssa-muted"><?php printf( esc_html__( 'best: %1$s (%2$s%% off)', 'splitshare-affiliates' ), '<code>' . esc_html( $coupons['best']->code ) . '</code>', esc_html( wc_format_decimal( $coupons['best']->discount_pct, 1 ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			<?php endif; ?>
+		</div>
+		<a class="ssa-hero__link" href="<?php echo esc_url( SSA_Account::url( 'coupons' ) ); ?>"><?php esc_html_e( 'Manage my coupons', 'splitshare-affiliates' ); ?> →</a>
 	</div>
 	<div class="ssa-hero__stats">
 		<div class="ssa-stat ssa-stat--confirmed">
@@ -44,8 +48,8 @@ $share = (float) $settings['default_share'];
 	</div>
 </section>
 
-<?php if ( empty( $partner->split_changed_at ) ) : ?>
-	<p class="ssa-notice ssa-notice-info"><?php esc_html_e( 'First step: decide how to split your share between your commission and your followers\' discount.', 'splitshare-affiliates' ); ?> <a href="<?php echo esc_url( SSA_Account::url( 'split' ) ); ?>"><?php esc_html_e( 'Split my share', 'splitshare-affiliates' ); ?> →</a></p>
+<?php if ( ! $coupons['active'] ) : ?>
+	<p class="ssa-notice ssa-notice-info"><?php esc_html_e( 'First step: create a coupon for your next post — pick the discount your followers get and where it applies.', 'splitshare-affiliates' ); ?> <a href="<?php echo esc_url( SSA_Account::url( 'coupons' ) ); ?>"><?php esc_html_e( 'Create a coupon', 'splitshare-affiliates' ); ?> →</a></p>
 <?php endif; ?>
 
 <div class="ssa-two">

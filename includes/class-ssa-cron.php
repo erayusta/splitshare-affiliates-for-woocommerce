@@ -1,6 +1,6 @@
 <?php
 /**
- * Zamanlanmış işler: günlük (bekleme→onay, statüler, kod rotasyonu) ve aylık hakediş.
+ * Zamanlanmış işler: günlük (bekleme→onay, statüler, süresi dolan kuponlar) ve aylık hakediş.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -15,9 +15,9 @@ class SSA_Cron {
 	public static function daily() {
 		$approved = SSA_Commissions::approve_due();
 		$tiers    = SSA_Partners::update_tiers();
-		$rotated  = SSA_Partners::rotate_due();
-		do_action( 'ssa_daily_done', compact( 'approved', 'tiers', 'rotated' ) );
-		return compact( 'approved', 'tiers', 'rotated' );
+		$expired  = SSA_Partner_Coupons::expire_due();
+		do_action( 'ssa_daily_done', compact( 'approved', 'tiers', 'expired' ) );
+		return compact( 'approved', 'tiers', 'expired' );
 	}
 
 	/** Her gün tetiklenir; yalnızca ödeme gününde ve o dönem için parti yoksa çalışır. */

@@ -1,13 +1,13 @@
 <?php
 /**
- * Hesabım paneli: endpoint'ler, menü, şablonlar, form işleme (dağılım, ödeme bilgileri).
+ * Hesabım paneli: endpoint'ler, menü, şablonlar, form işleme (kuponlar, ödeme bilgileri).
  */
 
 defined( 'ABSPATH' ) || exit;
 
 class SSA_Account {
 
-	const KEYS = array( 'dashboard', 'sales', 'earnings', 'split', 'links', 'kit' );
+	const KEYS = array( 'dashboard', 'sales', 'earnings', 'coupons', 'links', 'kit' );
 
 	public static function init() {
 		add_action( 'init', array( __CLASS__, 'add_endpoints' ) );
@@ -27,7 +27,7 @@ class SSA_Account {
 		add_action( 'wc_ajax_ssa_search_products', array( __CLASS__, 'ajax_search_products' ) );
 	}
 
-	/** Link üreteci için ürün arama (yalnızca ortaklar; yayımlanmış ürünler). */
+	/** Link üreteci ve kupon kapsamı için ürün arama (yalnızca ortaklar; yayımlanmış ürünler). */
 	public static function ajax_search_products() {
 		check_ajax_referer( 'ssa_search', 'security' );
 		if ( ! self::partner() ) {
@@ -49,7 +49,7 @@ class SSA_Account {
 			'dashboard' => SSA_Settings::get( 'program_name' ),
 			'sales'     => __( 'Partner sales', 'splitshare-affiliates' ),
 			'earnings'  => __( 'Earnings', 'splitshare-affiliates' ),
-			'split'     => __( 'Split my share', 'splitshare-affiliates' ),
+			'coupons'   => __( 'My coupons', 'splitshare-affiliates' ),
 			'links'     => __( 'Links', 'splitshare-affiliates' ),
 			'kit'       => __( 'Content kit', 'splitshare-affiliates' ),
 		);
@@ -113,7 +113,12 @@ class SSA_Account {
 				'dec_sep'  => wc_get_price_decimal_separator(),
 				'th_sep'   => wc_get_price_thousand_separator(),
 				'pos'      => get_option( 'woocommerce_currency_pos' ),
-				'i18n'     => array( 'copied' => __( 'Copied!', 'splitshare-affiliates' ), 'copy' => __( 'Copy', 'splitshare-affiliates' ) ),
+				'i18n'     => array(
+					'copied'     => __( 'Copied!', 'splitshare-affiliates' ),
+					'copy'       => __( 'Copy', 'splitshare-affiliates' ),
+					'search'     => __( 'Type to search…', 'splitshare-affiliates' ),
+					'no_results' => __( 'No products found', 'splitshare-affiliates' ),
+				),
 			) );
 		}
 	}
@@ -134,7 +139,8 @@ class SSA_Account {
 			echo '<p>' . esc_html__( 'This area is for program partners.', 'splitshare-affiliates' ) . '</p>';
 			return;
 		}
-		$args = array( 'partner' => $partner, 'settings' => SSA_Settings::all(), 'notices' => self::notices() );
+		$flash = self::flash();
+		$args  = array( 'partner' => $partner, 'settings' => SSA_Settings::all(), 'notices' => $flash['notices'], 'old' => $flash['old'] );
 		switch ( $key ) {
 			case 'dashboard':
 				$args['earnings']    = SSA_Reports::partner_earnings( $partner->id );
@@ -142,6 +148,7 @@ class SSA_Account {
 				$args['monthly']     = SSA_Reports::monthly( 6, $partner->id );
 				$args['next_payout'] = SSA_Payouts::next_payout_date();
 				$args['recent']      = SSA_Commissions::query( array( 'partner_id' => $partner->id, 'limit' => 6 ) );
+				$args['coupons']     = SSA_Partner_Coupons::partner_summary( $partner->id );
 				break;
 			case 'sales':
 				$per  = 20;
@@ -161,12 +168,14 @@ class SSA_Account {
 				$args['earnings']   = SSA_Reports::partner_earnings( $partner->id );
 				$args['next_payout'] = SSA_Payouts::next_payout_date();
 				break;
-			case 'split':
-				$args['share']    = (float) SSA_Settings::get( 'default_share' );
-				$args['interval'] = (int) SSA_Settings::get( 'split_change_interval_days' );
-				$args['can']      = $partner->can_change_split( $args['interval'] );
-				$args['next']     = $partner->next_split_change_at( $args['interval'] );
-				$args['groups']   = self::group_rows();
+			case 'coupons':
+				$args['coupons']    = SSA_Partner_Coupons::for_partner( $partner->id );
+				$args['limits']     = SSA_Partner_Coupons::limits();
+				$args['share']      = (float) SSA_Settings::get( 'default_share' );
+				$args['link_pct']   = min( (float) SSA_Settings::get( 'link_commission_pct' ), $args['share'] );
+				$args['kpis']       = SSA_Partner_Coupons::partner_kpis( $partner->id, 30 );
+				$args['categories'] = self::category_choices();
+				$args['groups']     = self::group_rows();
 				break;
 			case 'links':
 				$args['stats']    = SSA_Tracking::click_stats( $partner->id, 30 );
@@ -175,8 +184,9 @@ class SSA_Account {
 				$args['categories'] = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => true, 'parent' => 0 ) );
 				break;
 			case 'kit':
-				$args['media'] = array_filter( array_map( 'get_post', array_map( 'intval', (array) SSA_Settings::get( 'kit_attachments', array() ) ) ) );
-				$args['texts'] = array_filter( array_map( 'trim', preg_split( '/\n\s*\n/', (string) SSA_Settings::get( 'kit_texts' ) ) ) );
+				$args['media']   = array_filter( array_map( 'get_post', array_map( 'intval', (array) SSA_Settings::get( 'kit_attachments', array() ) ) ) );
+				$args['texts']   = array_filter( array_map( 'trim', preg_split( '/\n\s*\n/', (string) SSA_Settings::get( 'kit_texts' ) ) ) );
+				$args['coupons'] = SSA_Partner_Coupons::for_partner( $partner->id, array( 'status' => 'active' ) );
 				break;
 		}
 		echo '<div class="ssa-panel ssa-panel-' . esc_attr( $key ) . '">';
@@ -196,17 +206,41 @@ class SSA_Account {
 		return $rows;
 	}
 
-	private static function notices() {
+	/** Kategori seçenekleri (hiyerarşik sıra, girintili ad). */
+	public static function category_choices() {
+		$terms = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => true ) );
+		if ( is_wp_error( $terms ) ) {
+			return array();
+		}
+		$by_parent = array();
+		foreach ( $terms as $t ) {
+			$by_parent[ (int) $t->parent ][] = $t;
+		}
+		$out  = array();
+		$walk = function ( $parent, $depth ) use ( &$walk, &$out, $by_parent ) {
+			if ( empty( $by_parent[ $parent ] ) ) {
+				return;
+			}
+			foreach ( $by_parent[ $parent ] as $t ) {
+				$out[ $t->term_id ] = str_repeat( '— ', $depth ) . $t->name;
+				$walk( $t->term_id, $depth + 1 );
+			}
+		};
+		$walk( 0, 0 );
+		return $out;
+	}
+
+	private static function flash() {
 		$key = 'ssa_panel_notice_' . get_current_user_id();
 		$n   = get_transient( $key );
 		if ( $n ) {
 			delete_transient( $key );
 		}
-		return $n ? array( $n ) : array();
+		return array( 'notices' => $n ? array( $n ) : array(), 'old' => ( $n && isset( $n['old'] ) ) ? (array) $n['old'] : array() );
 	}
 
-	private static function notice( $message, $type = 'success' ) {
-		set_transient( 'ssa_panel_notice_' . get_current_user_id(), array( 'message' => $message, 'type' => $type ), 60 );
+	private static function notice( $message, $type = 'success', array $old = array() ) {
+		set_transient( 'ssa_panel_notice_' . get_current_user_id(), array( 'message' => $message, 'type' => $type, 'old' => $old ), 60 );
 	}
 
 	public static function handle_forms() {
@@ -218,12 +252,49 @@ class SSA_Account {
 			return;
 		}
 		$action = sanitize_key( $_POST['ssa_action'] );
-		if ( 'set_split' === $action ) {
-			$r = SSA_Partners::set_split( $partner->id, isset( $_POST['commission_pct'] ) ? (float) $_POST['commission_pct'] : $partner->commission_pct );
-			self::notice( is_wp_error( $r ) ? $r->get_error_message() : __( 'Your split has been updated. Your code now gives the new discount.', 'splitshare-affiliates' ), is_wp_error( $r ) ? 'error' : 'success' );
-			wp_safe_redirect( self::url( 'split' ) );
+
+		if ( 'coupon_create' === $action ) {
+			$scope = isset( $_POST['scope_type'] ) ? sanitize_key( $_POST['scope_type'] ) : 'all';
+			$ids   = array();
+			if ( 'products' === $scope && ! empty( $_POST['scope_products'] ) ) {
+				$ids = array_map( 'intval', (array) $_POST['scope_products'] );
+			} elseif ( 'categories' === $scope && ! empty( $_POST['scope_categories'] ) ) {
+				$ids = array_map( 'intval', (array) $_POST['scope_categories'] );
+			}
+			$data = array(
+				'code'         => isset( $_POST['code'] ) ? sanitize_text_field( wp_unslash( $_POST['code'] ) ) : '',
+				'name'         => isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '',
+				'discount_pct' => isset( $_POST['discount_pct'] ) ? sanitize_text_field( wp_unslash( $_POST['discount_pct'] ) ) : '',
+				'scope_type'   => $scope,
+				'scope_ids'    => $ids,
+				'expires_at'   => isset( $_POST['expires_at'] ) ? sanitize_text_field( wp_unslash( $_POST['expires_at'] ) ) : '',
+			);
+			$r = SSA_Partner_Coupons::create( $partner, $data );
+			if ( is_wp_error( $r ) ) {
+				self::notice( $r->get_error_message(), 'error', $data );
+			} else {
+				/* translators: %s: coupon code */
+				self::notice( sprintf( __( 'Coupon %s is live. Share it with your followers!', 'splitshare-affiliates' ), SSA_Partner_Coupons::normalize_code( $data['code'] ) ) );
+			}
+			wp_safe_redirect( self::url( 'coupons' ) );
 			exit;
 		}
+
+		if ( in_array( $action, array( 'coupon_pause', 'coupon_resume', 'coupon_delete' ), true ) ) {
+			$row = isset( $_POST['coupon_id'] ) ? SSA_Partner_Coupons::get( (int) $_POST['coupon_id'] ) : null;
+			if ( ! $row || $row->partner_id !== $partner->id ) {
+				self::notice( __( 'Coupon not found.', 'splitshare-affiliates' ), 'error' );
+			} elseif ( 'coupon_delete' === $action ) {
+				SSA_Partner_Coupons::delete( $row->id );
+				self::notice( __( 'Coupon deleted.', 'splitshare-affiliates' ) );
+			} else {
+				SSA_Partner_Coupons::set_status( $row->id, 'coupon_pause' === $action ? 'paused' : 'active' );
+				self::notice( 'coupon_pause' === $action ? __( 'Coupon paused. It no longer works at checkout.', 'splitshare-affiliates' ) : __( 'Coupon is live again.', 'splitshare-affiliates' ) );
+			}
+			wp_safe_redirect( self::url( 'coupons' ) );
+			exit;
+		}
+
 		if ( 'payout_details' === $action ) {
 			SSA_Partners::update_payout_details( $partner->id, isset( $_POST['payout'] ) ? (array) wp_unslash( $_POST['payout'] ) : array() ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
 			self::notice( __( 'Payout details saved.', 'splitshare-affiliates' ) );
@@ -249,7 +320,7 @@ class SSA_Account {
 		if ( $existing ) {
 			return;
 		}
-		echo '<div class="ssa-join-card"><strong>' . esc_html( SSA_Settings::get( 'program_name' ) ) . '</strong><br>' . esc_html__( 'Create content, share your code and earn on every sale — you decide how to split your share between commission and follower discount.', 'splitshare-affiliates' ) . ' <a href="' . esc_url( $url ) . '">' . esc_html__( 'Apply now', 'splitshare-affiliates' ) . ' →</a></div>';
+		echo '<div class="ssa-join-card"><strong>' . esc_html( SSA_Settings::get( 'program_name' ) ) . '</strong><br>' . esc_html__( 'Create content, share your own coupons and links, and earn on every sale — you decide how much of your share goes to your followers as a discount.', 'splitshare-affiliates' ) . ' <a href="' . esc_url( $url ) . '">' . esc_html__( 'Apply now', 'splitshare-affiliates' ) . ' →</a></div>';
 	}
 
 	/** Şablonlarda kullanılan yardımcılar. */
@@ -260,6 +331,9 @@ class SSA_Account {
 			'paid'     => __( 'Paid', 'splitshare-affiliates' ),
 			'void'     => __( 'Cancelled', 'splitshare-affiliates' ),
 			'open'     => __( 'Scheduled', 'splitshare-affiliates' ),
+			'active'   => __( 'Live', 'splitshare-affiliates' ),
+			'paused'   => __( 'Paused', 'splitshare-affiliates' ),
+			'expired'  => __( 'Expired', 'splitshare-affiliates' ),
 		);
 		return '<span class="ssa-status ssa-status-' . esc_attr( $status ) . '">' . esc_html( isset( $map[ $status ] ) ? $map[ $status ] : $status ) . '</span>';
 	}

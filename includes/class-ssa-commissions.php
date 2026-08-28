@@ -77,8 +77,8 @@ class SSA_Commissions {
 			'attribution'      => (string) $order->get_meta( '_ssa_attribution' ),
 			'code_used'        => (string) $order->get_meta( '_ssa_code' ),
 			'order_total_base' => $calc['base_total'],
-			'discount_pct'     => $calc['ctx']['discount_pct'],
-			'commission_pct'   => $calc['ctx']['commission_pct'],
+			'discount_pct'     => $calc['ctx']['coupon'] ? (float) $calc['ctx']['coupon']['discount_pct'] : 0,
+			'commission_pct'   => $calc['ctx']['coupon'] ? max( 0, (float) $calc['ctx']['rules']['default_share'] - (float) $calc['ctx']['coupon']['discount_pct'] ) : min( (float) $calc['ctx']['link_commission_pct'], (float) $calc['ctx']['rules']['default_share'] ),
 			'breakdown'        => wp_json_encode( array( 'items' => $calc['breakdown'], 'factors' => $calc['factors'], 'rules' => $calc['ctx']['rules'] ) ),
 			'amount'           => $calc['amount'],
 			'status'           => $calc['amount'] > 0 ? 'pending' : 'void',
@@ -116,10 +116,16 @@ class SSA_Commissions {
 		foreach ( $items as $it ) {
 			$base += $it['paid_total'];
 		}
+		$coupon = null;
+		if ( 'coupon' === $order->get_meta( '_ssa_attribution' ) ) {
+			$coupon = (int) $order->get_meta( '_ssa_coupon_id' ) ? SSA_Partner_Coupons::get( (int) $order->get_meta( '_ssa_coupon_id' ) ) : null;
+			if ( ! $coupon ) {
+				$coupon = SSA_Partner_Coupons::get_by_code( (string) $order->get_meta( '_ssa_code' ) );
+			}
+		}
 		$ctx = array(
-			'commission_pct'   => (float) $partner->commission_pct,
-			'discount_pct'     => (float) $partner->discount_pct,
-			'discount_applied' => 'coupon' === $order->get_meta( '_ssa_attribution' ),
+			'coupon'              => SSA_Partner_Coupons::to_ctx( $coupon ),
+			'link_commission_pct' => (float) SSA_Settings::get( 'link_commission_pct' ),
 			'order_base_total' => round( $base, 2 ),
 			'is_new_customer'  => self::is_new_customer( $order ),
 			'rules'            => SSA_Settings::rules( $order->get_date_created() ? $order->get_date_created()->getTimestamp() : null ),

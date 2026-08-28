@@ -81,6 +81,7 @@ class SSA_Settings {
 			'campaign_share'      => $campaign_share,
 			'boosters'            => $boosters,
 			'rounding'            => ( 'kurus' === $s['rounding'] ) ? 'kurus' : 'lira',
+			'link_commission_pct' => (float) $s['link_commission_pct'],
 		);
 	}
 

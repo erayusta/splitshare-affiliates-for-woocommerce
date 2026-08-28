@@ -41,6 +41,7 @@ final class SSA_Plugin {
 			'includes/class-ssa-settings.php',
 			'includes/class-ssa-partner.php',
 			'includes/class-ssa-partners.php',
+			'includes/class-ssa-partner-coupons.php',
 			'includes/class-ssa-coupon.php',
 			'includes/class-ssa-tracking.php',
 			'includes/class-ssa-commissions.php',

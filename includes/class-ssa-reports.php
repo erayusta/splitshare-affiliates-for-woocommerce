@@ -106,34 +106,6 @@ class SSA_Reports {
 		return self::monthly( $months, $partner_id )['commission'];
 	}
 
-	/** Ortakların dağılım tercihleri ve her grubun cirosu. */
-	public static function split_distribution( $from = '', $to = '' ) {
-		global $wpdb;
-		$t = SSA_Install::tables();
-		list( $f, $l ) = self::range( $from, $to );
-		return (array) $wpdb->get_results( $wpdb->prepare( "SELECT p.commission_pct, p.discount_pct, COUNT(DISTINCT p.id) partners, COALESCE(SUM(c.order_total_base),0) revenue, COALESCE(SUM(c.amount),0) commission FROM {$t['partners']} p LEFT JOIN {$t['commissions']} c ON c.partner_id = p.id AND c.status <> 'void' AND c.adjustment_of IS NULL AND c.created_at BETWEEN %s AND %s WHERE p.status IN ('active','paused') GROUP BY p.commission_pct, p.discount_pct ORDER BY p.commission_pct DESC", $f, $l ) ); // phpcs:ignore WordPress.DB
-	}
-
-	/** Dağılımı üç kovaya indirger (donut için): komisyon ağırlıklı / dengeli / indirim ağırlıklı. */
-	public static function split_buckets() {
-		global $wpdb;
-		$t     = SSA_Install::tables()['partners'];
-		$share = max( 0.01, (float) SSA_Settings::get( 'default_share' ) );
-		$rows  = (array) $wpdb->get_results( "SELECT commission_pct FROM {$t} WHERE status IN ('active','paused')" ); // phpcs:ignore WordPress.DB
-		$b     = array( 'commission' => 0, 'balanced' => 0, 'discount' => 0 );
-		foreach ( $rows as $r ) {
-			$ratio = (float) $r->commission_pct / $share;
-			if ( $ratio > 0.66 ) {
-				$b['commission']++;
-			} elseif ( $ratio < 0.34 ) {
-				$b['discount']++;
-			} else {
-				$b['balanced']++;
-			}
-		}
-		return $b;
-	}
-
 	/** Ürün grubuna göre komisyon (breakdown JSON'dan). */
 	public static function group_revenue( $from = '', $to = '' ) {
 		global $wpdb;
@@ -161,7 +133,7 @@ class SSA_Reports {
 		global $wpdb;
 		$t     = SSA_Install::tables();
 		$since = gmdate( 'Y-m-d H:i:s', current_time( 'timestamp' ) - $days * DAY_IN_SECONDS );
-		$rows  = (array) $wpdb->get_results( $wpdb->prepare( "SELECT c.partner_id, p.code, COUNT(*) orders, SUM(c.is_new_customer) new_customers FROM {$t['commissions']} c JOIN {$t['partners']} p ON p.id = c.partner_id WHERE c.attribution = 'coupon' AND c.adjustment_of IS NULL AND c.created_at >= %s GROUP BY c.partner_id, p.code", $since ) ); // phpcs:ignore WordPress.DB
+		$rows  = (array) $wpdb->get_results( $wpdb->prepare( "SELECT c.partner_id, c.code_used code, COUNT(*) orders, SUM(c.is_new_customer) new_customers FROM {$t['commissions']} c WHERE c.attribution = 'coupon' AND c.adjustment_of IS NULL AND c.created_at >= %s GROUP BY c.partner_id, c.code_used", $since ) ); // phpcs:ignore WordPress.DB
 		$avg   = $rows ? array_sum( wp_list_pluck( $rows, 'orders' ) ) / count( $rows ) : 0;
 		foreach ( $rows as $r ) {
 			$r->new_rate = $r->orders ? round( 100 * $r->new_customers / $r->orders, 1 ) : 0;
