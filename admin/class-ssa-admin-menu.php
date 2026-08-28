@@ -18,6 +18,7 @@ class SSA_Admin_Menu {
 
 	public static function tabs() {
 		$tabs = array(
+			'overview'     => array( 'label' => __( 'Overview', 'splitshare-affiliates' ), 'class' => 'SSA_Admin_Overview' ),
 			'partners'     => array( 'label' => __( 'Partners', 'splitshare-affiliates' ), 'class' => 'SSA_Admin_Partners' ),
 			'applications' => array( 'label' => __( 'Applications', 'splitshare-affiliates' ), 'class' => 'SSA_Admin_Applications' ),
 			'commissions'  => array( 'label' => __( 'Commissions', 'splitshare-affiliates' ), 'class' => 'SSA_Admin_Commissions' ),
@@ -34,12 +35,12 @@ class SSA_Admin_Menu {
 	}
 
 	public static function current_tab() {
-		$tab  = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'partners'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$tab  = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'overview'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$tabs = self::tabs();
-		return isset( $tabs[ $tab ] ) ? $tab : 'partners';
+		return isset( $tabs[ $tab ] ) ? $tab : 'overview';
 	}
 
-	public static function url( $tab = 'partners', array $args = array() ) {
+	public static function url( $tab = 'overview', array $args = array() ) {
 		return add_query_arg( array_merge( array( 'page' => self::SLUG, 'tab' => $tab ), $args ), admin_url( 'admin.php' ) );
 	}
 
@@ -53,8 +54,8 @@ class SSA_Admin_Menu {
 		if ( false === strpos( $hook, self::SLUG ) && 'woocommerce_page_wc-orders' !== $hook && 'post.php' !== $hook ) {
 			return;
 		}
-		wp_enqueue_style( 'ssa-admin', SSA_URL . 'assets/css/admin.css', array(), SSA_VERSION );
-		wp_enqueue_script( 'ssa-admin', SSA_URL . 'assets/js/admin.js', array( 'jquery' ), SSA_VERSION, true );
+		wp_enqueue_style( 'ssa-admin', SSA_URL . 'assets/css/admin.css', array(), SSA_Plugin::asset_ver( 'assets/css/admin.css' ) );
+		wp_enqueue_script( 'ssa-admin', SSA_URL . 'assets/js/admin.js', array( 'jquery' ), SSA_Plugin::asset_ver( 'assets/js/admin.js' ), true );
 	}
 
 	public static function handle_actions() {
@@ -71,22 +72,28 @@ class SSA_Admin_Menu {
 	public static function render() {
 		$tabs    = self::tabs();
 		$current = self::current_tab();
-		echo '<div class="wrap ssa-admin"><h1>' . esc_html( SSA_Settings::get( 'program_name' ) ) . ' <small>— ' . esc_html__( 'Affiliates', 'splitshare-affiliates' ) . '</small></h1>';
-		echo '<nav class="nav-tab-wrapper">';
+		echo '<div class="wrap ssa-admin ssa-tab-' . esc_attr( $current ) . '">';
+		echo '<header class="ssa-pagehead"><div><span class="ssa-eyebrow">' . esc_html__( 'Affiliates', 'splitshare-affiliates' ) . '</span><h1>' . esc_html( SSA_Settings::get( 'program_name' ) ) . '</h1></div>';
+		echo '<div class="ssa-pagehead__actions"><a class="button" href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=ssa' ) ) . '">' . esc_html__( 'Settings', 'splitshare-affiliates' ) . '</a>';
+		if ( SSA_Application::apply_url() ) {
+			echo '<a class="button" target="_blank" rel="noopener" href="' . esc_url( SSA_Application::apply_url() ) . '">' . esc_html__( 'Application page', 'splitshare-affiliates' ) . ' ' . SSA_Admin_UI::icon( 'external' ) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		echo '</div></header>';
+		echo '<nav class="ssa-tabs">';
 		foreach ( $tabs as $key => $tab ) {
 			$badge = ( 'applications' === $key ) ? SSA_Partners::counts_by_status()['pending'] : 0;
-			echo '<a class="nav-tab' . ( $key === $current ? ' nav-tab-active' : '' ) . '" href="' . esc_url( self::url( $key ) ) . '">' . esc_html( $tab['label'] ) . ( $badge ? ' <span class="awaiting-mod">' . (int) $badge . '</span>' : '' ) . '</a>';
+			echo '<a class="ssa-tab' . ( $key === $current ? ' is-active' : '' ) . '" href="' . esc_url( self::url( $key ) ) . '">' . esc_html( $tab['label'] ) . ( $badge ? ' <span class="ssa-count">' . (int) $badge . '</span>' : '' ) . '</a>';
 		}
-		echo '<a class="nav-tab" href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=ssa' ) ) . '">' . esc_html__( 'Settings', 'splitshare-affiliates' ) . ' ↗</a>';
 		echo '</nav>';
 		self::notices();
 		$class = $tabs[ $current ]['class'];
+		echo '<div class="ssa-tabpanel">';
 		if ( class_exists( $class ) ) {
 			call_user_func( array( $class, 'render' ) );
 		} else {
 			echo '<p>' . esc_html__( 'Coming soon.', 'splitshare-affiliates' ) . '</p>';
 		}
-		echo '</div>';
+		echo '</div></div>';
 	}
 
 	public static function redirect_with( $tab, $message, $type = 'success', array $args = array() ) {
@@ -99,16 +106,16 @@ class SSA_Admin_Menu {
 		$n = get_transient( 'ssa_notice_' . get_current_user_id() );
 		if ( $n ) {
 			delete_transient( 'ssa_notice_' . get_current_user_id() );
-			echo '<div class="notice notice-' . esc_attr( $n['type'] ) . ' is-dismissible"><p>' . esc_html( $n['message'] ) . '</p></div>';
+			echo '<div class="ssa-notice ssa-notice--' . esc_attr( $n['type'] ) . '"><p>' . esc_html( $n['message'] ) . '</p></div>';
 		}
 	}
 
-	/** Ortak adı + link (tablolar için). */
-	public static function partner_link( SSA_Partner $p ) {
-		return '<a href="' . esc_url( self::url( 'partners', array( 'action' => 'edit', 'id' => $p->id ) ) ) . '">' . esc_html( $p->display_name() ) . '</a><br><small>' . esc_html( $p->email() ) . '</small>';
+	/** Ortak adı + avatar + link (tablolar için). */
+	public static function partner_link( SSA_Partner $p, $with_avatar = true ) {
+		return '<span class="ssa-partnercell">' . ( $with_avatar ? SSA_Admin_UI::avatar( $p ) : '' ) . '<span><a href="' . esc_url( self::url( 'partners', array( 'action' => 'edit', 'id' => $p->id ) ) ) . '">' . esc_html( $p->display_name() ) . '</a><small>' . esc_html( $p->email() ) . '</small></span></span>';
 	}
 
 	public static function badge( $status ) {
-		return '<span class="ssa-badge ssa-badge-' . esc_attr( $status ) . '">' . esc_html( ucfirst( $status ) ) . '</span>';
+		return SSA_Admin_UI::badge( $status );
 	}
 }

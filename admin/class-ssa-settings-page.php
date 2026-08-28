@@ -22,8 +22,8 @@ class SSA_Settings_Page extends WC_Settings_Page {
 		add_action( 'admin_enqueue_scripts', function () {
 			if ( isset( $_GET['tab'] ) && 'ssa' === $_GET['tab'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				wp_enqueue_media();
-				wp_enqueue_style( 'ssa-admin', SSA_URL . 'assets/css/admin.css', array(), SSA_VERSION );
-				wp_enqueue_script( 'ssa-admin', SSA_URL . 'assets/js/admin.js', array( 'jquery', 'wc-enhanced-select' ), SSA_VERSION, true );
+				wp_enqueue_style( 'ssa-admin', SSA_URL . 'assets/css/admin.css', array(), SSA_Plugin::asset_ver( 'assets/css/admin.css' ) );
+				wp_enqueue_script( 'ssa-admin', SSA_URL . 'assets/js/admin.js', array( 'jquery', 'wc-enhanced-select' ), SSA_Plugin::asset_ver( 'assets/js/admin.js' ), true );
 			}
 		} );
 	}

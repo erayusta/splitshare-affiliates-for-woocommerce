@@ -10,6 +10,12 @@ final class SSA_Plugin {
 	/** @var SSA_Plugin|null */
 	private static $instance = null;
 
+	/** Asset sürümü: dosya değişim zamanı (cache-bust). */
+	public static function asset_ver( $rel ) {
+		$file = SSA_PATH . ltrim( $rel, '/' );
+		return file_exists( $file ) ? (string) filemtime( $file ) : SSA_VERSION;
+	}
+
 	public static function instance() {
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -31,6 +37,7 @@ final class SSA_Plugin {
 
 		foreach ( array(
 			'includes/class-ssa-calculator.php',
+			'includes/class-ssa-charts.php',
 			'includes/class-ssa-settings.php',
 			'includes/class-ssa-partner.php',
 			'includes/class-ssa-partners.php',
@@ -43,6 +50,7 @@ final class SSA_Plugin {
 			'includes/class-ssa-application.php',
 			'includes/class-ssa-emails.php',
 			'includes/class-ssa-reports.php',
+			'admin/class-ssa-admin-ui.php',
 			'admin/class-ssa-admin-menu.php',
 			'admin/class-ssa-admin-order.php',
 		) as $file ) {

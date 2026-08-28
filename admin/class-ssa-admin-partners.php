@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin → Partners: liste, düzenleme, eylemler (duraklat/devam, kod döndür, kilit aç).
+ * Admin → Partners: liste (toolbar, avatar, kod chip'i, dağılım çubuğu, sparkline) ve profil sayfası.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -18,24 +18,24 @@ class SSA_Admin_Partners {
 			return;
 		}
 		check_admin_referer( 'ssa_partner_' . $action . '_' . $id );
-
+		$back = array( 'action' => 'edit', 'id' => $id );
 		switch ( $action ) {
 			case 'pause':
 				SSA_Partners::set_status( $id, 'paused' );
-				SSA_Admin_Menu::redirect_with( 'partners', __( 'Partner paused.', 'splitshare-affiliates' ) );
+				SSA_Admin_Menu::redirect_with( 'partners', __( 'Partner paused.', 'splitshare-affiliates' ), 'success', $back );
 				break;
 			case 'resume':
 				SSA_Partners::set_status( $id, 'active' );
-				SSA_Admin_Menu::redirect_with( 'partners', __( 'Partner reactivated.', 'splitshare-affiliates' ) );
+				SSA_Admin_Menu::redirect_with( 'partners', __( 'Partner reactivated.', 'splitshare-affiliates' ), 'success', $back );
 				break;
 			case 'rotate':
 				$new = SSA_Partners::rotate_code( $id );
 				/* translators: %s: new code */
-				SSA_Admin_Menu::redirect_with( 'partners', sprintf( __( 'New code issued: %s', 'splitshare-affiliates' ), $new ), 'success', array( 'action' => 'edit', 'id' => $id ) );
+				SSA_Admin_Menu::redirect_with( 'partners', sprintf( __( 'New code issued: %s', 'splitshare-affiliates' ), $new ), 'success', $back );
 				break;
 			case 'unlock':
 				SSA_Partners::unlock_split( $id );
-				SSA_Admin_Menu::redirect_with( 'partners', __( 'Split change unlocked.', 'splitshare-affiliates' ), 'success', array( 'action' => 'edit', 'id' => $id ) );
+				SSA_Admin_Menu::redirect_with( 'partners', __( 'Split change unlocked.', 'splitshare-affiliates' ), 'success', $back );
 				break;
 			case 'save':
 				self::save( $id );
@@ -70,66 +70,134 @@ class SSA_Admin_Partners {
 
 	public static function render() {
 		if ( isset( $_GET['action'] ) && 'edit' === $_GET['action'] && ! empty( $_GET['id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			self::render_edit( (int) $_GET['id'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			self::render_profile( (int) $_GET['id'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
+		$counts  = SSA_Partners::counts_by_status();
+		$status  = isset( $_GET['status'] ) ? sanitize_key( $_GET['status'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$search  = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		echo SSA_Admin_UI::toolbar_open(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="ssa-chips">';
+		foreach ( array( '' => __( 'All', 'splitshare-affiliates' ), 'active' => __( 'Active', 'splitshare-affiliates' ), 'paused' => __( 'Paused', 'splitshare-affiliates' ), 'rejected' => __( 'Rejected', 'splitshare-affiliates' ) ) as $key => $label ) {
+			$n = '' === $key ? array_sum( $counts ) - $counts['pending'] : $counts[ $key ];
+			echo '<a class="ssa-chip' . ( $status === $key ? ' is-active' : '' ) . '" href="' . esc_url( SSA_Admin_Menu::url( 'partners', $key ? array( 'status' => $key ) : array() ) ) . '">' . esc_html( $label ) . ' <span>' . (int) $n . '</span></a>';
+		}
+		echo '</div>';
+		echo '<form method="get" class="ssa-toolbar__search"><input type="hidden" name="page" value="' . esc_attr( SSA_Admin_Menu::SLUG ) . '"><input type="hidden" name="tab" value="partners">' . ( $status ? '<input type="hidden" name="status" value="' . esc_attr( $status ) . '">' : '' ) . '<input type="search" name="s" value="' . esc_attr( $search ) . '" placeholder="' . esc_attr__( 'Search name, e-mail or code', 'splitshare-affiliates' ) . '"><button class="button">' . esc_html__( 'Search', 'splitshare-affiliates' ) . '</button></form>';
+		echo SSA_Admin_UI::toolbar_close(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
 		$table = new SSA_Partners_Table();
 		$table->prepare_items();
+		if ( ! $table->items ) {
+			echo SSA_Admin_UI::empty_state( __( 'No partners yet', 'splitshare-affiliates' ), __( 'Approved applications appear here with their code, split and earnings.', 'splitshare-affiliates' ), '<p><a class="button" href="' . esc_url( SSA_Admin_Menu::url( 'applications' ) ) . '">' . esc_html__( 'Review applications', 'splitshare-affiliates' ) . '</a></p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			return;
+		}
 		echo '<form method="get"><input type="hidden" name="page" value="' . esc_attr( SSA_Admin_Menu::SLUG ) . '" /><input type="hidden" name="tab" value="partners" />';
-		$table->views();
-		$table->search_box( __( 'Search partners', 'splitshare-affiliates' ), 'ssa' );
 		$table->display();
 		echo '</form>';
 	}
 
-	private static function render_edit( $id ) {
+	private static function render_profile( $id ) {
 		$p = SSA_Partners::get( $id );
 		if ( ! $p ) {
-			echo '<p>' . esc_html__( 'Partner not found.', 'splitshare-affiliates' ) . '</p>';
+			echo SSA_Admin_UI::empty_state( __( 'Partner not found.', 'splitshare-affiliates' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
-		$totals   = class_exists( 'SSA_Commissions' ) ? SSA_Commissions::totals_for_partner( $p->id ) : array();
+		$e        = SSA_Reports::partner_earnings( $p->id );
 		$interval = (int) SSA_Settings::get( 'split_change_interval_days' );
 		$share    = (float) SSA_Settings::get( 'default_share' );
-		?>
-		<h2><?php echo esc_html( $p->display_name() ); ?> <?php echo SSA_Admin_Menu::badge( $p->status ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
-		<p><a href="<?php echo esc_url( SSA_Admin_Menu::url( 'partners' ) ); ?>">&larr; <?php esc_html_e( 'All partners', 'splitshare-affiliates' ); ?></a></p>
-		<?php if ( $totals ) : ?>
-		<div class="ssa-stat-cards">
-			<div class="ssa-stat-card"><?php esc_html_e( 'Pending', 'splitshare-affiliates' ); ?><strong><?php echo wp_kses_post( wc_price( $totals['pending'] ) ); ?></strong></div>
-			<div class="ssa-stat-card"><?php esc_html_e( 'Approved', 'splitshare-affiliates' ); ?><strong><?php echo wp_kses_post( wc_price( $totals['approved'] ) ); ?></strong></div>
-			<div class="ssa-stat-card"><?php esc_html_e( 'Paid', 'splitshare-affiliates' ); ?><strong><?php echo wp_kses_post( wc_price( $totals['paid'] ) ); ?></strong></div>
-			<div class="ssa-stat-card"><?php esc_html_e( 'Approved sales', 'splitshare-affiliates' ); ?><strong><?php echo (int) $totals['sales_count']; ?></strong></div>
-		</div>
-		<?php endif; ?>
-		<form method="post" action="<?php echo esc_url( SSA_Admin_Menu::url( 'partners', array( 'action' => 'save', 'id' => $p->id ) ) ); ?>">
-			<?php wp_nonce_field( 'ssa_partner_save_' . $p->id ); ?>
-			<table class="form-table">
-				<tr><th><?php esc_html_e( 'E-mail', 'splitshare-affiliates' ); ?></th><td><?php echo esc_html( $p->email() ); ?> · <a href="<?php echo esc_url( get_edit_user_link( $p->user_id ) ); ?>"><?php esc_html_e( 'user profile', 'splitshare-affiliates' ); ?></a></td></tr>
-				<tr><th><?php esc_html_e( 'Code', 'splitshare-affiliates' ); ?></th><td><input type="text" name="code" value="<?php echo esc_attr( $p->code ); ?>" class="regular-text" pattern="[A-Za-z0-9]{4,12}" />
-					<?php if ( $p->previous_code_valid() ) : ?><p class="description"><?php printf( esc_html__( 'Previous code %1$s valid until %2$s', 'splitshare-affiliates' ), esc_html( $p->previous_code ), esc_html( $p->previous_code_expires ) ); ?></p><?php endif; ?>
-					<p><a class="button ssa-confirm" data-confirm="<?php esc_attr_e( 'Issue a new code? The old one stays valid for the grace period.', 'splitshare-affiliates' ); ?>" href="<?php echo esc_url( self::action_url( 'rotate', $p->id ) ); ?>"><?php esc_html_e( 'Rotate code', 'splitshare-affiliates' ); ?></a></p></td></tr>
-				<tr><th><?php esc_html_e( 'Split', 'splitshare-affiliates' ); ?></th><td>
-					<input type="number" name="commission_pct" value="<?php echo esc_attr( $p->commission_pct ); ?>" min="0" max="<?php echo esc_attr( $share ); ?>" step="0.5" /> % <?php esc_html_e( 'commission', 'splitshare-affiliates' ); ?> + <strong><?php echo esc_html( $p->discount_pct ); ?>%</strong> <?php esc_html_e( 'discount', 'splitshare-affiliates' ); ?> (<?php printf( esc_html__( 'share %s%%', 'splitshare-affiliates' ), esc_html( $share ) ); ?>)
-					<?php if ( ! $p->can_change_split( $interval ) ) : ?><p class="description"><?php printf( esc_html__( 'Partner can change again on %s.', 'splitshare-affiliates' ), esc_html( date_i18n( get_option( 'date_format' ), $p->next_split_change_at( $interval ) ) ) ); ?> <a href="<?php echo esc_url( self::action_url( 'unlock', $p->id ) ); ?>"><?php esc_html_e( 'Unlock now', 'splitshare-affiliates' ); ?></a></p><?php endif; ?></td></tr>
-				<tr><th><?php esc_html_e( 'Tier', 'splitshare-affiliates' ); ?></th><td><?php echo esc_html( $p->tier ? $p->tier : '—' ); ?></td></tr>
-				<tr><th><?php esc_html_e( 'Application', 'splitshare-affiliates' ); ?></th><td><?php foreach ( $p->application as $k => $v ) { if ( '' !== (string) $v ) { echo '<strong>' . esc_html( ucfirst( str_replace( '_', ' ', $k ) ) ) . ':</strong> ' . esc_html( $v ) . '<br>'; } } ?></td></tr>
-				<tr><th><?php esc_html_e( 'Payout details', 'splitshare-affiliates' ); ?></th><td>
-					<?php foreach ( array( 'holder' => __( 'Account holder', 'splitshare-affiliates' ), 'iban' => 'IBAN', 'company' => __( 'Company / tax office', 'splitshare-affiliates' ), 'tax_no' => __( 'Tax / ID number', 'splitshare-affiliates' ), 'invoices' => __( 'Issues invoices? (yes/no)', 'splitshare-affiliates' ) ) as $k => $label ) : ?>
-						<p><label><?php echo esc_html( $label ); ?><br><input type="text" class="regular-text" name="payout[<?php echo esc_attr( $k ); ?>]" value="<?php echo esc_attr( isset( $p->payout_details[ $k ] ) ? $p->payout_details[ $k ] : '' ); ?>" /></label></p>
-					<?php endforeach; ?></td></tr>
-				<tr><th><?php esc_html_e( 'Admin note', 'splitshare-affiliates' ); ?></th><td><textarea name="admin_note" rows="3" class="large-text"><?php echo esc_textarea( $p->admin_note ); ?></textarea></td></tr>
-			</table>
-			<p class="submit">
-				<button class="button button-primary"><?php esc_html_e( 'Save', 'splitshare-affiliates' ); ?></button>
-				<?php if ( 'active' === $p->status ) : ?>
-					<a class="button" href="<?php echo esc_url( self::action_url( 'pause', $p->id ) ); ?>"><?php esc_html_e( 'Pause partner', 'splitshare-affiliates' ); ?></a>
-				<?php elseif ( 'paused' === $p->status ) : ?>
-					<a class="button" href="<?php echo esc_url( self::action_url( 'resume', $p->id ) ); ?>"><?php esc_html_e( 'Reactivate', 'splitshare-affiliates' ); ?></a>
-				<?php endif; ?>
-			</p>
-		</form>
-		<?php
+		$clicks   = SSA_Tracking::click_stats( $p->id, 30 );
+		$m        = SSA_Reports::monthly( 12, $p->id );
+
+		echo '<p><a class="ssa-link" href="' . esc_url( SSA_Admin_Menu::url( 'partners' ) ) . '">← ' . esc_html__( 'All partners', 'splitshare-affiliates' ) . '</a></p>';
+		echo '<div class="ssa-profile">' . SSA_Admin_UI::avatar( $p, 'lg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="ssa-profile__id"><h2>' . esc_html( $p->display_name() ) . ' ' . SSA_Admin_UI::badge( $p->status ) . ( $p->tier ? ' <span class="ssa-pill ssa-pill--muted">' . esc_html( $p->tier ) . '</span>' : '' ) . '</h2>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="ssa-muted">' . esc_html( $p->email() ) . ' · <a href="' . esc_url( get_edit_user_link( $p->user_id ) ) . '">' . esc_html__( 'user profile', 'splitshare-affiliates' ) . '</a>' . ( $p->approved_at ? ' · ' . esc_html( sprintf( __( 'since %s', 'splitshare-affiliates' ), date_i18n( get_option( 'date_format' ), strtotime( $p->approved_at ) ) ) ) : '' ) . '</div>';
+		echo '<div style="margin-top:8px">' . SSA_Admin_UI::code_chip( $p->code ) . ( $p->previous_code_valid() ? ' <small class="ssa-muted">' . esc_html( sprintf( __( 'previous %1$s until %2$s', 'splitshare-affiliates' ), $p->previous_code, date_i18n( get_option( 'date_format' ), strtotime( $p->previous_code_expires ) ) ) ) . '</small>' : '' ) . '</div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="ssa-profile__split">' . SSA_Charts::split_bar( $p->commission_pct, $p->discount_pct, $share, array( 'size' => 'lg' ) ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="ssa-profile__actions">';
+		if ( 'active' === $p->status ) {
+			echo '<a class="button" href="' . esc_url( self::action_url( 'pause', $p->id ) ) . '">' . esc_html__( 'Pause', 'splitshare-affiliates' ) . '</a>';
+		} elseif ( 'paused' === $p->status ) {
+			echo '<a class="button" href="' . esc_url( self::action_url( 'resume', $p->id ) ) . '">' . esc_html__( 'Reactivate', 'splitshare-affiliates' ) . '</a>';
+		}
+		echo '<a class="button ssa-confirm" data-confirm="' . esc_attr__( 'Issue a new code? The old one stays valid for the grace period.', 'splitshare-affiliates' ) . '" href="' . esc_url( self::action_url( 'rotate', $p->id ) ) . '">' . esc_html__( 'Rotate code', 'splitshare-affiliates' ) . '</a>';
+		echo '</div></div>';
+
+		echo '<div class="ssa-kpis">';
+		echo SSA_Admin_UI::kpi( array( 'label' => __( 'Confirmed earnings', 'splitshare-affiliates' ), 'value' => wc_price( $e['confirmed'] ), 'hint' => sprintf( __( '%1$s paid · %2$s awaiting payout', 'splitshare-affiliates' ), wp_strip_all_tags( wc_price( $e['paid'] ) ), wp_strip_all_tags( wc_price( max( 0, $e['unpaid'] ) ) ) ), 'spark' => $m['commission'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo SSA_Admin_UI::kpi( array( 'label' => __( 'Estimated (pending)', 'splitshare-affiliates' ), 'value' => wc_price( $e['estimated'] ), 'hint' => __( 'inside the hold period', 'splitshare-affiliates' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo SSA_Admin_UI::kpi( array( 'label' => __( 'Approved sales', 'splitshare-affiliates' ), 'value' => number_format_i18n( $e['sales'] ), 'hint' => sprintf( __( '%s this month', 'splitshare-affiliates' ), wp_strip_all_tags( wc_price( $e['month_sales'] ) ) ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo SSA_Admin_UI::kpi( array( 'label' => __( 'Traffic (30 days)', 'splitshare-affiliates' ), 'value' => number_format_i18n( $clicks['clicks'] ), 'hint' => sprintf( __( '%d orders from links', 'splitshare-affiliates' ), $clicks['conversions'] ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '</div>';
+
+		echo '<div class="ssa-subtabs-wrap">';
+		echo '<div class="ssa-subtabs"><button type="button" class="ssa-subtab is-active" data-target="#ssa-p-sales">' . esc_html__( 'Sales', 'splitshare-affiliates' ) . '</button><button type="button" class="ssa-subtab" data-target="#ssa-p-payouts">' . esc_html__( 'Payouts', 'splitshare-affiliates' ) . '</button><button type="button" class="ssa-subtab" data-target="#ssa-p-details">' . esc_html__( 'Details & bank', 'splitshare-affiliates' ) . '</button><button type="button" class="ssa-subtab" data-target="#ssa-p-split">' . esc_html__( 'Split & code', 'splitshare-affiliates' ) . '</button></div>';
+
+		// Satışlar
+		echo '<div id="ssa-p-sales" class="ssa-subpanel is-active">';
+		echo SSA_Admin_UI::card_open( __( 'Commission, last 12 months', 'splitshare-affiliates' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		if ( array_sum( $m['revenue'] ) > 0 ) {
+			echo SSA_Charts::columns( $m['labels'], array( array( 'name' => __( 'Revenue', 'splitshare-affiliates' ), 'values' => $m['revenue'] ), array( 'name' => __( 'Commission', 'splitshare-affiliates' ), 'values' => $m['commission'] ) ), array( 'title' => __( 'Monthly revenue and commission', 'splitshare-affiliates' ), 'height' => 240, 'width' => 1200 ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		} else {
+			echo SSA_Admin_UI::empty_state( __( 'No sales yet', 'splitshare-affiliates' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		echo SSA_Admin_UI::card_close(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$rows = SSA_Commissions::query( array( 'partner_id' => $p->id, 'limit' => 50 ) );
+		echo SSA_Admin_UI::card_open( __( 'Recent commissions', 'splitshare-affiliates' ), '<a class="ssa-link" href="' . esc_url( SSA_Admin_Menu::url( 'commissions', array( 'partner_id' => $p->id ) ) ) . '">' . esc_html__( 'All', 'splitshare-affiliates' ) . ' →</a>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		if ( $rows ) {
+			echo '<table class="ssa-table"><thead><tr><th>' . esc_html__( 'Date', 'splitshare-affiliates' ) . '</th><th>' . esc_html__( 'Order', 'splitshare-affiliates' ) . '</th><th>' . esc_html__( 'Attribution', 'splitshare-affiliates' ) . '</th><th class="num">' . esc_html__( 'Basis', 'splitshare-affiliates' ) . '</th><th class="num">' . esc_html__( 'Commission', 'splitshare-affiliates' ) . '</th><th>' . esc_html__( 'Status', 'splitshare-affiliates' ) . '</th></tr></thead><tbody>';
+			foreach ( $rows as $c ) {
+				$order = wc_get_order( $c->order_id );
+				echo '<tr><td>' . esc_html( date_i18n( get_option( 'date_format' ), strtotime( $c->created_at ) ) ) . '</td><td>' . ( $order ? '<a href="' . esc_url( $order->get_edit_order_url() ) . '">#' . (int) $c->order_id . '</a>' : '#' . (int) $c->order_id ) . '</td><td>' . esc_html( $c->attribution ) . ( $c->is_new_customer ? '' : '<small>' . esc_html__( 'returning customer', 'splitshare-affiliates' ) . '</small>' ) . '</td><td class="num">' . wp_kses_post( wc_price( $c->order_total_base ) ) . '</td><td class="num"><strong>' . wp_kses_post( wc_price( $c->amount ) ) . '</strong></td><td>' . SSA_Admin_UI::badge( $c->status ) . '</td></tr>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+			echo '</tbody></table>';
+		} else {
+			echo '<p class="ssa-muted">' . esc_html__( 'No commissions yet.', 'splitshare-affiliates' ) . '</p>';
+		}
+		echo SSA_Admin_UI::card_close() . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		// Hakedişler
+		echo '<div id="ssa-p-payouts" class="ssa-subpanel">' . SSA_Admin_UI::card_open( __( 'Payouts', 'splitshare-affiliates' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$payouts = SSA_Payouts::for_partner( $p->id );
+		if ( $payouts ) {
+			echo '<table class="ssa-table"><thead><tr><th>' . esc_html__( 'Period', 'splitshare-affiliates' ) . '</th><th class="num">' . esc_html__( 'Amount', 'splitshare-affiliates' ) . '</th><th>' . esc_html__( 'Status', 'splitshare-affiliates' ) . '</th><th>' . esc_html__( 'Paid on', 'splitshare-affiliates' ) . '</th></tr></thead><tbody>';
+			foreach ( $payouts as $po ) {
+				echo '<tr><td>' . esc_html( $po->period ) . '</td><td class="num">' . wp_kses_post( wc_price( $po->amount ) ) . '</td><td>' . SSA_Admin_UI::badge( $po->status ) . '</td><td>' . ( $po->paid_at ? esc_html( date_i18n( get_option( 'date_format' ), strtotime( $po->paid_at ) ) . ( $po->reference ? ' · ' . $po->reference : '' ) ) : '—' ) . '</td></tr>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+			echo '</tbody></table>';
+		} else {
+			echo '<p class="ssa-muted">' . esc_html__( 'No payouts yet.', 'splitshare-affiliates' ) . '</p>';
+		}
+		echo SSA_Admin_UI::card_close() . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		// Detaylar & banka + Dağılım & kod (tek form)
+		echo '<form method="post" action="' . esc_url( SSA_Admin_Menu::url( 'partners', array( 'action' => 'save', 'id' => $p->id ) ) ) . '">';
+		wp_nonce_field( 'ssa_partner_save_' . $p->id );
+		echo '<div id="ssa-p-details" class="ssa-subpanel"><div class="ssa-grid ssa-grid--1-1">';
+		echo SSA_Admin_UI::card_open( __( 'Application', 'splitshare-affiliates' ) ) . '<dl class="ssa-appcard__meta">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		foreach ( $p->application as $k => $v ) {
+			if ( '' !== (string) $v ) {
+				$val = filter_var( $v, FILTER_VALIDATE_URL ) ? '<a href="' . esc_url( $v ) . '" target="_blank" rel="noopener">' . esc_html( preg_replace( '#^https?://(www\.)?#', '', $v ) ) . '</a>' : esc_html( $v );
+				echo '<div><dt>' . esc_html( ucfirst( str_replace( '_', ' ', $k ) ) ) . '</dt><dd>' . $val . '</dd></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+		}
+		echo '</dl>' . SSA_Admin_UI::card_close(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo SSA_Admin_UI::card_open( __( 'Bank details & notes', 'splitshare-affiliates' ) ) . '<div class="ssa-form-grid">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		foreach ( array( 'holder' => __( 'Account holder', 'splitshare-affiliates' ), 'iban' => 'IBAN', 'company' => __( 'Company / tax office', 'splitshare-affiliates' ), 'tax_no' => __( 'Tax / ID number', 'splitshare-affiliates' ), 'invoices' => __( 'Issues invoices? (yes/no)', 'splitshare-affiliates' ) ) as $k => $label ) {
+			echo '<div><label>' . esc_html( $label ) . '</label><input type="text" name="payout[' . esc_attr( $k ) . ']" value="' . esc_attr( isset( $p->payout_details[ $k ] ) ? $p->payout_details[ $k ] : '' ) . '"></div>';
+		}
+		echo '<div style="grid-column:1/-1"><label>' . esc_html__( 'Admin note', 'splitshare-affiliates' ) . '</label><textarea name="admin_note" rows="3">' . esc_textarea( $p->admin_note ) . '</textarea></div></div>';
+		echo '<p><button class="button button-primary">' . esc_html__( 'Save', 'splitshare-affiliates' ) . '</button></p>' . SSA_Admin_UI::card_close() . '</div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		echo '<div id="ssa-p-split" class="ssa-subpanel">' . SSA_Admin_UI::card_open( __( 'Split & code', 'splitshare-affiliates' ) ) . '<div class="ssa-form-grid">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div><label>' . esc_html__( 'Code', 'splitshare-affiliates' ) . '</label><input type="text" name="code" value="' . esc_attr( $p->code ) . '" pattern="[A-Za-z0-9]{4,12}"></div>';
+		echo '<div><label>' . esc_html( sprintf( __( 'Commission %% (share %s%%)', 'splitshare-affiliates' ), $share ) ) . '</label><input type="number" name="commission_pct" value="' . esc_attr( $p->commission_pct ) . '" min="0" max="' . esc_attr( $share ) . '" step="0.5"> <span class="ssa-muted">+ ' . esc_html( $p->discount_pct ) . '% ' . esc_html__( 'discount', 'splitshare-affiliates' ) . '</span>';
+		if ( ! $p->can_change_split( $interval ) ) {
+			echo '<p class="ssa-muted">' . esc_html( sprintf( __( 'Partner can change again on %s.', 'splitshare-affiliates' ), date_i18n( get_option( 'date_format' ), $p->next_split_change_at( $interval ) ) ) ) . ' <a href="' . esc_url( self::action_url( 'unlock', $p->id ) ) . '">' . esc_html__( 'Unlock now', 'splitshare-affiliates' ) . '</a></p>';
+		}
+		echo '</div></div><p><button class="button button-primary">' . esc_html__( 'Save', 'splitshare-affiliates' ) . '</button></p>' . SSA_Admin_UI::card_close() . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '</form></div>';
 	}
 }
 
@@ -144,24 +212,11 @@ class SSA_Partners_Table extends WP_List_Table {
 			'name'   => __( 'Partner', 'splitshare-affiliates' ),
 			'code'   => __( 'Code', 'splitshare-affiliates' ),
 			'split'  => __( 'Split', 'splitshare-affiliates' ),
-			'tier'   => __( 'Tier', 'splitshare-affiliates' ),
 			'status' => __( 'Status', 'splitshare-affiliates' ),
-			'sales'  => __( 'Approved sales', 'splitshare-affiliates' ),
-			'earned' => __( 'Approved / Paid', 'splitshare-affiliates' ),
-			'since'  => __( 'Since', 'splitshare-affiliates' ),
+			'trend'  => __( 'Last 6 months', 'splitshare-affiliates' ),
+			'sales'  => __( 'Sales', 'splitshare-affiliates' ),
+			'earned' => __( 'Confirmed / Pending', 'splitshare-affiliates' ),
 		);
-	}
-
-	protected function get_views() {
-		$counts  = SSA_Partners::counts_by_status();
-		$current = isset( $_GET['status'] ) ? sanitize_key( $_GET['status'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$views   = array( '' => __( 'All', 'splitshare-affiliates' ), 'active' => __( 'Active', 'splitshare-affiliates' ), 'paused' => __( 'Paused', 'splitshare-affiliates' ), 'rejected' => __( 'Rejected', 'splitshare-affiliates' ) );
-		$out     = array();
-		foreach ( $views as $key => $label ) {
-			$n = '' === $key ? array_sum( $counts ) - $counts['pending'] : $counts[ $key ];
-			$out[ $key ? $key : 'all' ] = '<a href="' . esc_url( SSA_Admin_Menu::url( 'partners', $key ? array( 'status' => $key ) : array() ) ) . '"' . ( $current === $key ? ' class="current"' : '' ) . '>' . esc_html( $label ) . ' <span class="count">(' . (int) $n . ')</span></a>';
-		}
-		return $out;
 	}
 
 	public function prepare_items() {
@@ -174,16 +229,15 @@ class SSA_Partners_Table extends WP_List_Table {
 			'limit'           => $per_page,
 			'offset'          => ( $this->get_pagenum() - 1 ) * $per_page,
 		);
-		$this->items = SSA_Partners::query( $args );
+		$this->items           = SSA_Partners::query( $args );
 		$this->_column_headers = array( $this->get_columns(), array(), array() );
 		$this->set_pagination_args( array( 'total_items' => SSA_Partners::count( $args ), 'per_page' => $per_page ) );
 	}
 
 	public function column_default( $item, $col ) {
-		$totals = class_exists( 'SSA_Commissions' ) ? SSA_Commissions::totals_for_partner( $item->id ) : array( 'approved' => 0, 'paid' => 0, 'sales_count' => 0 );
 		switch ( $col ) {
 			case 'name':
-				$actions = array( 'edit' => '<a href="' . esc_url( SSA_Admin_Menu::url( 'partners', array( 'action' => 'edit', 'id' => $item->id ) ) ) . '">' . esc_html__( 'Edit', 'splitshare-affiliates' ) . '</a>' );
+				$actions = array( 'edit' => '<a href="' . esc_url( SSA_Admin_Menu::url( 'partners', array( 'action' => 'edit', 'id' => $item->id ) ) ) . '">' . esc_html__( 'Profile', 'splitshare-affiliates' ) . '</a>' );
 				if ( 'active' === $item->status ) {
 					$actions['pause'] = '<a href="' . esc_url( SSA_Admin_Partners::action_url( 'pause', $item->id ) ) . '">' . esc_html__( 'Pause', 'splitshare-affiliates' ) . '</a>';
 				} elseif ( 'paused' === $item->status ) {
@@ -191,19 +245,18 @@ class SSA_Partners_Table extends WP_List_Table {
 				}
 				return SSA_Admin_Menu::partner_link( $item ) . $this->row_actions( $actions );
 			case 'code':
-				return '<code>' . esc_html( $item->code ) . '</code>';
+				return SSA_Admin_UI::code_chip( $item->code );
 			case 'split':
-				return esc_html( $item->commission_pct . '% + ' . $item->discount_pct . '%' );
-			case 'tier':
-				return esc_html( $item->tier ? $item->tier : '—' );
+				return SSA_Charts::split_bar( $item->commission_pct, $item->discount_pct, (float) SSA_Settings::get( 'default_share' ) );
 			case 'status':
-				return SSA_Admin_Menu::badge( $item->status );
+				return SSA_Admin_UI::badge( $item->status ) . ( $item->tier ? '<br><small class="ssa-muted">' . esc_html( $item->tier ) . '</small>' : '' );
+			case 'trend':
+				return SSA_Charts::sparkline( SSA_Reports::partner_spark( $item->id, 6 ) );
 			case 'sales':
-				return (int) $totals['sales_count'];
+				return '<span class="num">' . (int) SSA_Reports::partner_earnings( $item->id )['sales'] . '</span>';
 			case 'earned':
-				return wp_kses_post( wc_price( $totals['approved'] ) . ' / ' . wc_price( $totals['paid'] ) );
-			case 'since':
-				return esc_html( $item->approved_at ? date_i18n( get_option( 'date_format' ), strtotime( $item->approved_at ) ) : '—' );
+				$e = SSA_Reports::partner_earnings( $item->id );
+				return '<strong>' . wp_kses_post( wc_price( $e['confirmed'] ) ) . '</strong><br><small class="ssa-muted">' . wp_kses_post( wc_price( $e['estimated'] ) ) . ' ' . esc_html__( 'pending', 'splitshare-affiliates' ) . '</small>';
 		}
 		return '';
 	}

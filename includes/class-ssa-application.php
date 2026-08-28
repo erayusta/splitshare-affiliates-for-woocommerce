@@ -37,7 +37,7 @@ class SSA_Application {
 	}
 
 	public static function render() {
-		wp_enqueue_style( 'ssa-account', SSA_URL . 'assets/css/account.css', array(), SSA_VERSION );
+		wp_enqueue_style( 'ssa-account', SSA_URL . 'assets/css/account.css', array(), SSA_Plugin::asset_ver( 'assets/css/account.css' ) );
 		$partner = is_user_logged_in() ? SSA_Partners::get_by_user( get_current_user_id() ) : null;
 		ob_start();
 		$file = self::locate_template( 'apply-form.php' );

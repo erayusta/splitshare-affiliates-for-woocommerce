@@ -24,6 +24,24 @@ class SSA_Account {
 		add_action( 'template_redirect', array( __CLASS__, 'handle_forms' ) );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'assets' ) );
 		add_action( 'woocommerce_account_dashboard', array( __CLASS__, 'join_card' ), 5 );
+		add_action( 'wc_ajax_ssa_search_products', array( __CLASS__, 'ajax_search_products' ) );
+	}
+
+	/** Link üreteci için ürün arama (yalnızca ortaklar; yayımlanmış ürünler). */
+	public static function ajax_search_products() {
+		check_ajax_referer( 'ssa_search', 'security' );
+		if ( ! self::partner() ) {
+			wp_send_json( array() );
+		}
+		$term = isset( $_GET['term'] ) ? sanitize_text_field( wp_unslash( $_GET['term'] ) ) : '';
+		if ( mb_strlen( $term ) < 2 ) {
+			wp_send_json( array() );
+		}
+		$out = array();
+		foreach ( wc_get_products( array( 's' => $term, 'limit' => 12, 'status' => 'publish', 'orderby' => 'title', 'order' => 'ASC' ) ) as $product ) {
+			$out[] = array( 'id' => $product->get_id(), 'text' => $product->get_name(), 'url' => $product->get_permalink() );
+		}
+		wp_send_json( $out );
 	}
 
 	public static function titles() {
@@ -82,11 +100,20 @@ class SSA_Account {
 
 	public static function assets() {
 		if ( function_exists( 'is_account_page' ) && is_account_page() ) {
-			wp_enqueue_style( 'ssa-account', SSA_URL . 'assets/css/account.css', array(), SSA_VERSION );
-			wp_enqueue_script( 'ssa-account', SSA_URL . 'assets/js/account.js', array(), SSA_VERSION, true );
+			wp_enqueue_style( 'ssa-account', SSA_URL . 'assets/css/account.css', array(), SSA_Plugin::asset_ver( 'assets/css/account.css' ) );
+			wp_enqueue_style( 'select2' );
+			wp_enqueue_script( 'selectWoo' );
+			wp_enqueue_script( 'ssa-account', SSA_URL . 'assets/js/account.js', array( 'jquery', 'selectWoo' ), SSA_Plugin::asset_ver( 'assets/js/account.js' ), true );
 			wp_localize_script( 'ssa-account', 'ssa_account', array(
-				'home' => home_url( '/' ),
-				'i18n' => array( 'copied' => __( 'Copied!', 'splitshare-affiliates' ), 'copy' => __( 'Copy', 'splitshare-affiliates' ) ),
+				'home'     => home_url( '/' ),
+				'search'   => WC_AJAX::get_endpoint( 'ssa_search_products' ),
+				'nonce'    => wp_create_nonce( 'ssa_search' ),
+				'currency' => get_woocommerce_currency_symbol(),
+				'decimals' => wc_get_price_decimals(),
+				'dec_sep'  => wc_get_price_decimal_separator(),
+				'th_sep'   => wc_get_price_thousand_separator(),
+				'pos'      => get_option( 'woocommerce_currency_pos' ),
+				'i18n'     => array( 'copied' => __( 'Copied!', 'splitshare-affiliates' ), 'copy' => __( 'Copy', 'splitshare-affiliates' ) ),
 			) );
 		}
 	}
@@ -110,9 +137,11 @@ class SSA_Account {
 		$args = array( 'partner' => $partner, 'settings' => SSA_Settings::all(), 'notices' => self::notices() );
 		switch ( $key ) {
 			case 'dashboard':
-				$args['totals']      = SSA_Commissions::totals_for_partner( $partner->id );
+				$args['earnings']    = SSA_Reports::partner_earnings( $partner->id );
+				$args['traffic']     = SSA_Reports::daily_clicks( $partner->id, 30 );
+				$args['monthly']     = SSA_Reports::monthly( 6, $partner->id );
 				$args['next_payout'] = SSA_Payouts::next_payout_date();
-				$args['recent']      = SSA_Commissions::query( array( 'partner_id' => $partner->id, 'limit' => 5 ) );
+				$args['recent']      = SSA_Commissions::query( array( 'partner_id' => $partner->id, 'limit' => 6 ) );
 				break;
 			case 'sales':
 				$per  = 20;
@@ -120,6 +149,7 @@ class SSA_Account {
 				if ( isset( $_GET['pg'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					$page = max( 1, (int) $_GET['pg'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				}
+				$args['earnings'] = SSA_Reports::partner_earnings( $partner->id );
 				$args['rows']  = SSA_Commissions::query( array( 'partner_id' => $partner->id, 'limit' => $per, 'offset' => ( $page - 1 ) * $per ) );
 				$args['total'] = SSA_Commissions::count( array( 'partner_id' => $partner->id ) );
 				$args['page']  = $page;
@@ -128,7 +158,7 @@ class SSA_Account {
 			case 'earnings':
 				$args['payouts']    = SSA_Payouts::for_partner( $partner->id );
 				$args['carry_over'] = SSA_Payouts::carry_over( $partner->id );
-				$args['totals']     = SSA_Commissions::totals_for_partner( $partner->id );
+				$args['earnings']   = SSA_Reports::partner_earnings( $partner->id );
 				$args['next_payout'] = SSA_Payouts::next_payout_date();
 				break;
 			case 'split':
@@ -140,6 +170,7 @@ class SSA_Account {
 				break;
 			case 'links':
 				$args['stats']    = SSA_Tracking::click_stats( $partner->id, 30 );
+				$args['traffic']  = SSA_Reports::daily_clicks( $partner->id, 30 );
 				$args['boosters'] = array_filter( array_map( 'wc_get_product', SSA_Settings::active_booster_products() ) );
 				$args['categories'] = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => true, 'parent' => 0 ) );
 				break;

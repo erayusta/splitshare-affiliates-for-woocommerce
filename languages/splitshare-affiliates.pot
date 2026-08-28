@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-27T11:22:57+00:00\n"
+"POT-Creation-Date: 2026-08-28T04:38:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: splitshare-affiliates\n"
@@ -49,198 +49,262 @@ msgid "Application declined."
 msgstr ""
 
 #: admin/class-ssa-admin-applications.php:38
-msgid "No pending applications."
+msgid "No pending applications"
 msgstr ""
 
-#: admin/class-ssa-admin-applications.php:41
-msgid "Applicant"
-msgstr ""
-
-#: admin/class-ssa-admin-applications.php:41
-msgid "Details"
-msgstr ""
-
-#: admin/class-ssa-admin-applications.php:41
-msgid "Applied"
-msgstr ""
-
-#: admin/class-ssa-admin-applications.php:41
-msgid "Decision"
-msgstr ""
-
-#: admin/class-ssa-admin-applications.php:53
-msgid "Code (optional, auto)"
-msgstr ""
-
-#: admin/class-ssa-admin-applications.php:54
-msgid "Note (sent on decline)"
+#: admin/class-ssa-admin-applications.php:38
+msgid "New applications from the application page land here for review."
 msgstr ""
 
 #: admin/class-ssa-admin-applications.php:55
-#: admin/class-ssa-admin-commissions.php:80
+msgid "Followers"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:55
+#: includes/class-ssa-application.php:29
+msgid "City"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:55
+msgid "Creates"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:66
+msgid "Code (optional, auto)"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:67
+msgid "Default split: %1$s%% + %2$s%%"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:68
+msgid "Note (sent on decline)"
+msgstr ""
+
+#: admin/class-ssa-admin-applications.php:69
+#: admin/class-ssa-admin-commissions.php:121
 msgid "Approve"
 msgstr ""
 
-#: admin/class-ssa-admin-applications.php:56
+#: admin/class-ssa-admin-applications.php:70
 msgid "Decline this application?"
 msgstr ""
 
-#: admin/class-ssa-admin-applications.php:56
+#: admin/class-ssa-admin-applications.php:70
 msgid "Decline"
 msgstr ""
 
 #. translators: %d: count
-#: admin/class-ssa-admin-commissions.php:34
+#: admin/class-ssa-admin-commissions.php:38
 msgid "%d commission updated."
 msgid_plural "%d commissions updated."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/class-ssa-admin-commissions.php:51
-#: admin/class-ssa-admin-partners.php:96
-msgid "All partners"
-msgstr ""
-
-#: admin/class-ssa-admin-commissions.php:55
-msgid "Filter"
-msgstr ""
-
-#: admin/class-ssa-admin-commissions.php:68
-#: templates/account/sales.php:16
-msgid "Order"
+#: admin/class-ssa-admin-commissions.php:69
+#: admin/class-ssa-admin-commissions.php:76
+#: admin/class-ssa-admin-ui.php:118
+#: includes/class-ssa-account.php:238
+msgid "Pending"
 msgstr ""
 
 #: admin/class-ssa-admin-commissions.php:69
-#: admin/class-ssa-admin-partners.php:144
-#: admin/class-ssa-admin-payouts.php:55
-#: admin/class-ssa-admin-reports.php:32
+#: admin/class-ssa-admin-commissions.php:76
+#: admin/class-ssa-admin-ui.php:116
+#: includes/class-ssa-account.php:239
+msgid "Approved"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:69
+#: admin/class-ssa-admin-commissions.php:76
+#: admin/class-ssa-admin-payouts.php:54
+#: admin/class-ssa-admin-ui.php:117
+#: includes/class-ssa-account.php:240
+msgid "Paid"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:69
+#: admin/class-ssa-admin-commissions.php:76
+#: admin/class-ssa-admin-commissions.php:121
+#: admin/class-ssa-admin-commissions.php:153
+#: admin/class-ssa-admin-ui.php:121
+msgid "Void"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:76
+#: admin/class-ssa-admin-partners.php:81
+#: admin/class-ssa-admin-partners.php:147
+#: admin/class-ssa-admin-payouts.php:54
+msgid "All"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:81
+#: admin/class-ssa-admin-overview.php:66
+#: admin/class-ssa-admin-partners.php:112
+msgid "All partners"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:85
+msgid "Filter"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:86
+msgid "Export CSV"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:92
+msgid "No commissions match"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:92
+msgid "Commissions are recorded when an attributed order is paid."
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:110
+#: admin/class-ssa-admin-overview.php:83
+#: admin/class-ssa-admin-partners.php:149
+#: templates/account/sales.php:24
+msgid "Order"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:111
+#: admin/class-ssa-admin-overview.php:69
+#: admin/class-ssa-admin-overview.php:83
+#: admin/class-ssa-admin-partners.php:212
+#: admin/class-ssa-admin-payouts.php:66
+#: admin/class-ssa-admin-reports.php:59
 msgid "Partner"
 msgstr ""
 
-#: admin/class-ssa-admin-commissions.php:70
+#: admin/class-ssa-admin-commissions.php:112
+#: admin/class-ssa-admin-partners.php:149
 #: admin/class-ssa-settings-page.php:81
 msgid "Attribution"
 msgstr ""
 
-#: admin/class-ssa-admin-commissions.php:71
+#: admin/class-ssa-admin-commissions.php:113
+#: admin/class-ssa-admin-partners.php:149
 msgid "Basis"
 msgstr ""
 
-#: admin/class-ssa-admin-commissions.php:72
-#: admin/class-ssa-admin-partners.php:112
-#: admin/class-ssa-admin-partners.php:146
+#: admin/class-ssa-admin-commissions.php:114
+#: admin/class-ssa-admin-partners.php:214
+#: admin/class-ssa-admin-reports.php:46
 #: admin/class-ssa-settings-page.php:178
 msgid "Split"
 msgstr ""
 
-#: admin/class-ssa-admin-commissions.php:73
-#: admin/class-ssa-admin-reports.php:23
-#: admin/class-ssa-admin-reports.php:26
-#: admin/class-ssa-admin-reports.php:32
-#: admin/class-ssa-admin-reports.php:39
-#: templates/account/dashboard.php:49
-#: templates/account/sales.php:19
+#: admin/class-ssa-admin-commissions.php:115
+#: admin/class-ssa-admin-overview.php:22
+#: admin/class-ssa-admin-overview.php:34
+#: admin/class-ssa-admin-overview.php:69
+#: admin/class-ssa-admin-overview.php:83
+#: admin/class-ssa-admin-partners.php:141
+#: admin/class-ssa-admin-partners.php:149
+#: admin/class-ssa-admin-reports.php:21
+#: admin/class-ssa-admin-reports.php:30
+#: admin/class-ssa-admin-reports.php:59
+#: admin/class-ssa-admin-reports.php:75
+#: templates/account/dashboard.php:63
+#: templates/account/dashboard.php:74
+#: templates/account/sales.php:27
 msgid "Commission"
 msgstr ""
 
-#: admin/class-ssa-admin-commissions.php:74
-#: admin/class-ssa-admin-partners.php:148
-#: admin/class-ssa-admin-payouts.php:55
-#: templates/account/dashboard.php:49
-#: templates/account/earnings.php:24
-#: templates/account/sales.php:20
+#: admin/class-ssa-admin-commissions.php:116
+#: admin/class-ssa-admin-overview.php:83
+#: admin/class-ssa-admin-partners.php:149
+#: admin/class-ssa-admin-partners.php:164
+#: admin/class-ssa-admin-partners.php:215
+#: admin/class-ssa-admin-payouts.php:66
+#: templates/account/dashboard.php:74
+#: templates/account/earnings.php:36
+#: templates/account/sales.php:28
 msgid "Status"
 msgstr ""
 
-#: admin/class-ssa-admin-commissions.php:75
-#: templates/account/dashboard.php:49
-#: templates/account/sales.php:15
-msgid "Date"
-msgstr ""
-
-#: admin/class-ssa-admin-commissions.php:80
-#: admin/class-ssa-admin-commissions.php:93
-#: admin/class-ssa-admin-commissions.php:128
-msgid "Void"
-msgstr ""
-
-#: admin/class-ssa-admin-commissions.php:93
-#: admin/class-ssa-admin-partners.php:158
-#: admin/class-ssa-admin-payouts.php:46
-msgid "All"
-msgstr ""
-
-#: admin/class-ssa-admin-commissions.php:93
-#: admin/class-ssa-admin-partners.php:99
-#: includes/class-ssa-account.php:227
-#: templates/account/dashboard.php:26
-#: templates/account/earnings.php:17
-msgid "Pending"
-msgstr ""
-
-#: admin/class-ssa-admin-commissions.php:93
-#: admin/class-ssa-admin-partners.php:100
-#: includes/class-ssa-account.php:228
-msgid "Approved"
-msgstr ""
-
-#: admin/class-ssa-admin-commissions.php:93
-#: admin/class-ssa-admin-partners.php:101
-#: admin/class-ssa-admin-payouts.php:46
-#: includes/class-ssa-account.php:229
-msgid "Paid"
-msgstr ""
-
-#: admin/class-ssa-admin-commissions.php:125
+#: admin/class-ssa-admin-commissions.php:150
 msgid "Approve now"
 msgstr ""
 
-#: admin/class-ssa-admin-commissions.php:130
+#: admin/class-ssa-admin-commissions.php:155
 msgid "adjustment"
 msgstr ""
 
-#: admin/class-ssa-admin-commissions.php:135
-#: templates/account/sales.php:28
+#: admin/class-ssa-admin-commissions.php:160
+#: admin/class-ssa-admin-partners.php:194
+#: admin/class-ssa-admin-partners.php:213
+#: admin/class-ssa-admin-reports.php:59
+#: admin/class-ssa-admin-reports.php:85
+#: templates/account/dashboard.php:77
+#: templates/account/sales.php:39
+msgid "Code"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:160
+#: templates/account/dashboard.php:77
+#: templates/account/sales.php:39
+msgid "Link"
+msgstr ""
+
+#: admin/class-ssa-admin-commissions.php:160
+#: admin/class-ssa-admin-partners.php:152
+#: templates/account/sales.php:39
 msgid "returning customer"
 msgstr ""
 
+#: admin/class-ssa-admin-commissions.php:170
+msgid "approves %s"
+msgstr ""
+
 #: admin/class-ssa-admin-menu.php:21
-#: admin/class-ssa-admin-reports.php:26
-#: includes/class-ssa-plugin.php:65
-msgid "Partners"
+msgid "Overview"
 msgstr ""
 
 #: admin/class-ssa-admin-menu.php:22
-msgid "Applications"
+#: admin/class-ssa-admin-reports.php:46
+#: includes/class-ssa-plugin.php:73
+msgid "Partners"
 msgstr ""
 
 #: admin/class-ssa-admin-menu.php:23
-msgid "Commissions"
+msgid "Applications"
 msgstr ""
 
 #: admin/class-ssa-admin-menu.php:24
-#: admin/class-ssa-settings-page.php:87
-#: templates/account/earnings.php:21
-msgid "Payouts"
+msgid "Commissions"
 msgstr ""
 
 #: admin/class-ssa-admin-menu.php:25
+#: admin/class-ssa-admin-partners.php:135
+#: admin/class-ssa-admin-partners.php:161
+#: admin/class-ssa-settings-page.php:87
+#: templates/account/earnings.php:33
+msgid "Payouts"
+msgstr ""
+
+#: admin/class-ssa-admin-menu.php:26
 msgid "Reports"
 msgstr ""
 
-#: admin/class-ssa-admin-menu.php:48
 #: admin/class-ssa-admin-menu.php:49
-#: admin/class-ssa-admin-menu.php:74
+#: admin/class-ssa-admin-menu.php:50
+#: admin/class-ssa-admin-menu.php:76
 #: admin/class-ssa-settings-page.php:13
 msgid "Affiliates"
 msgstr ""
 
-#: admin/class-ssa-admin-menu.php:80
-#: includes/class-ssa-plugin.php:66
+#: admin/class-ssa-admin-menu.php:77
+#: includes/class-ssa-plugin.php:74
 msgid "Settings"
 msgstr ""
 
-#: admin/class-ssa-admin-menu.php:87
+#: admin/class-ssa-admin-menu.php:79
+#: admin/class-ssa-settings-page.php:103
+msgid "Application page"
+msgstr ""
+
+#: admin/class-ssa-admin-menu.php:94
 msgid "Coming soon."
 msgstr ""
 
@@ -280,6 +344,158 @@ msgstr ""
 msgid "Not allowed."
 msgstr ""
 
+#: admin/class-ssa-admin-overview.php:16
+#: admin/class-ssa-admin-reports.php:14
+msgid "vs previous period"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:21
+#: admin/class-ssa-admin-reports.php:19
+msgid "Attributed revenue"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:21
+msgid "%d order"
+msgid_plural "%d orders"
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/class-ssa-admin-overview.php:23
+#: admin/class-ssa-admin-reports.php:23
+#: admin/class-ssa-admin-reports.php:85
+msgid "New customer rate"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:23
+msgid "target ≥ 60%"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:24
+#: admin/class-ssa-admin-reports.php:24
+msgid "Effective cost rate"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:25
+msgid "Active partners"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:25
+msgid "%d paused"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:26
+msgid "Approving within 7 days"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:26
+msgid "pending commissions past their hold period soon"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:32
+msgid "Revenue & commission, last 12 months"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:34
+#: admin/class-ssa-admin-overview.php:69
+#: admin/class-ssa-admin-partners.php:141
+#: admin/class-ssa-admin-reports.php:30
+#: admin/class-ssa-admin-reports.php:46
+#: admin/class-ssa-admin-reports.php:59
+msgid "Revenue"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:34
+msgid "Monthly attributed revenue and commission"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:36
+msgid "No attributed sales yet"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:36
+msgid "Once partners share their codes and links, monthly revenue and commission show up here."
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:41
+msgid "Needs attention"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:43
+msgid "pending applications"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:44
+msgid "open payouts (%s)"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:45
+msgid "suspicious codes"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:54
+#: admin/class-ssa-admin-reports.php:39
+msgid "How partners split their share"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:56
+#: admin/class-ssa-admin-reports.php:42
+msgid "Commission heavy"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:57
+#: admin/class-ssa-admin-reports.php:43
+#: templates/account/split.php:29
+msgid "Balanced"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:58
+#: admin/class-ssa-admin-reports.php:44
+#: templates/account/split.php:29
+msgid "Discount heavy"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:59
+#: admin/class-ssa-admin-reports.php:45
+msgid "partners"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:59
+#: admin/class-ssa-admin-reports.php:45
+msgid "Split preferences"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:66
+#: admin/class-ssa-admin-reports.php:56
+msgid "Top partners"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:69
+#: admin/class-ssa-admin-reports.php:20
+#: admin/class-ssa-admin-reports.php:59
+#: admin/class-ssa-admin-reports.php:85
+#: templates/account/dashboard.php:55
+#: templates/account/links.php:20
+msgid "Orders"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:76
+#: admin/class-ssa-admin-reports.php:66
+msgid "No sales in this period"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:80
+#: admin/class-ssa-admin-partners.php:147
+msgid "Recent commissions"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:80
+msgid "All commissions"
+msgstr ""
+
+#: admin/class-ssa-admin-overview.php:91
+msgid "No commissions yet"
+msgstr ""
+
 #: admin/class-ssa-admin-partners.php:25
 msgid "Partner paused."
 msgstr ""
@@ -305,145 +521,239 @@ msgstr ""
 msgid "Partner saved."
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:80
-msgid "Search partners"
+#: admin/class-ssa-admin-partners.php:81
+#: admin/class-ssa-admin-ui.php:115
+msgid "Active"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:88
+#: admin/class-ssa-admin-partners.php:81
+#: admin/class-ssa-admin-ui.php:120
+msgid "Paused"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:81
+#: admin/class-ssa-admin-ui.php:122
+msgid "Rejected"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:86
+msgid "Search name, e-mail or code"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:86
+msgid "Search"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:92
+msgid "No partners yet"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:92
+msgid "Approved applications appear here with their code, split and earnings."
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:92
+msgid "Review applications"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:103
 #: includes/class-ssa-partners.php:138
 #: includes/class-ssa-partners.php:199
 msgid "Partner not found."
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:102
-#: admin/class-ssa-admin-partners.php:149
-msgid "Approved sales"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:108
-#: includes/class-ssa-application.php:27
-msgid "E-mail"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:108
+#: admin/class-ssa-admin-partners.php:115
 msgid "user profile"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:109
-#: admin/class-ssa-admin-partners.php:145
-#: admin/class-ssa-admin-reports.php:47
-#: templates/account/sales.php:28
-msgid "Code"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:110
-msgid "Previous code %1$s valid until %2$s"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:111
-msgid "Issue a new code? The old one stays valid for the grace period."
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:111
-#: admin/class-ssa-admin-reports.php:49
-msgid "Rotate code"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:113
-msgid "commission"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:113
-msgid "discount"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:113
-msgid "share %s%%"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:114
-msgid "Partner can change again on %s."
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:114
-msgid "Unlock now"
-msgstr ""
-
 #: admin/class-ssa-admin-partners.php:115
-#: admin/class-ssa-admin-partners.php:147
-msgid "Tier"
+msgid "since %s"
 msgstr ""
 
 #: admin/class-ssa-admin-partners.php:116
-msgid "Application"
+msgid "previous %1$s until %2$s"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:117
-msgid "Payout details"
+#: admin/class-ssa-admin-partners.php:120
+#: admin/class-ssa-admin-partners.php:242
+msgid "Pause"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:118
-#: templates/account/earnings.php:39
-msgid "Account holder"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:118
-msgid "Company / tax office"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:118
-#: templates/account/earnings.php:39
-msgid "Tax / ID number"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:118
-msgid "Issues invoices? (yes/no)"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:121
-msgid "Admin note"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:124
-#: templates/account/earnings.php:43
-msgid "Save"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:126
-msgid "Pause partner"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:128
-#: admin/class-ssa-admin-partners.php:190
+#: admin/class-ssa-admin-partners.php:122
+#: admin/class-ssa-admin-partners.php:244
 msgid "Reactivate"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:150
-msgid "Approved / Paid"
+#: admin/class-ssa-admin-partners.php:124
+msgid "Issue a new code? The old one stays valid for the grace period."
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:151
-msgid "Since"
+#: admin/class-ssa-admin-partners.php:124
+#: admin/class-ssa-admin-reports.php:87
+msgid "Rotate code"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:158
-msgid "Active"
+#: admin/class-ssa-admin-partners.php:128
+#: templates/account/dashboard.php:25
+msgid "Confirmed earnings"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:158
-msgid "Paused"
+#: admin/class-ssa-admin-partners.php:128
+msgid "%1$s paid · %2$s awaiting payout"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:158
-msgid "Rejected"
+#: admin/class-ssa-admin-partners.php:129
+msgid "Estimated (pending)"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:129
+msgid "inside the hold period"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:130
+#: templates/account/sales.php:13
+msgid "Approved sales"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:130
+msgid "%s this month"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:131
+msgid "Traffic (30 days)"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:131
+msgid "%d orders from links"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:135
+#: admin/class-ssa-admin-partners.php:217
+#: admin/class-ssa-settings-page.php:178
+msgid "Sales"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:135
+msgid "Details & bank"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:135
+#: admin/class-ssa-admin-partners.php:193
+msgid "Split & code"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:139
+msgid "Commission, last 12 months"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:141
+#: admin/class-ssa-admin-reports.php:30
+msgid "Monthly revenue and commission"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:143
+msgid "No sales yet"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:149
+#: templates/account/dashboard.php:74
+#: templates/account/sales.php:23
+msgid "Date"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:156
+msgid "No commissions yet."
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:164
+#: admin/class-ssa-admin-payouts.php:66
+#: templates/account/earnings.php:36
+msgid "Period"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:164
+#: admin/class-ssa-admin-payouts.php:66
+#: templates/account/earnings.php:36
+msgid "Amount"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:164
+#: templates/account/earnings.php:36
+msgid "Paid on"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:170
+#: templates/account/earnings.php:44
+msgid "No payouts yet."
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:178
+msgid "Application"
 msgstr ""
 
 #: admin/class-ssa-admin-partners.php:186
-msgid "Edit"
+msgid "Bank details & notes"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:188
-msgid "Pause"
+#: admin/class-ssa-admin-partners.php:187
+#: templates/account/earnings.php:54
+msgid "Account holder"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:187
+msgid "Company / tax office"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:187
+#: templates/account/earnings.php:54
+msgid "Tax / ID number"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:187
+msgid "Issues invoices? (yes/no)"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:190
+msgid "Admin note"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:191
+#: admin/class-ssa-admin-partners.php:199
+#: templates/account/earnings.php:59
+msgid "Save"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:195
+msgid "Commission %% (share %s%%)"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:195
+#: includes/class-ssa-charts.php:192
+msgid "discount"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:197
+msgid "Partner can change again on %s."
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:197
+msgid "Unlock now"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:216
+msgid "Last 6 months"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:218
+msgid "Confirmed / Pending"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:240
+msgid "Profile"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:259
+msgid "pending"
 msgstr ""
 
 #. translators: 1: created count, 2: carried count
@@ -455,128 +765,151 @@ msgstr ""
 msgid "Payout marked as paid and the partner has been notified."
 msgstr ""
 
-#: admin/class-ssa-admin-payouts.php:40
-msgid "Create payouts now for all approved, unpaid commissions?"
-msgstr ""
-
-#: admin/class-ssa-admin-payouts.php:40
-msgid "Create payouts now"
-msgstr ""
-
-#: admin/class-ssa-admin-payouts.php:41
-msgid "Download open payouts (CSV)"
-msgstr ""
-
-#. translators: %s: date
-#: admin/class-ssa-admin-payouts.php:43
-msgid "Next scheduled run: %s"
-msgstr ""
-
 #: admin/class-ssa-admin-payouts.php:46
+msgid "Open payouts"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:47
+msgid "Approved, not yet batched"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:48
+msgid "Paid, last 12 months"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:49
+msgid "Next scheduled run"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:54
+#: admin/class-ssa-admin-ui.php:119
 msgid "Open"
 msgstr ""
 
-#: admin/class-ssa-admin-payouts.php:52
-msgid "No payouts."
+#: admin/class-ssa-admin-payouts.php:58
+msgid "Download open payouts (CSV)"
 msgstr ""
 
-#: admin/class-ssa-admin-payouts.php:55
-#: templates/account/earnings.php:24
-msgid "Period"
+#: admin/class-ssa-admin-payouts.php:59
+msgid "Create payouts now for all approved, unpaid commissions?"
 msgstr ""
 
-#: admin/class-ssa-admin-payouts.php:55
-#: templates/account/earnings.php:35
+#: admin/class-ssa-admin-payouts.php:59
+msgid "Create payouts now"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:63
+msgid "No payouts"
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:63
+msgid "Payouts are created automatically on the payout day from approved commissions above the minimum. You can also create them now."
+msgstr ""
+
+#: admin/class-ssa-admin-payouts.php:66
+#: templates/account/earnings.php:49
 msgid "Bank details"
 msgstr ""
 
-#: admin/class-ssa-admin-payouts.php:55
-#: templates/account/earnings.php:24
-msgid "Amount"
+#: admin/class-ssa-admin-payouts.php:71
+msgid "IBAN missing"
 msgstr ""
 
-#: admin/class-ssa-admin-payouts.php:66
+#: admin/class-ssa-admin-payouts.php:77
 msgid "Bank reference"
 msgstr ""
 
-#: admin/class-ssa-admin-payouts.php:66
+#: admin/class-ssa-admin-payouts.php:77
 msgid "Mark paid"
 msgstr ""
 
-#: admin/class-ssa-admin-reports.php:15
+#: admin/class-ssa-admin-reports.php:22
+msgid "Discounts given"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:29
+msgid "Revenue & commission by month"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:32
+msgid "New vs. returning customers by month"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:33
+msgid "New customers"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:33
+msgid "Returning"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:33
+msgid "Orders by customer type"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:52
+msgid "No active partners yet"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:72
+msgid "Commission by share group"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:75
+msgid "Commission by product-group share"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:77
+msgid "No data"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:82
+msgid "Code usage, last 30 days"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:83
+msgid "Average %s orders per code. Codes with 3× the average and a low new-customer rate may have leaked to coupon sites."
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:87
+msgid "Suspicious"
+msgstr ""
+
+#: admin/class-ssa-admin-reports.php:91
+msgid "No code usage yet."
+msgstr ""
+
+#: admin/class-ssa-admin-ui.php:45
+#: templates/account/dashboard.php:35
+msgid "This month"
+msgstr ""
+
+#: admin/class-ssa-admin-ui.php:46
+msgid "Last month"
+msgstr ""
+
+#: admin/class-ssa-admin-ui.php:47
+msgid "Last 30 days"
+msgstr ""
+
+#: admin/class-ssa-admin-ui.php:48
+msgid "Last 90 days"
+msgstr ""
+
+#: admin/class-ssa-admin-ui.php:49
+msgid "This year"
+msgstr ""
+
+#: admin/class-ssa-admin-ui.php:56
 #: templates/apply-form.php:47
 msgid "Apply"
 msgstr ""
 
-#: admin/class-ssa-admin-reports.php:20
-#: admin/class-ssa-admin-reports.php:47
-msgid "New customer rate"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:20
-msgid "target ≥ 60%"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:21
-msgid "Effective cost rate"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:21
-msgid "(discount + commission) / attributed revenue · target ≤ share"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:22
-msgid "Attributed revenue"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:23
-msgid "Discounts: %s"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:26
-msgid "Split distribution"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:26
-msgid "Split (commission / discount)"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:26
-#: admin/class-ssa-admin-reports.php:32
-msgid "Revenue"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:32
-msgid "Top partners"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:32
-#: admin/class-ssa-admin-reports.php:47
-msgid "Orders"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:39
-msgid "Share groups"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:39
-msgid "Share"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:39
-msgid "Line items"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:46
-msgid "Code usage (last 30 days)"
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:46
-msgid "Average %s orders per code. Codes with 3× the average and a low new-customer rate may have leaked to coupon sites."
-msgstr ""
-
-#: admin/class-ssa-admin-reports.php:49
-msgid "Suspicious"
+#: admin/class-ssa-admin-ui.php:110
+#: includes/class-ssa-account.php:96
+#: templates/account/dashboard.php:19
+#: templates/account/kit.php:19
+msgid "Copy"
 msgstr ""
 
 #: admin/class-ssa-settings-page.php:33
@@ -776,10 +1109,6 @@ msgid "Partner panel"
 msgstr ""
 
 #: admin/class-ssa-settings-page.php:103
-msgid "Application page"
-msgstr ""
-
-#: admin/class-ssa-settings-page.php:103
 msgid "Page containing the [ssa_apply] shortcode."
 msgstr ""
 
@@ -855,10 +1184,6 @@ msgid "Dashboard"
 msgstr ""
 
 #: admin/class-ssa-settings-page.php:178
-msgid "Sales"
-msgstr ""
-
-#: admin/class-ssa-settings-page.php:178
 #: includes/class-ssa-account.php:33
 #: includes/class-ssa-emails.php:100
 msgid "Earnings"
@@ -883,49 +1208,44 @@ msgid "Partner sales"
 msgstr ""
 
 #: includes/class-ssa-account.php:34
-#: templates/account/dashboard.php:43
+#: templates/account/dashboard.php:48
 msgid "Split my share"
 msgstr ""
 
-#: includes/class-ssa-account.php:89
+#: includes/class-ssa-account.php:96
 msgid "Copied!"
 msgstr ""
 
-#: includes/class-ssa-account.php:89
-#: templates/account/dashboard.php:17
-#: templates/account/kit.php:19
-msgid "Copy"
-msgstr ""
-
-#: includes/class-ssa-account.php:107
+#: includes/class-ssa-account.php:114
 msgid "This area is for program partners."
 msgstr ""
 
-#: includes/class-ssa-account.php:192
+#: includes/class-ssa-account.php:203
 msgid "Your split has been updated. Your code now gives the new discount."
 msgstr ""
 
-#: includes/class-ssa-account.php:198
+#: includes/class-ssa-account.php:209
 msgid "Payout details saved."
 msgstr ""
 
-#: includes/class-ssa-account.php:215
+#: includes/class-ssa-account.php:226
 msgid "your application is being reviewed."
 msgstr ""
 
-#: includes/class-ssa-account.php:221
+#: includes/class-ssa-account.php:232
 msgid "Create content, share your code and earn on every sale — you decide how to split your share between commission and follower discount."
 msgstr ""
 
-#: includes/class-ssa-account.php:221
+#: includes/class-ssa-account.php:232
 msgid "Apply now"
 msgstr ""
 
-#: includes/class-ssa-account.php:230
+#: includes/class-ssa-account.php:241
+#: templates/account/sales.php:14
 msgid "Cancelled"
 msgstr ""
 
-#: includes/class-ssa-account.php:231
+#: includes/class-ssa-account.php:242
 msgid "Scheduled"
 msgstr ""
 
@@ -933,12 +1253,12 @@ msgstr ""
 msgid "Full name"
 msgstr ""
 
-#: includes/class-ssa-application.php:28
-msgid "Phone"
+#: includes/class-ssa-application.php:27
+msgid "E-mail"
 msgstr ""
 
-#: includes/class-ssa-application.php:29
-msgid "City"
+#: includes/class-ssa-application.php:28
+msgid "Phone"
 msgstr ""
 
 #: includes/class-ssa-application.php:30
@@ -984,6 +1304,18 @@ msgstr ""
 
 #: includes/class-ssa-application.php:94
 msgid "Please accept the program terms."
+msgstr ""
+
+#: includes/class-ssa-charts.php:105
+msgid "Show data"
+msgstr ""
+
+#: includes/class-ssa-charts.php:189
+msgid "%1$s%% commission, %2$s%% discount"
+msgstr ""
+
+#: includes/class-ssa-charts.php:192
+msgid "commission"
 msgstr ""
 
 #. translators: 1: partner, 2: amount, 3: reason
@@ -1176,7 +1508,7 @@ msgstr ""
 msgid "You can change your split again on %s."
 msgstr ""
 
-#: includes/class-ssa-plugin.php:27
+#: includes/class-ssa-plugin.php:33
 msgid "WooCommerce is required for this plugin to work."
 msgstr ""
 
@@ -1184,89 +1516,141 @@ msgstr ""
 msgid "Affiliate: order placed by the partner themselves — no commission."
 msgstr ""
 
-#: templates/account/dashboard.php:16
+#: templates/account/dashboard.php:18
 msgid "Your code"
 msgstr ""
 
-#: templates/account/dashboard.php:18
-msgid "%1$s%% commission + %2$s%% follower discount"
-msgstr ""
-
 #: templates/account/dashboard.php:21
-msgid "This month"
+msgid "Change my split"
 msgstr ""
 
-#: templates/account/dashboard.php:23
+#: templates/account/dashboard.php:27
+msgid "%1$s paid · %2$s ready for payout"
+msgstr ""
+
+#: templates/account/dashboard.php:30
+msgid "Estimated earnings"
+msgstr ""
+
+#: templates/account/dashboard.php:32
+msgid "confirmed %d days after delivery, unless returned"
+msgstr ""
+
+#: templates/account/dashboard.php:37
 msgid "on %s sales"
 msgstr ""
 
-#: templates/account/dashboard.php:28
-msgid "approved %d days after delivery"
+#: templates/account/dashboard.php:40
+msgid "Next payout"
 msgstr ""
 
-#: templates/account/dashboard.php:31
-msgid "Ready for payout"
+#: templates/account/dashboard.php:42
+msgid "minimum %s, the rest carries over"
 msgstr ""
 
-#: templates/account/dashboard.php:33
-msgid "next payout %s"
-msgstr ""
-
-#: templates/account/dashboard.php:36
-#: templates/account/earnings.php:18
-msgid "Paid so far"
-msgstr ""
-
-#: templates/account/dashboard.php:38
-msgid "%d approved sales"
-msgstr ""
-
-#: templates/account/dashboard.php:43
+#: templates/account/dashboard.php:48
 msgid "First step: decide how to split your share between your commission and your followers' discount."
 msgstr ""
 
-#: templates/account/dashboard.php:46
-msgid "Recent sales"
+#: templates/account/dashboard.php:53
+msgid "Traffic, last 30 days"
 msgstr ""
 
-#: templates/account/dashboard.php:49
-#: templates/account/sales.php:17
-msgid "Basket"
+#: templates/account/dashboard.php:53
+msgid "%1$d clicks · %2$d orders from links"
 msgstr ""
 
-#: templates/account/dashboard.php:56
-msgid "All sales"
+#: templates/account/dashboard.php:55
+#: templates/account/links.php:20
+msgid "Clicks"
 msgstr ""
 
-#: templates/account/dashboard.php:58
-msgid "No sales yet. Share your code or a link to get started."
+#: templates/account/dashboard.php:55
+#: templates/account/links.php:20
+msgid "Daily clicks and orders from your links"
 msgstr ""
 
-#: templates/account/dashboard.php:58
+#: templates/account/dashboard.php:57
+msgid "No clicks yet. Share a link to see your traffic here."
+msgstr ""
+
+#: templates/account/dashboard.php:57
 msgid "Create a link"
 msgstr ""
 
-#: templates/account/earnings.php:16
-msgid "Balance"
+#: templates/account/dashboard.php:61
+msgid "Commission by month"
 msgstr ""
 
-#: templates/account/earnings.php:16
-msgid "paid on the %1$s if ≥ %2$s"
+#: templates/account/dashboard.php:63
+msgid "Monthly commission"
 msgstr ""
 
-#: templates/account/earnings.php:24
-msgid "Paid on"
+#: templates/account/dashboard.php:65
+msgid "No sales yet. Share your code or a link to get started."
 msgstr ""
 
-#: templates/account/earnings.php:32
-msgid "No payouts yet."
+#: templates/account/dashboard.php:71
+msgid "Recent sales"
 msgstr ""
 
-#: templates/account/earnings.php:39
+#: templates/account/dashboard.php:71
+msgid "All sales"
+msgstr ""
+
+#: templates/account/dashboard.php:74
+#: templates/account/sales.php:25
+msgid "Basket"
+msgstr ""
+
+#: templates/account/dashboard.php:74
+#: templates/account/sales.php:26
+msgid "Via"
+msgstr ""
+
+#: templates/account/dashboard.php:82
+#: templates/account/sales.php:18
+msgid "No sales yet."
+msgstr ""
+
+#: templates/account/earnings.php:19
+msgid "Ready for payout"
+msgstr ""
+
+#: templates/account/earnings.php:21
+msgid "Above the %1$s minimum — paid on %2$s"
+msgstr ""
+
+#: templates/account/earnings.php:21
+msgid "%1$s more to reach the %2$s minimum; otherwise it carries over to next month"
+msgstr ""
+
+#: templates/account/earnings.php:22
+msgid "A refund adjustment of %s will be deducted from your next payout."
+msgstr ""
+
+#: templates/account/earnings.php:26
+#: templates/account/sales.php:11
+msgid "Estimated"
+msgstr ""
+
+#: templates/account/earnings.php:26
+msgid "pending approval"
+msgstr ""
+
+#: templates/account/earnings.php:27
+msgid "Paid so far"
+msgstr ""
+
+#: templates/account/earnings.php:27
+msgid "%d payouts"
+msgstr ""
+
+#: templates/account/earnings.php:54
 msgid "Company / tax office (if you issue invoices)"
 msgstr ""
 
-#: templates/account/earnings.php:42
+#: templates/account/earnings.php:58
 msgid "I issue invoices for my commission"
 msgstr ""
 
@@ -1290,6 +1674,10 @@ msgstr ""
 msgid "Orders from links (30 days)"
 msgstr ""
 
+#: templates/account/links.php:13
+msgid "%s%% conversion"
+msgstr ""
+
 #: templates/account/links.php:14
 msgid "Link validity"
 msgstr ""
@@ -1302,108 +1690,133 @@ msgstr ""
 msgid "orders within this window count, even without the code"
 msgstr ""
 
-#: templates/account/links.php:17
-msgid "Link generator"
-msgstr ""
-
 #: templates/account/links.php:19
-msgid "Any page on the store"
-msgstr ""
-
-#: templates/account/links.php:20
-msgid "…or pick a category"
-msgstr ""
-
-#: templates/account/links.php:21
-msgid "Home page"
+msgid "Daily traffic"
 msgstr ""
 
 #: templates/account/links.php:25
-#: templates/account/links.php:34
-msgid "Copy link"
+msgid "Link generator"
 msgstr ""
 
-#: templates/account/links.php:26
-msgid "Tip: add ?ref=CODE to any product URL to make it your link."
+#: templates/account/links.php:28
+msgid "Search a product"
+msgstr ""
+
+#: templates/account/links.php:29
+msgid "Type to search…"
 msgstr ""
 
 #: templates/account/links.php:30
+msgid "…or pick a category"
+msgstr ""
+
+#: templates/account/links.php:31
+msgid "Home page"
+msgstr ""
+
+#: templates/account/links.php:34
+msgid "…or paste any page URL"
+msgstr ""
+
+#: templates/account/links.php:37
+#: templates/account/links.php:48
+msgid "Copy link"
+msgstr ""
+
+#: templates/account/links.php:38
+msgid "Tip: add ?ref=CODE to any product URL to make it your link."
+msgstr ""
+
+#: templates/account/links.php:44
 msgid "Products earning extra this week"
 msgstr ""
 
 #: templates/account/sales.php:11
-msgid "No sales yet."
+msgid "in the hold period"
 msgstr ""
 
-#: templates/account/sales.php:18
-msgid "Via"
+#: templates/account/sales.php:12
+msgid "Confirmed"
 msgstr ""
 
-#: templates/account/sales.php:26
+#: templates/account/sales.php:12
+msgid "approved + paid"
+msgstr ""
+
+#: templates/account/sales.php:14
+msgid "returns & below minimum"
+msgstr ""
+
+#: templates/account/sales.php:37
 msgid "refund adjustment"
 msgstr ""
 
-#: templates/account/sales.php:28
-msgid "Link"
+#: templates/account/sales.php:42
+msgid "confirms %s"
 msgstr ""
 
-#: templates/account/sales.php:32
+#: templates/account/sales.php:43
 msgid "below minimum basket"
 msgstr ""
 
-#: templates/account/split.php:14
+#: templates/account/split.php:15
 msgid "On every sale, %s%% of the basket is yours to split: keep it as commission, give it to your followers as a discount, or anything in between. The store's cost is the same either way."
 msgstr ""
 
-#: templates/account/split.php:21
+#: templates/account/split.php:23
+#: templates/account/split.php:25
 msgid "My commission"
 msgstr ""
 
-#: templates/account/split.php:22
+#: templates/account/split.php:26
 msgid "Follower discount"
 msgstr ""
 
-#: templates/account/split.php:24
-msgid "Presets:"
-msgstr ""
-
-#: templates/account/split.php:25
+#: templates/account/split.php:29
 msgid "Link only"
 msgstr ""
 
-#: templates/account/split.php:25
-msgid "Balanced"
-msgstr ""
-
-#: templates/account/split.php:25
+#: templates/account/split.php:29
 msgid "Even"
 msgstr ""
 
-#: templates/account/split.php:25
-msgid "Discount heavy"
+#: templates/account/split.php:35
+msgid "Example: a %s basket"
 msgstr ""
 
-#: templates/account/split.php:30
-msgid "Save my split"
+#: templates/account/split.php:36
+msgid "Your follower pays"
 msgstr ""
 
-#: templates/account/split.php:31
-msgid "You can change it once every %d days."
-msgstr ""
-
-#: templates/account/split.php:33
-msgid "You changed your split recently. Next change possible on %s."
+#: templates/account/split.php:37
+msgid "You earn"
 msgstr ""
 
 #: templates/account/split.php:38
-msgid "Share by product group"
-msgstr ""
-
-#: templates/account/split.php:39
-msgid "Some groups have a smaller share because of their margin; your discount is subtracted from that group's share, so your commission there can be lower."
+msgid "Without your code (link only), you earn"
 msgstr ""
 
 #: templates/account/split.php:42
+msgid "Save my split"
+msgstr ""
+
+#: templates/account/split.php:43
+msgid "You can change it once every %d days."
+msgstr ""
+
+#: templates/account/split.php:45
+msgid "You changed your split recently. Next change possible on %s."
+msgstr ""
+
+#: templates/account/split.php:51
+msgid "Share by product group"
+msgstr ""
+
+#: templates/account/split.php:52
+msgid "Some groups have a smaller share because of their margin; your discount is subtracted from that group's share, so your commission there can be lower."
+msgstr ""
+
+#: templates/account/split.php:55
 msgid "Default"
 msgstr ""
 

@@ -1,13 +1,216 @@
+/* SplitShare Affiliates — admin design system (WooCommerce Analytics dili) */
+.ssa-admin {
+	--ssa-surface: #fff; --ssa-plane: #f6f7f7; --ssa-ink: #1e1e1e; --ssa-ink-2: #50575e; --ssa-muted: #757575;
+	--ssa-line: #dcdcde; --ssa-line-soft: #f0f0f1; --ssa-accent: #2a78d6;
+	--ssa-s1: #2a78d6; --ssa-s2: #eb6834; --ssa-s3: #1baf7a; /* dataviz kategorik slotlar (doğrulanmış) */
+	--ssa-c: #2a78d6; --ssa-d: #eb6834;                        /* dağılım çubuğu: komisyon / indirim */
+	--ssa-good: #0ca30c; --ssa-good-ink: #006300; --ssa-warn: #fab219; --ssa-warn-ink: #7a5b00; --ssa-bad: #d03b3b;
+	--ssa-radius: 8px; --ssa-shadow: 0 1px 2px rgba(0,0,0,.05);
+	font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ssa-ink);
+}
+.ssa-admin h1, .ssa-admin h2, .ssa-admin h3 { color: var(--ssa-ink); }
+
+/* Sayfa başlığı ve sekmeler */
+.ssa-pagehead { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin: 8px 0 12px; }
+.ssa-pagehead h1 { margin: 0; font-size: 24px; font-weight: 600; line-height: 1.2; padding: 0; }
+.ssa-eyebrow { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ssa-muted); margin-bottom: 2px; }
+.ssa-pagehead__actions { display: flex; gap: 8px; }
+.ssa-pagehead__actions .button { display: inline-flex; align-items: center; gap: 6px; }
+.ssa-tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--ssa-line); margin-bottom: 16px; overflow-x: auto; }
+.ssa-tab { padding: 10px 14px; margin-bottom: -1px; border-bottom: 2px solid transparent; color: var(--ssa-ink-2); text-decoration: none; font-weight: 500; white-space: nowrap; }
+.ssa-tab:hover { color: var(--ssa-ink); }
+.ssa-tab.is-active { color: var(--ssa-accent); border-bottom-color: var(--ssa-accent); }
+.ssa-count { display: inline-block; min-width: 18px; padding: 0 6px; border-radius: 9px; background: var(--ssa-bad); color: #fff; font-size: 11px; font-weight: 600; text-align: center; line-height: 18px; }
+.ssa-notice { border-left: 4px solid var(--ssa-accent); background: var(--ssa-surface); padding: 2px 12px; margin: 0 0 12px; box-shadow: var(--ssa-shadow); border-radius: 0 4px 4px 0; }
+.ssa-notice--success { border-left-color: var(--ssa-good); }
+.ssa-notice--error { border-left-color: var(--ssa-bad); }
+
+/* Tarih aralığı */
+.ssa-rangebar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 14px; }
+.ssa-rangebar__presets { display: flex; gap: 6px; flex-wrap: wrap; }
+.ssa-chip { display: inline-block; padding: 5px 12px; border: 1px solid var(--ssa-line); border-radius: 999px; background: var(--ssa-surface); color: var(--ssa-ink-2); text-decoration: none; font-size: 13px; }
+.ssa-chip:hover { border-color: var(--ssa-ink-2); color: var(--ssa-ink); }
+.ssa-chip.is-active { background: var(--ssa-ink); border-color: var(--ssa-ink); color: #fff; }
+.ssa-rangebar__custom { display: flex; align-items: center; gap: 6px; }
+.ssa-rangebar__custom input[type="date"] { height: 30px; }
+
+/* KPI kartları */
+.ssa-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 0 0 16px; }
+.ssa-kpi { background: var(--ssa-surface); border: 1px solid var(--ssa-line); border-radius: var(--ssa-radius); padding: 14px 16px; box-shadow: var(--ssa-shadow); min-width: 0; }
+.ssa-kpi__label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ssa-muted); text-transform: uppercase; letter-spacing: .04em; }
+.ssa-kpi__icon .ssa-icon { width: 16px; height: 16px; color: var(--ssa-ink-2); }
+.ssa-kpi__row { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; margin-top: 6px; }
+.ssa-kpi__value { font-size: 24px; font-weight: 600; line-height: 1.1; color: var(--ssa-ink); overflow-wrap: anywhere; }
+.ssa-kpi__value .woocommerce-Price-currencySymbol { font-size: .7em; font-weight: 500; color: var(--ssa-ink-2); }
+.ssa-kpi__delta { margin-top: 6px; font-size: 12px; color: var(--ssa-ink-2); }
+.ssa-kpi__delta.is-good .ssa-kpi__arrow { color: var(--ssa-good-ink); }
+.ssa-kpi__delta.is-bad .ssa-kpi__arrow { color: var(--ssa-bad); }
+.ssa-kpi__vs { color: var(--ssa-muted); }
+.ssa-kpi__hint { margin-top: 6px; font-size: 12px; color: var(--ssa-muted); }
+.ssa-kpi--good { border-top: 3px solid var(--ssa-good); }
+.ssa-kpi--warn { border-top: 3px solid var(--ssa-warn); }
+.ssa-kpi--bad { border-top: 3px solid var(--ssa-bad); }
+.ssa-spark { width: 96px; height: 28px; flex: 0 0 auto; }
+.ssa-spark polyline { fill: none; stroke: var(--ssa-s1); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.ssa-spark circle { fill: var(--ssa-s1); stroke: var(--ssa-surface); stroke-width: 2; }
+
+/* Kart ve grid */
+.ssa-grid { display: grid; gap: 12px; margin: 0 0 12px; }
+.ssa-grid--2-1 { grid-template-columns: 2fr 1fr; }
+.ssa-grid--1-1 { grid-template-columns: 1fr 1fr; }
+.ssa-grid--1-2 { grid-template-columns: 1fr 2fr; }
+@media (max-width: 1100px) { .ssa-grid--2-1, .ssa-grid--1-1, .ssa-grid--1-2 { grid-template-columns: 1fr; } }
+.ssa-card { background: var(--ssa-surface); border: 1px solid var(--ssa-line); border-radius: var(--ssa-radius); box-shadow: var(--ssa-shadow); min-width: 0; }
+.ssa-card__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--ssa-line-soft); }
+.ssa-card__head h2 { margin: 0; font-size: 14px; font-weight: 600; }
+.ssa-card__body { padding: 14px 16px; }
+.ssa-card__body > .ssa-table { margin: -14px -16px; width: calc(100% + 32px); }
+.ssa-subhead { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--ssa-muted); margin: 16px 0 8px; }
+.ssa-link { color: var(--ssa-accent); text-decoration: none; font-size: 13px; }
+
+/* Tablolar */
+.ssa-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ssa-table th, .ssa-table td { padding: 10px 16px; border-bottom: 1px solid var(--ssa-line-soft); text-align: left; vertical-align: middle; }
+.ssa-table thead th { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--ssa-muted); font-weight: 600; background: #fafafa; }
+.ssa-table tbody tr:last-child td { border-bottom: 0; }
+.ssa-table tbody tr:hover td { background: #fbfbfc; }
+.ssa-table .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ssa-table td small { display: block; color: var(--ssa-muted); font-size: 11px; }
+.ssa-admin .wp-list-table { border: 1px solid var(--ssa-line); border-radius: var(--ssa-radius); box-shadow: var(--ssa-shadow); overflow: hidden; }
+.ssa-admin .wp-list-table th, .ssa-admin .wp-list-table td { vertical-align: middle; }
+.ssa-admin .wp-list-table thead th { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--ssa-muted); background: #fafafa; }
+.ssa-admin .wp-list-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.ssa-admin .tablenav.top { margin-bottom: 8px; }
+
+/* Ortak hücresi, avatar, kod chip'i, rozet */
+.ssa-partnercell { display: inline-flex; align-items: center; gap: 10px; }
+.ssa-partnercell > span { display: flex; flex-direction: column; line-height: 1.25; }
+.ssa-partnercell a { font-weight: 600; text-decoration: none; }
+.ssa-partnercell small { color: var(--ssa-muted); font-size: 11px; }
+.ssa-avatar { display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 700; color: #fff; background: hsl(var(--h, 210) 45% 45%); flex: 0 0 auto; }
+.ssa-avatar--sm { width: 32px; height: 32px; font-size: 12px; }
+.ssa-avatar--lg { width: 64px; height: 64px; font-size: 22px; }
+.ssa-codechip { display: inline-flex; align-items: center; gap: 4px; }
+.ssa-codechip code { background: #f0f0f1; border-radius: 4px; padding: 3px 8px; font-size: 12px; letter-spacing: .06em; }
+.ssa-copy { border: 0; background: none; cursor: pointer; padding: 2px; color: var(--ssa-muted); line-height: 0; }
+.ssa-copy:hover { color: var(--ssa-ink); }
+.ssa-copy .ssa-icon { width: 14px; height: 14px; }
+.ssa-copy.is-copied { color: var(--ssa-good-ink); }
+.ssa-pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px 2px 7px; border-radius: 999px; font-size: 12px; font-weight: 500; background: #f0f0f1; color: var(--ssa-ink-2); white-space: nowrap; }
+.ssa-pill i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .8; }
+.ssa-pill--good { background: #e6f6e6; color: var(--ssa-good-ink); }
+.ssa-pill--warn { background: #fff4d6; color: var(--ssa-warn-ink); }
+.ssa-pill--bad { background: #fbe6e6; color: #8a1f1f; }
+.ssa-pill--muted { background: #f0f0f1; color: var(--ssa-ink-2); }
+.ssa-icon { width: 18px; height: 18px; vertical-align: middle; }
+
+/* İmza öğesi: dağılım çubuğu */
+.ssa-split { min-width: 120px; }
+.ssa-split__track { display: flex; height: 8px; border-radius: 4px; overflow: hidden; background: var(--ssa-line-soft); gap: 2px; }
+.ssa-split__c { background: var(--ssa-c); height: 100%; }
+.ssa-split__d { background: var(--ssa-d); height: 100%; }
+.ssa-split--lg .ssa-split__track { height: 14px; border-radius: 7px; }
+.ssa-split__legend { display: flex; gap: 12px; margin-top: 4px; font-size: 11px; color: var(--ssa-ink-2); white-space: nowrap; }
+.ssa-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; background: var(--ssa-muted); }
+.ssa-swatch--c { background: var(--ssa-c); } .ssa-swatch--d { background: var(--ssa-d); }
+.ssa-swatch.ssa-s1 { background: var(--ssa-s1); } .ssa-swatch.ssa-s2 { background: var(--ssa-s2); } .ssa-swatch.ssa-s3 { background: var(--ssa-s3); }
+
+/* Grafikler */
+.ssa-chart { margin: 0; position: relative; }
+.ssa-chart svg { width: 100%; height: auto; display: block; }
+.ssa-chart--columns svg { max-height: 300px; }
+.ssa-grid { stroke: var(--ssa-line-soft); stroke-width: 1; }
+.ssa-axis { stroke: var(--ssa-line); stroke-width: 1; }
+.ssa-tick { font-size: 11px; fill: var(--ssa-muted); font-family: inherit; }
+.ssa-bar { transition: opacity .12s; cursor: default; }
+.ssa-bar.ssa-s1 { fill: var(--ssa-s1); } .ssa-bar.ssa-s2 { fill: var(--ssa-s2); } .ssa-bar.ssa-s3 { fill: var(--ssa-s3); }
+.ssa-chart:hover .ssa-bar { opacity: .55; } .ssa-chart .ssa-bar:hover { opacity: 1; }
+.ssa-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--ssa-ink-2); margin-top: 8px; }
+.ssa-legend--stack { flex-direction: column; gap: 4px; }
+.ssa-legend b { color: var(--ssa-ink); margin-left: 4px; }
+.ssa-chart--donut { display: flex; align-items: center; gap: 16px; }
+.ssa-chart--donut svg { width: 150px; height: 150px; flex: 0 0 auto; }
+.ssa-donut-track { fill: none; stroke: var(--ssa-line-soft); stroke-width: 18; }
+.ssa-donut-seg { fill: none; stroke-width: 18; transform: rotate(-90deg); transform-origin: 50% 50%; transition: opacity .12s; }
+.ssa-donut-seg.ssa-s1 { stroke: var(--ssa-s1); } .ssa-donut-seg.ssa-s2 { stroke: var(--ssa-s2); } .ssa-donut-seg.ssa-s3 { stroke: var(--ssa-s3); }
+.ssa-chart--donut:hover .ssa-donut-seg { opacity: .55; } .ssa-chart--donut .ssa-donut-seg:hover { opacity: 1; }
+.ssa-donut-center { font-size: 26px; font-weight: 600; fill: var(--ssa-ink); font-family: inherit; }
+.ssa-donut-sub { font-size: 11px; fill: var(--ssa-muted); font-family: inherit; }
+.ssa-chart-table { margin-top: 8px; font-size: 12px; }
+.ssa-chart-table summary { cursor: pointer; color: var(--ssa-muted); }
+.ssa-chart-table table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+.ssa-chart-table th, .ssa-chart-table td { padding: 4px 8px; border-bottom: 1px solid var(--ssa-line-soft); text-align: right; font-variant-numeric: tabular-nums; }
+.ssa-chart-table th:first-child { text-align: left; }
+.ssa-tooltip { position: fixed; z-index: 9999; pointer-events: none; background: var(--ssa-ink); color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 12px; line-height: 1.4; box-shadow: 0 4px 12px rgba(0,0,0,.15); opacity: 0; transition: opacity .1s; white-space: nowrap; }
+.ssa-tooltip.is-visible { opacity: 1; }
+.ssa-tooltip b { display: block; font-weight: 600; }
+.ssa-meter { height: 8px; border-radius: 4px; background: #d9e7f8; overflow: hidden; }
+.ssa-meter span { display: block; height: 100%; background: var(--ssa-s1); border-radius: 4px; }
+.ssa-meter__label { font-size: 12px; color: var(--ssa-muted); margin-top: 4px; }
+
+/* İlgi bekleyenler, boş durum */
+.ssa-attention { margin: 0; padding: 0; list-style: none; }
+.ssa-attention li a { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--ssa-line-soft); color: var(--ssa-ink-2); text-decoration: none; }
+.ssa-attention li:last-child a { border-bottom: 0; }
+.ssa-attention .ssa-icon { color: var(--ssa-muted); }
+.ssa-attention li.is-hot a { color: var(--ssa-ink); }
+.ssa-attention li.is-hot .ssa-icon { color: var(--ssa-warn-ink); }
+.ssa-attention strong { font-size: 16px; min-width: 24px; }
+.ssa-empty { text-align: center; padding: 28px 16px; color: var(--ssa-muted); }
+.ssa-empty__icon .ssa-icon { width: 36px; height: 36px; color: var(--ssa-line); }
+.ssa-empty h3 { margin: 8px 0 4px; font-size: 14px; color: var(--ssa-ink-2); }
+.ssa-empty p { margin: 0 auto; max-width: 420px; font-size: 13px; }
+
+/* Toolbar / filtreler */
+.ssa-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 12px; }
+.ssa-toolbar .ssa-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.ssa-toolbar form { display: flex; align-items: center; gap: 6px; }
+.ssa-toolbar .search-box { display: flex; gap: 6px; }
+.ssa-toolbar select, .ssa-toolbar input[type="search"], .ssa-toolbar input[type="date"] { height: 30px; }
+.ssa-strip { display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--ssa-line); border-radius: var(--ssa-radius); background: var(--ssa-surface); margin: 0 0 12px; overflow: hidden; }
+.ssa-strip > div { flex: 1 1 140px; padding: 10px 16px; border-right: 1px solid var(--ssa-line-soft); }
+.ssa-strip > div:last-child { border-right: 0; }
+.ssa-strip__label { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--ssa-muted); display: flex; align-items: center; gap: 6px; }
+.ssa-strip__value { font-size: 18px; font-weight: 600; margin-top: 2px; }
+
+/* Başvuru kartları */
+.ssa-appgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 12px; }
+.ssa-appcard { background: var(--ssa-surface); border: 1px solid var(--ssa-line); border-radius: var(--ssa-radius); box-shadow: var(--ssa-shadow); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.ssa-appcard__head { display: flex; align-items: center; gap: 12px; }
+.ssa-appcard__head strong { display: block; font-size: 15px; }
+.ssa-appcard__head small { color: var(--ssa-muted); }
+.ssa-appcard__meta { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; font-size: 13px; }
+.ssa-appcard__meta dt { color: var(--ssa-muted); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+.ssa-appcard__meta dd { margin: 0; overflow-wrap: anywhere; }
+.ssa-appcard__social { display: flex; gap: 6px; flex-wrap: wrap; }
+.ssa-appcard__social a { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border: 1px solid var(--ssa-line); border-radius: 999px; font-size: 12px; text-decoration: none; color: var(--ssa-ink-2); }
+.ssa-appcard__note { font-size: 13px; color: var(--ssa-ink-2); background: #fafafa; border-radius: 6px; padding: 8px 10px; }
+.ssa-appcard form { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border-top: 1px solid var(--ssa-line-soft); padding-top: 12px; }
+.ssa-appcard form textarea { grid-column: 1 / -1; min-height: 48px; }
+.ssa-appcard form .ssa-actions { grid-column: 1 / -1; display: flex; gap: 8px; }
+
+/* Ortak profili */
+.ssa-profile { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--ssa-surface); border: 1px solid var(--ssa-line); border-radius: var(--ssa-radius); box-shadow: var(--ssa-shadow); margin: 0 0 12px; flex-wrap: wrap; }
+.ssa-profile__id { flex: 1 1 260px; }
+.ssa-profile__id h2 { margin: 0 0 2px; font-size: 20px; display: flex; align-items: center; gap: 10px; }
+.ssa-profile__id .ssa-muted { font-size: 13px; }
+.ssa-profile__split { flex: 1 1 220px; }
+.ssa-profile__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.ssa-subtabs { display: flex; gap: 2px; border-bottom: 1px solid var(--ssa-line); margin: 0 0 12px; }
+.ssa-subtab { padding: 8px 12px; margin-bottom: -1px; border-bottom: 2px solid transparent; color: var(--ssa-ink-2); cursor: pointer; background: none; border-top: 0; border-left: 0; border-right: 0; font: inherit; }
+.ssa-subtab.is-active { color: var(--ssa-accent); border-bottom-color: var(--ssa-accent); font-weight: 600; }
+.ssa-subpanel { display: none; }
+.ssa-subpanel.is-active { display: block; }
+.ssa-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.ssa-form-grid label { display: block; font-size: 12px; color: var(--ssa-muted); margin-bottom: 4px; }
+.ssa-form-grid input[type="text"], .ssa-form-grid input[type="number"], .ssa-form-grid textarea { width: 100%; }
+.ssa-muted { color: var(--ssa-muted); }
+.ssa-flag { color: var(--ssa-bad); font-weight: 600; }
 .ssa-rows, .ssa-rows-static { max-width: 760px; margin-bottom: 6px; }
-.ssa-rows td, .ssa-rows-static td { vertical-align: middle; }
 .ssa-rows input[type="number"] { width: 90px; }
 .ssa-row-remove { color: #b32d2e; text-decoration: none; font-size: 18px; }
-.ssa-stat-cards { display: flex; gap: 14px; flex-wrap: wrap; margin: 14px 0; }
-.ssa-stat-card { background: #fff; border: 1px solid #dcdcde; border-radius: 6px; padding: 14px 18px; min-width: 180px; }
-.ssa-stat-card strong { display: block; font-size: 22px; margin-top: 4px; }
-.ssa-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #f0f0f1; }
-.ssa-badge-active, .ssa-badge-approved, .ssa-badge-paid { background: #d4f4dd; color: #0a5c2b; }
-.ssa-badge-pending, .ssa-badge-open { background: #fff3cd; color: #7a5b00; }
-.ssa-badge-void, .ssa-badge-rejected, .ssa-badge-paused { background: #f8d7da; color: #7a1c24; }
-.ssa-flag { color: #b32d2e; font-weight: 600; }
-.ssa-admin-box p { margin: 4px 0; }
+@media (max-width: 782px) {
+	.ssa-pagehead { flex-direction: column; align-items: flex-start; }
+	.ssa-card__body > .ssa-table { margin: -14px -16px; }
+	.ssa-profile { flex-direction: column; align-items: flex-start; }
+}

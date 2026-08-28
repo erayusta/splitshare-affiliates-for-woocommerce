@@ -1,4 +1,9 @@
 /* SplitShare Affiliates — ön yüz (başvuru formu + Hesabım paneli). Tema override edebilir. */
+.ssa-panel, .ssa-apply {
+	--ssa-ink: #202435; --ssa-ink-2: #4a4a5a; --ssa-muted: #7c7c8a; --ssa-line: #e9e9ee; --ssa-line-soft: #f3f3f6; --ssa-surface: #fff;
+	--ssa-s1: #2a78d6; --ssa-s2: #eb6834; --ssa-s3: #1baf7a; --ssa-c: #2a78d6; --ssa-d: #eb6834;
+	--ssa-good: #0ca30c; --ssa-good-ink: #0a5c2b; --ssa-warn-ink: #7a5b00; --ssa-bad: #d03b3b; --ssa-radius: 12px;
+}
 .ssa-notice { padding: 12px 16px; border-radius: 8px; margin: 0 0 16px; border-left: 4px solid #999; background: #f6f6f6; }
 .ssa-notice-success { border-left-color: #2e8b57; background: #eef8f1; }
 .ssa-notice-error { border-left-color: #c0392b; background: #fdf0ee; }
@@ -8,30 +13,116 @@
 .ssa-apply-form label { display: block; font-weight: 600; margin-bottom: 4px; }
 .ssa-apply-form input[type="text"], .ssa-apply-form input[type="email"], .ssa-apply-form input[type="tel"], .ssa-apply-form input[type="url"], .ssa-apply-form input[type="number"], .ssa-apply-form textarea { width: 100%; max-width: 520px; }
 .ssa-legal { font-size: 13px; color: #555; }
+.ssa-muted { color: var(--ssa-muted); font-size: 13px; }
 
-.ssa-panel h2 { margin-top: 0; }
-.ssa-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin: 0 0 22px; }
-.ssa-card { border: 1px solid #e6e6e6; border-radius: 12px; padding: 14px 16px; background: #fff; }
-.ssa-card__label { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #777; }
+/* Hero */
+.ssa-hero { display: grid; grid-template-columns: minmax(240px, 1fr) 2fr; gap: 16px; margin: 0 0 18px; }
+.ssa-hero__code { border: 1px solid var(--ssa-line); border-radius: var(--ssa-radius); padding: 16px; background: var(--ssa-surface); display: flex; flex-direction: column; gap: 10px; }
+.ssa-hero__link { font-size: 13px; text-decoration: none; }
+.ssa-hero__stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.ssa-stat { border: 1px solid var(--ssa-line); border-radius: var(--ssa-radius); padding: 14px 16px; background: var(--ssa-surface); }
+.ssa-stat strong { display: block; font-size: 24px; font-weight: 700; margin: 4px 0 2px; line-height: 1.1; }
+.ssa-stat small { display: block; font-size: 12px; color: var(--ssa-muted); }
+.ssa-stat--confirmed { border-top: 3px solid var(--ssa-good); }
+.ssa-stat--estimated { border-top: 3px solid #e0a800; }
+.ssa-card__label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--ssa-muted); }
+.ssa-code { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 20px; letter-spacing: .12em; padding: 8px 6px 8px 14px; border: 1px dashed #bbb; border-radius: 8px; background: #fafafa; }
+.ssa-code .ssa-copy { flex: 0 0 auto; font-size: 12px; letter-spacing: 0; font-family: inherit; padding: 6px 10px; }
+.ssa-copy.is-copied { background: var(--ssa-good) !important; border-color: var(--ssa-good) !important; color: #fff !important; }
+
+/* Kartlar, bloklar */
+.ssa-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin: 0 0 18px; }
+.ssa-cards--2 { grid-template-columns: repeat(2, 1fr); }
+.ssa-cards--3 { grid-template-columns: repeat(3, 1fr); }
+.ssa-cards--4 { grid-template-columns: repeat(4, 1fr); }
+.ssa-card { border: 1px solid var(--ssa-line); border-radius: var(--ssa-radius); padding: 14px 16px; background: var(--ssa-surface); min-width: 0; }
 .ssa-card__value { font-size: 22px; font-weight: 700; margin-top: 4px; }
-.ssa-card__hint { font-size: 12px; color: #888; margin-top: 4px; }
-.ssa-code { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 18px; letter-spacing: .1em; padding: 6px 6px 6px 12px; border: 1px dashed #bbb; border-radius: 8px; background: #fafafa; }
-.ssa-code .ssa-copy { flex: 0 0 auto; padding: 6px 10px; }
-.ssa-copy { cursor: pointer; font-size: 12px; letter-spacing: 0; font-family: inherit; }
+.ssa-card__hint { font-size: 12px; color: var(--ssa-muted); margin-top: 4px; }
+.ssa-two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 18px; }
+.ssa-block { border: 1px solid var(--ssa-line); border-radius: var(--ssa-radius); padding: 16px; background: var(--ssa-surface); margin: 0 0 18px; min-width: 0; }
+.ssa-two .ssa-block { margin: 0; }
+.ssa-block h3 { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 0 0 12px; font-size: 15px; }
+.ssa-block h3 small { font-weight: 400; font-size: 12px; }
+.ssa-more { font-size: 13px; font-weight: 400; text-decoration: none; }
+.ssa-block--balance { text-align: left; }
+.ssa-hero-number { font-size: 38px; font-weight: 700; line-height: 1.1; margin: 4px 0 10px; }
+
+/* Tablo */
 .ssa-table { width: 100%; border-collapse: collapse; }
-.ssa-table th, .ssa-table td { padding: 10px 8px; border-bottom: 1px solid #eee; text-align: left; font-size: 14px; }
-.ssa-status { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; background: #eee; }
-.ssa-status-pending, .ssa-status-open { background: #fff3cd; color: #7a5b00; }
-.ssa-status-approved, .ssa-status-paid { background: #d4f4dd; color: #0a5c2b; }
+.ssa-table th, .ssa-table td { padding: 10px 8px; border-bottom: 1px solid var(--ssa-line-soft); text-align: left; font-size: 14px; vertical-align: middle; }
+.ssa-table thead th { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ssa-muted); }
+.ssa-table .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ssa-table__group th { background: #fafafa; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--ssa-ink-2); padding: 8px; }
+.ssa-status { display: inline-block; padding: 2px 9px; border-radius: 10px; font-size: 12px; font-weight: 600; background: #eee; white-space: nowrap; }
+.ssa-status-pending, .ssa-status-open { background: #fff3cd; color: var(--ssa-warn-ink); }
+.ssa-status-approved, .ssa-status-paid { background: #d4f4dd; color: var(--ssa-good-ink); }
 .ssa-status-void { background: #f8d7da; color: #7a1c24; }
-.ssa-split { max-width: 560px; }
-.ssa-split input[type="range"] { width: 100%; }
-.ssa-split__readout { display: flex; justify-content: space-between; font-weight: 600; margin: 8px 0 16px; }
-.ssa-link-generator input[type="url"], .ssa-link-generator select { width: 100%; max-width: 520px; }
-.ssa-link-generator output { display: block; margin: 10px 0; padding: 10px; background: #fafafa; border: 1px solid #e6e6e6; border-radius: 8px; word-break: break-all; font-size: 13px; }
+.ssa-pagination a, .ssa-pagination strong { display: inline-block; padding: 4px 10px; margin-right: 4px; border: 1px solid var(--ssa-line); border-radius: 6px; text-decoration: none; }
+
+/* Dağılım çubuğu ve editörü */
+.ssa-split__track { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: var(--ssa-line-soft); gap: 2px; }
+.ssa-split--lg .ssa-split__track { height: 16px; border-radius: 8px; }
+.ssa-split__c { background: var(--ssa-c); height: 100%; transition: width .15s; }
+.ssa-split__d { background: var(--ssa-d); height: 100%; transition: width .15s; }
+.ssa-split__legend { display: flex; gap: 14px; margin-top: 6px; font-size: 12px; color: var(--ssa-ink-2); }
+.ssa-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; background: var(--ssa-muted); }
+.ssa-swatch--c { background: var(--ssa-c); } .ssa-swatch--d { background: var(--ssa-d); }
+.ssa-swatch.ssa-s1 { background: var(--ssa-s1); } .ssa-swatch.ssa-s2 { background: var(--ssa-s2); } .ssa-swatch.ssa-s3 { background: var(--ssa-s3); }
+.ssa-split-editor { max-width: 640px; }
+.ssa-split-editor__bar { margin: 6px 0 12px; }
+.ssa-split-editor input[type="range"] { width: 100%; accent-color: var(--ssa-c); }
+.ssa-split__readout { display: flex; justify-content: space-between; font-weight: 600; margin: 8px 0 14px; font-size: 14px; }
+.ssa-presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; }
+.ssa-preset { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 8px 12px; border: 1px solid var(--ssa-line); border-radius: 8px; background: var(--ssa-surface); color: var(--ssa-ink); cursor: pointer; font-size: 13px; font-weight: 600; line-height: 1.2; }
+.ssa-preset small { font-weight: 400; color: var(--ssa-muted); font-size: 11px; }
+.ssa-preset.is-active { border-color: var(--ssa-ink); box-shadow: inset 0 0 0 1px var(--ssa-ink); }
+.ssa-preset:disabled { opacity: .5; cursor: default; }
+.ssa-example { border: 1px solid var(--ssa-line); border-radius: 10px; padding: 12px 14px; margin: 0 0 16px; background: #fafafa; }
+.ssa-example__title { font-weight: 600; margin-bottom: 8px; }
+.ssa-example__row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 14px; }
+.ssa-example__row strong { font-variant-numeric: tabular-nums; }
+
+/* Ölçer */
+.ssa-meter { height: 10px; border-radius: 5px; background: #d9e7f8; overflow: hidden; }
+.ssa-meter span { display: block; height: 100%; background: var(--ssa-s1); border-radius: 5px; }
+.ssa-meter__label { font-size: 12px; color: var(--ssa-muted); margin-top: 6px; }
+
+/* Grafikler */
+.ssa-chart { margin: 0; position: relative; }
+.ssa-chart svg { width: 100%; height: auto; display: block; }
+.ssa-chart--columns svg { max-height: 260px; }
+.ssa-grid { stroke: var(--ssa-line-soft); stroke-width: 1; }
+.ssa-axis { stroke: var(--ssa-line); stroke-width: 1; }
+.ssa-tick { font-size: 11px; fill: var(--ssa-muted); font-family: inherit; }
+.ssa-bar { transition: opacity .12s; }
+.ssa-bar.ssa-s1 { fill: var(--ssa-s1); } .ssa-bar.ssa-s2 { fill: var(--ssa-s2); } .ssa-bar.ssa-s3 { fill: var(--ssa-s3); }
+.ssa-chart:hover .ssa-bar { opacity: .55; } .ssa-chart .ssa-bar:hover { opacity: 1; }
+.ssa-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--ssa-ink-2); margin-top: 8px; }
+.ssa-chart-table { margin-top: 8px; font-size: 12px; }
+.ssa-chart-table summary { cursor: pointer; color: var(--ssa-muted); }
+.ssa-chart-table table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+.ssa-chart-table th, .ssa-chart-table td { padding: 4px 8px; border-bottom: 1px solid var(--ssa-line-soft); text-align: right; font-size: 12px; }
+.ssa-chart-table th:first-child { text-align: left; }
+.ssa-tooltip { position: fixed; z-index: 9999; pointer-events: none; background: var(--ssa-ink, #202435); color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 12px; line-height: 1.4; box-shadow: 0 4px 12px rgba(0,0,0,.15); opacity: 0; transition: opacity .1s; white-space: nowrap; }
+.ssa-tooltip.is-visible { opacity: 1; }
+.ssa-tooltip b { display: block; font-weight: 600; }
+
+/* Link üreteci, kit, form */
+.ssa-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 16px; }
+.ssa-link-generator output { display: block; margin: 10px 0; padding: 10px 12px; background: #fafafa; border: 1px solid var(--ssa-line); border-radius: 8px; word-break: break-all; font-size: 13px; }
+.ssa-link-generator .select2-container { width: 100% !important; }
 .ssa-kit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
 .ssa-kit-grid img { width: 100%; height: auto; border-radius: 8px; }
-.ssa-kit-text { white-space: pre-wrap; background: #fafafa; border: 1px solid #e6e6e6; border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+.ssa-kit-text { white-space: pre-wrap; background: #fafafa; border: 1px solid var(--ssa-line); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
 .ssa-legal-box { border-left: 4px solid #e2001a; background: #fff5f5; padding: 10px 14px; border-radius: 6px; font-size: 13px; }
 .ssa-join-card { border: 1px dashed #f4811f; border-radius: 12px; padding: 16px; margin: 0 0 20px; background: #fff8f2; }
-.ssa-muted { color: #777; font-size: 13px; }
+
+@media (max-width: 900px) {
+	.ssa-hero, .ssa-two { grid-template-columns: 1fr; }
+	.ssa-cards--3, .ssa-cards--4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+	.ssa-hero__stats, .ssa-cards--2, .ssa-cards--3, .ssa-cards--4 { grid-template-columns: 1fr; }
+	.ssa-split__readout { flex-direction: column; gap: 4px; }
+	.ssa-table th, .ssa-table td { padding: 8px 6px; font-size: 13px; }
+}
