@@ -176,6 +176,16 @@ class SSA_Account {
 				$args['kpis']       = SSA_Partner_Coupons::partner_kpis( $partner->id, 30 );
 				$args['categories'] = self::category_choices();
 				$args['groups']     = self::group_rows();
+				$args['edit']       = null;
+				if ( ! empty( $_GET['edit'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					$row = SSA_Partner_Coupons::get( (int) $_GET['edit'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					if ( $row && $row->partner_id === $partner->id ) {
+						$args['edit'] = $row;
+						if ( ! $args['old'] ) {
+							$args['old'] = array( 'code' => $row->code, 'name' => $row->name, 'discount_pct' => $row->discount_pct, 'scope_type' => $row->scope_type, 'scope_ids' => $row->scope_ids, 'expires_at' => $row->expires_at ? substr( $row->expires_at, 0, 10 ) : '' );
+						}
+					}
+				}
 				break;
 			case 'links':
 				$args['stats']    = SSA_Tracking::click_stats( $partner->id, 30 );
@@ -253,7 +263,7 @@ class SSA_Account {
 		}
 		$action = sanitize_key( $_POST['ssa_action'] );
 
-		if ( 'coupon_create' === $action ) {
+		if ( 'coupon_create' === $action || 'coupon_update' === $action ) {
 			$scope = isset( $_POST['scope_type'] ) ? sanitize_key( $_POST['scope_type'] ) : 'all';
 			$ids   = array();
 			if ( 'products' === $scope && ! empty( $_POST['scope_products'] ) ) {
@@ -269,6 +279,24 @@ class SSA_Account {
 				'scope_ids'    => $ids,
 				'expires_at'   => isset( $_POST['expires_at'] ) ? sanitize_text_field( wp_unslash( $_POST['expires_at'] ) ) : '',
 			);
+			if ( 'coupon_update' === $action ) {
+				$row = isset( $_POST['coupon_id'] ) ? SSA_Partner_Coupons::get( (int) $_POST['coupon_id'] ) : null;
+				if ( ! $row || $row->partner_id !== $partner->id ) {
+					self::notice( __( 'Coupon not found.', 'splitshare-affiliates' ), 'error' );
+					wp_safe_redirect( self::url( 'coupons' ) );
+					exit;
+				}
+				$r = SSA_Partner_Coupons::update( $row->id, $data );
+				if ( is_wp_error( $r ) ) {
+					self::notice( $r->get_error_message(), 'error', $data );
+					wp_safe_redirect( add_query_arg( 'edit', $row->id, self::url( 'coupons' ) ) );
+				} else {
+					/* translators: %s: coupon code */
+					self::notice( sprintf( __( 'Coupon %s updated.', 'splitshare-affiliates' ), $row->code ) );
+					wp_safe_redirect( self::url( 'coupons' ) );
+				}
+				exit;
+			}
 			$r = SSA_Partner_Coupons::create( $partner, $data );
 			if ( is_wp_error( $r ) ) {
 				self::notice( $r->get_error_message(), 'error', $data );

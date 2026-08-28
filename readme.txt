@@ -4,7 +4,7 @@ Tags: woocommerce, affiliate, influencer, referral, commission
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,6 +19,9 @@ A fixed share of every sale is set aside. Partners create as many campaign coupo
 3. Create a page with the [ssa_apply] shortcode and select it as the application page.
 
 == Changelog ==
+= 1.2.1 =
+* Coupons can be edited (name, discount, scope, end date) from the partner panel and the admin profile.
+
 = 1.2.0 =
 * Partner-created campaign coupons (discount, product/category scope, end date) replace the single code + split; link orders earn a configurable rate. Automatic migration of existing codes.
 

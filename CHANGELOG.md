@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.1 — 2026-08-28
+- Partners can edit a coupon (campaign name, discount, scope, end date) from "My coupons"; the code itself stays fixed. Admins get the same edit form in the partner profile.
+
 ## 1.2.0 — 2026-08-28
 - **Partner coupons.** Partners create their own campaign coupons from My Account ("My coupons"): code, optional campaign name, discount (between the configured min/max, taken out of the share), scope (whole store / selected products / selected categories), optional end date. Each is a real WooCommerce coupon (individual use, per-customer limit, minimum basket, excluded categories, scope restrictions). Partners can pause, resume and delete; admins manage them from the partner profile.
 - **Commission model.** Per line item: covered by the coupon → `share − discount`; not covered, or no coupon (referral link) → `min(link rate, share)`. New settings: link commission %, min/max coupon discount, coupon code length. Removed: default split, split-change interval, code rotation/grace.

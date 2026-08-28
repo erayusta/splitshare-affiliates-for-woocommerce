@@ -64,7 +64,7 @@ class SSA_Coupon {
 		$coupon->set_excluded_product_categories( array_map( 'intval', (array) SSA_Settings::get( 'excluded_categories', array() ) ) );
 		$coupon->set_product_ids( 'products' === $row->scope_type ? $row->scope_ids : array() );
 		$coupon->set_product_categories( 'categories' === $row->scope_type ? $row->scope_ids : array() );
-		$coupon->set_date_expires( $row->expires_at ? strtotime( $row->expires_at ) : null );
+		$coupon->set_date_expires( $row->expires_at ? (int) get_gmt_from_date( $row->expires_at, 'U' ) : null );
 		$coupon->set_description( sprintf(
 			/* translators: 1: program name, 2: partner name, 3: campaign name */
 			__( '%1$s partner coupon — %2$s%3$s (managed by SplitShare Affiliates, do not edit).', 'splitshare-affiliates' ),

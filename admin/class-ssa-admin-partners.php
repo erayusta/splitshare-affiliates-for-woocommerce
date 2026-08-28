@@ -43,6 +43,23 @@ class SSA_Admin_Partners {
 				SSA_Partner_Coupons::set_status( $row->id, 'coupon_pause' === $action ? 'paused' : 'active' );
 				SSA_Admin_Menu::redirect_with( 'partners', 'coupon_pause' === $action ? __( 'Coupon paused.', 'splitshare-affiliates' ) : __( 'Coupon is live again.', 'splitshare-affiliates' ), 'success', $back );
 				break;
+			case 'coupon_save':
+				$cid = isset( $_POST['coupon_id'] ) ? (int) $_POST['coupon_id'] : 0;
+				$row = $cid ? SSA_Partner_Coupons::get( $cid ) : null;
+				if ( ! $row || $row->partner_id !== $id ) {
+					SSA_Admin_Menu::redirect_with( 'partners', __( 'Coupon not found.', 'splitshare-affiliates' ), 'error', $back );
+				}
+				$scope = isset( $_POST['scope_type'] ) ? sanitize_key( $_POST['scope_type'] ) : 'all';
+				$ids   = isset( $_POST['scope_ids'] ) ? array_map( 'intval', array_filter( explode( ',', sanitize_text_field( wp_unslash( $_POST['scope_ids'] ) ) ) ) ) : array();
+				$r     = SSA_Partner_Coupons::update( $row->id, array(
+					'name'         => isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '',
+					'discount_pct' => isset( $_POST['discount_pct'] ) ? sanitize_text_field( wp_unslash( $_POST['discount_pct'] ) ) : '',
+					'scope_type'   => $scope,
+					'scope_ids'    => $ids,
+					'expires_at'   => isset( $_POST['expires_at'] ) ? sanitize_text_field( wp_unslash( $_POST['expires_at'] ) ) : '',
+				) );
+				SSA_Admin_Menu::redirect_with( 'partners', is_wp_error( $r ) ? $r->get_error_message() : __( 'Coupon updated.', 'splitshare-affiliates' ), is_wp_error( $r ) ? 'error' : 'success', $back );
+				break;
 			case 'save':
 				self::save( $id );
 				break;
@@ -136,7 +153,27 @@ class SSA_Admin_Partners {
 		echo '<div class="ssa-subtabs"><button type="button" class="ssa-subtab is-active" data-target="#ssa-p-coupons">' . esc_html__( 'Coupons', 'splitshare-affiliates' ) . '</button><button type="button" class="ssa-subtab" data-target="#ssa-p-sales">' . esc_html__( 'Sales', 'splitshare-affiliates' ) . '</button><button type="button" class="ssa-subtab" data-target="#ssa-p-payouts">' . esc_html__( 'Payouts', 'splitshare-affiliates' ) . '</button><button type="button" class="ssa-subtab" data-target="#ssa-p-details">' . esc_html__( 'Details & bank', 'splitshare-affiliates' ) . '</button></div>';
 
 		// Kuponlar
-		echo '<div id="ssa-p-coupons" class="ssa-subpanel is-active">' . SSA_Admin_UI::card_open( __( 'Partner coupons', 'splitshare-affiliates' ), '<span class="ssa-muted">' . esc_html( sprintf( __( 'Share %1$s%% · link rate %2$s%%', 'splitshare-affiliates' ), wc_format_decimal( $share, 1 ), wc_format_decimal( SSA_Settings::get( 'link_commission_pct' ), 1 ) ) ) . '</span>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div id="ssa-p-coupons" class="ssa-subpanel is-active">';
+		$edit_id = isset( $_GET['cid'] ) ? (int) $_GET['cid'] : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$edit    = $edit_id ? SSA_Partner_Coupons::get( $edit_id ) : null;
+		if ( $edit && $edit->partner_id === $p->id ) {
+			$lim = SSA_Partner_Coupons::limits();
+			echo SSA_Admin_UI::card_open( sprintf( __( 'Edit coupon %s', 'splitshare-affiliates' ), $edit->code ), '<a class="ssa-link" href="' . esc_url( SSA_Admin_Menu::url( 'partners', array( 'action' => 'edit', 'id' => $p->id ) ) ) . '">' . esc_html__( 'Cancel', 'splitshare-affiliates' ) . '</a>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<form method="post" action="' . esc_url( SSA_Admin_Menu::url( 'partners', array( 'action' => 'coupon_save', 'id' => $p->id ) ) ) . '"><div class="ssa-form-grid">';
+			wp_nonce_field( 'ssa_partner_coupon_save_' . $p->id );
+			echo '<input type="hidden" name="coupon_id" value="' . (int) $edit->id . '">';
+			echo '<div><label>' . esc_html__( 'Campaign', 'splitshare-affiliates' ) . '</label><input type="text" name="name" value="' . esc_attr( $edit->name ) . '" maxlength="120"></div>';
+			echo '<div><label>' . esc_html( sprintf( __( 'Discount %% (%1$s–%2$s)', 'splitshare-affiliates' ), wc_format_decimal( $lim['min_discount'], 1 ), wc_format_decimal( $lim['max_discount'], 1 ) ) ) . '</label><input type="number" name="discount_pct" step="0.5" min="' . esc_attr( $lim['min_discount'] ) . '" max="' . esc_attr( $lim['max_discount'] ) . '" value="' . esc_attr( $edit->discount_pct ) . '"></div>';
+			echo '<div><label>' . esc_html__( 'Applies to', 'splitshare-affiliates' ) . '</label><select name="scope_type">';
+			foreach ( array( 'all' => __( 'Whole store', 'splitshare-affiliates' ), 'products' => __( 'Selected products', 'splitshare-affiliates' ), 'categories' => __( 'Selected categories', 'splitshare-affiliates' ) ) as $k => $l ) {
+				echo '<option value="' . esc_attr( $k ) . '"' . selected( $edit->scope_type, $k, false ) . '>' . esc_html( $l ) . '</option>';
+			}
+			echo '</select></div>';
+			echo '<div><label>' . esc_html__( 'Product / category IDs (comma-separated)', 'splitshare-affiliates' ) . '</label><input type="text" name="scope_ids" value="' . esc_attr( implode( ',', $edit->scope_ids ) ) . '"><small class="ssa-muted">' . esc_html( implode( ', ', SSA_Partner_Coupons::scope_names( $edit, 8 ) ) ) . '</small></div>';
+			echo '<div><label>' . esc_html__( 'End date', 'splitshare-affiliates' ) . '</label><input type="date" name="expires_at" value="' . esc_attr( $edit->expires_at ? substr( $edit->expires_at, 0, 10 ) : '' ) . '"></div>';
+			echo '</div><p><button class="button button-primary">' . esc_html__( 'Save', 'splitshare-affiliates' ) . '</button></p></form>' . SSA_Admin_UI::card_close(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		echo SSA_Admin_UI::card_open( __( 'Partner coupons', 'splitshare-affiliates' ), '<span class="ssa-muted">' . esc_html( sprintf( __( 'Share %1$s%% · link rate %2$s%%', 'splitshare-affiliates' ), wc_format_decimal( $share, 1 ), wc_format_decimal( SSA_Settings::get( 'link_commission_pct' ), 1 ) ) ) . '</span>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		if ( $coupons ) {
 			echo '<table class="ssa-table"><thead><tr><th>' . esc_html__( 'Code', 'splitshare-affiliates' ) . '</th><th>' . esc_html__( 'Campaign', 'splitshare-affiliates' ) . '</th><th class="num">' . esc_html__( 'Discount / commission', 'splitshare-affiliates' ) . '</th><th>' . esc_html__( 'Applies to', 'splitshare-affiliates' ) . '</th><th class="num">' . esc_html__( 'Orders', 'splitshare-affiliates' ) . '</th><th class="num">' . esc_html__( 'Commission', 'splitshare-affiliates' ) . '</th><th>' . esc_html__( 'Ends', 'splitshare-affiliates' ) . '</th><th>' . esc_html__( 'Status', 'splitshare-affiliates' ) . '</th><th></th></tr></thead><tbody>';
 			foreach ( $coupons as $c ) {
@@ -148,6 +185,7 @@ class SSA_Admin_Partners {
 				} elseif ( 'paused' === $c->status ) {
 					$acts[] = '<a class="ssa-link" href="' . esc_url( self::action_url( 'coupon_resume', $p->id, array( 'cid' => $c->id ) ) ) . '">' . esc_html__( 'Resume', 'splitshare-affiliates' ) . '</a>';
 				}
+				$acts[] = '<a class="ssa-link" href="' . esc_url( SSA_Admin_Menu::url( 'partners', array( 'action' => 'edit', 'id' => $p->id, 'cid' => $c->id ) ) ) . '">' . esc_html__( 'Edit', 'splitshare-affiliates' ) . '</a>';
 				$acts[] = '<a class="ssa-link ssa-confirm" style="color:#b32d2e" data-confirm="' . esc_attr__( 'Delete this coupon? Past commissions are kept.', 'splitshare-affiliates' ) . '" href="' . esc_url( self::action_url( 'coupon_delete', $p->id, array( 'cid' => $c->id ) ) ) . '">' . esc_html__( 'Delete', 'splitshare-affiliates' ) . '</a>';
 				if ( $c->wc_coupon_id ) {
 					$acts[] = '<a class="ssa-link" href="' . esc_url( get_edit_post_link( $c->wc_coupon_id ) ) . '">' . esc_html__( 'WC coupon', 'splitshare-affiliates' ) . '</a>';

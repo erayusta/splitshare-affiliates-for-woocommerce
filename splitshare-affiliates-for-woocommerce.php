@@ -3,7 +3,7 @@
  * Plugin Name:       SplitShare Affiliates for WooCommerce
  * Plugin URI:        https://github.com/erayusta/splitshare-affiliates-for-woocommerce
  * Description:       Influencer affiliate program: partners create their own campaign coupons — the follower discount comes out of a fixed share, the rest is their commission. Link tracking, hold period, monthly payouts, My Account panel.
- * Version:           1.2.0
+ * Version:           1.2.1
  * Author:            Eray Usta
  * Author URI:        https://github.com/erayusta
  * License:           GPL v2 or later
@@ -18,7 +18,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SSA_VERSION', '1.2.0' );
+define( 'SSA_VERSION', '1.2.1' );
 define( 'SSA_FILE', __FILE__ );
 define( 'SSA_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SSA_URL', plugin_dir_url( __FILE__ ) );

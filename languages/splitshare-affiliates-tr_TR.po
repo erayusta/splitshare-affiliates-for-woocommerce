@@ -26,11 +26,6 @@ msgstr "SplitShare Affiliates for WooCommerce"
 msgid "https://github.com/erayusta/splitshare-affiliates-for-woocommerce"
 msgstr "https://github.com/erayusta/splitshare-affiliates-for-woocommerce"
 
-#. Description of the plugin
-#: splitshare-affiliates-for-woocommerce.php
-msgid "Influencer affiliate program: partners split a fixed share of each sale between their own commission and a follower discount. Coupon + link tracking, hold period, monthly payouts, My Account panel."
-msgstr "Influencer satış ortaklığı programı: ortaklar her satıştaki sabit payı kendi komisyonları ile takipçi indirimi arasında bölüştürür. Kupon + link takibi, bekleme süresi, aylık hakediş, Hesabım paneli."
-
 #. Author of the plugin
 #: splitshare-affiliates-for-woocommerce.php
 msgid "Eray Usta"
@@ -2100,3 +2095,50 @@ msgstr "Kuponla doldur:"
 #: templates/account/kit.php:27
 msgid "Create a coupon first so the captions can include your code."
 msgstr "Metinlerde kodun yer alsın diye önce bir kupon oluştur."
+
+#: admin/class-ssa-admin-partners.php:61
+msgid "Coupon updated."
+msgstr "Kupon güncellendi."
+
+#: admin/class-ssa-admin-partners.php:161
+#: templates/account/coupons.php:34
+msgid "Edit coupon %s"
+msgstr "%s kuponunu düzenle"
+
+#: admin/class-ssa-admin-partners.php:161
+#: templates/account/coupons.php:34
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#: admin/class-ssa-admin-partners.php:166
+msgid "Discount %% (%1$s–%2$s)"
+msgstr "İndirim %% (%1$s–%2$s)"
+
+#: admin/class-ssa-admin-partners.php:172
+msgid "Product / category IDs (comma-separated)"
+msgstr "Ürün / kategori ID'leri (virgülle)"
+
+#: admin/class-ssa-admin-partners.php:173
+msgid "End date"
+msgstr "Bitiş tarihi"
+
+#: admin/class-ssa-admin-partners.php:188
+#: templates/account/coupons.php:142
+msgid "Edit"
+msgstr "Düzenle"
+
+#. translators: %s: coupon code
+#: includes/class-ssa-account.php:295
+msgid "Coupon %s updated."
+msgstr "%s kuponu güncellendi."
+
+#: templates/account/coupons.php:46
+msgid "The code cannot be changed; delete the coupon and create a new one instead."
+msgstr "Kod değiştirilemez; bunun yerine kuponu silip yenisini oluştur."
+
+#: templates/account/coupons.php:106
+msgid "Save changes"
+msgstr "Değişiklikleri kaydet"
+
+msgid "Influencer affiliate program: partners create their own campaign coupons — the follower discount comes out of a fixed share, the rest is their commission. Link tracking, hold period, monthly payouts, My Account panel."
+msgstr "Influencer satış ortaklığı programı: ortaklar kendi kampanya kuponlarını oluşturur — takipçi indirimi sabit paydan düşer, kalanı komisyonlarıdır. Link takibi, bekleme süresi, aylık hakediş, Hesabım paneli."

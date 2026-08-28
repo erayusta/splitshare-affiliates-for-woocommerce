@@ -3,7 +3,7 @@
  * Panel — Kuponlarım: KPI'lar, kupon oluşturma formu (canlı örnek), kupon listesi.
  * Override: yourtheme/woocommerce/splitshare-affiliates/account/coupons.php
  *
- * @var SSA_Partner $partner; array $coupons, $limits, $kpis, $categories, $groups, $notices, $old, $settings; float $share, $link_pct
+ * @var SSA_Partner $partner; array $coupons, $limits, $kpis, $categories, $groups, $notices, $old, $settings; float $share, $link_pct; object|null $edit
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -30,19 +30,20 @@ if ( 'products' === $old['scope_type'] ) {
 	<div class="ssa-card"><div class="ssa-card__label"><?php esc_html_e( 'Coupon earnings, 30 days', 'splitshare-affiliates' ); ?></div><div class="ssa-card__value"><?php echo wp_kses_post( wc_price( $kpis['commission'] ) ); ?></div></div>
 </div>
 
-<section class="ssa-block">
-	<h3><?php esc_html_e( 'Create a coupon', 'splitshare-affiliates' ); ?></h3>
+<section class="ssa-block" id="ssa-coupon-form">
+	<h3><?php echo $edit ? esc_html( sprintf( __( 'Edit coupon %s', 'splitshare-affiliates' ), $edit->code ) ) : esc_html__( 'Create a coupon', 'splitshare-affiliates' ); ?><?php if ( $edit ) : ?> <a class="ssa-more" href="<?php echo esc_url( SSA_Account::url( 'coupons' ) ); ?>"><?php esc_html_e( 'Cancel', 'splitshare-affiliates' ); ?></a><?php endif; ?></h3>
 	<p class="ssa-muted"><?php printf( esc_html__( '%1$s%% of every sale is your share. The discount you give comes out of it and the rest is your commission — the store\'s cost is the same either way. Orders through your link without a coupon earn %2$s%%.', 'splitshare-affiliates' ), esc_html( wc_format_decimal( $share, 1 ) ), esc_html( wc_format_decimal( $link_pct, 1 ) ) ); ?></p>
 
 	<form method="post" class="ssa-coupon-form" data-share="<?php echo esc_attr( $share ); ?>" data-link="<?php echo esc_attr( $link_pct ); ?>" data-example="<?php echo esc_attr( $example ); ?>">
 		<?php wp_nonce_field( 'ssa_panel', '_ssa_nonce' ); ?>
-		<input type="hidden" name="ssa_action" value="coupon_create" />
+		<input type="hidden" name="ssa_action" value="<?php echo $edit ? 'coupon_update' : 'coupon_create'; ?>" />
+		<?php if ( $edit ) : ?><input type="hidden" name="coupon_id" value="<?php echo (int) $edit->id; ?>" /><?php endif; ?>
 
 		<div class="ssa-form-grid">
 			<div class="ssa-field">
 				<label for="ssa-c-code"><?php esc_html_e( 'Coupon code', 'splitshare-affiliates' ); ?></label>
-				<input type="text" id="ssa-c-code" name="code" class="ssa-code-input" value="<?php echo esc_attr( $old['code'] ); ?>" minlength="<?php echo (int) $limits['code_min']; ?>" maxlength="<?php echo (int) $limits['code_max']; ?>" pattern="[A-Za-z0-9]+" placeholder="<?php echo esc_attr( strtoupper( substr( preg_replace( '/[^A-Za-z]/', '', remove_accents( $partner->display_name() ) ), 0, 5 ) ) . '10' ); ?>" required />
-				<small class="ssa-muted"><?php printf( esc_html__( 'Letters and digits, %1$d–%2$d characters. Your followers type this at checkout.', 'splitshare-affiliates' ), (int) $limits['code_min'], (int) $limits['code_max'] ); ?></small>
+				<input type="text" id="ssa-c-code" name="code" class="ssa-code-input" value="<?php echo esc_attr( $old['code'] ); ?>" minlength="<?php echo (int) $limits['code_min']; ?>" maxlength="<?php echo (int) $limits['code_max']; ?>" pattern="[A-Za-z0-9]+" <?php echo $edit ? 'readonly' : ''; ?> placeholder="<?php echo esc_attr( strtoupper( substr( preg_replace( '/[^A-Za-z]/', '', remove_accents( $partner->display_name() ) ), 0, 5 ) ) . '10' ); ?>" required />
+				<small class="ssa-muted"><?php $edit ? esc_html_e( 'The code cannot be changed; delete the coupon and create a new one instead.', 'splitshare-affiliates' ) : printf( esc_html__( 'Letters and digits, %1$d–%2$d characters. Your followers type this at checkout.', 'splitshare-affiliates' ), (int) $limits['code_min'], (int) $limits['code_max'] ); ?></small>
 			</div>
 			<div class="ssa-field">
 				<label for="ssa-c-name"><?php esc_html_e( 'Campaign name (optional)', 'splitshare-affiliates' ); ?></label>
@@ -102,7 +103,7 @@ if ( 'products' === $old['scope_type'] ) {
 		</div>
 
 		<p class="ssa-form-actions">
-			<button class="button ssa-button"><?php esc_html_e( 'Create coupon', 'splitshare-affiliates' ); ?></button>
+			<button class="button ssa-button"><?php $edit ? esc_html_e( 'Save changes', 'splitshare-affiliates' ) : esc_html_e( 'Create coupon', 'splitshare-affiliates' ); ?></button>
 			<span class="ssa-muted"><?php printf( esc_html__( 'Each customer can use a coupon %d time(s). Coupons work on baskets of %s and above.', 'splitshare-affiliates' ), max( 1, (int) $settings['coupon_usage_limit_per_user'] ), wp_kses_post( wc_price( $settings['min_order'] ) ) ); ?></span>
 		</p>
 	</form>
@@ -138,6 +139,7 @@ if ( 'products' === $old['scope_type'] ) {
 					<td><?php echo SSA_Account::status_label( $c->status ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
 					<td class="ssa-coupon-actions">
 						<button type="button" class="ssa-copy ssa-linkbtn" data-copy="<?php echo esc_attr( SSA_Partner_Coupons::share_url( $c, $partner ) ); ?>"><?php esc_html_e( 'Copy link', 'splitshare-affiliates' ); ?></button>
+						<a class="ssa-linkbtn" href="<?php echo esc_url( add_query_arg( 'edit', $c->id, SSA_Account::url( 'coupons' ) ) . '#ssa-coupon-form' ); ?>"><?php esc_html_e( 'Edit', 'splitshare-affiliates' ); ?></a>
 						<?php if ( 'expired' !== $c->status ) : ?>
 							<form method="post"><?php wp_nonce_field( 'ssa_panel', '_ssa_nonce' ); ?><input type="hidden" name="coupon_id" value="<?php echo (int) $c->id; ?>" /><input type="hidden" name="ssa_action" value="<?php echo 'active' === $c->status ? 'coupon_pause' : 'coupon_resume'; ?>" /><button class="ssa-linkbtn"><?php echo 'active' === $c->status ? esc_html__( 'Pause', 'splitshare-affiliates' ) : esc_html__( 'Resume', 'splitshare-affiliates' ); ?></button></form>
 						<?php endif; ?>

@@ -2,14 +2,14 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: SplitShare Affiliates for WooCommerce 1.1.1\n"
+"Project-Id-Version: SplitShare Affiliates for WooCommerce 1.2.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/splitshare-affiliates-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-28T07:42:58+00:00\n"
+"POT-Creation-Date: 2026-08-28T08:17:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: splitshare-affiliates\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #. Description of the plugin
 #: splitshare-affiliates-for-woocommerce.php
-msgid "Influencer affiliate program: partners split a fixed share of each sale between their own commission and a follower discount. Coupon + link tracking, hold period, monthly payouts, My Account panel."
+msgid "Influencer affiliate program: partners create their own campaign coupons — the follower discount comes out of a fixed share, the rest is their commission. Link tracking, hold period, monthly payouts, My Account panel."
 msgstr ""
 
 #. Author of the plugin
@@ -96,14 +96,14 @@ msgstr[1] ""
 #: admin/class-ssa-admin-commissions.php:69
 #: admin/class-ssa-admin-commissions.php:76
 #: admin/class-ssa-admin-ui.php:118
-#: includes/class-ssa-account.php:329
+#: includes/class-ssa-account.php:357
 msgid "Pending"
 msgstr ""
 
 #: admin/class-ssa-admin-commissions.php:69
 #: admin/class-ssa-admin-commissions.php:76
 #: admin/class-ssa-admin-ui.php:116
-#: includes/class-ssa-account.php:330
+#: includes/class-ssa-account.php:358
 msgid "Approved"
 msgstr ""
 
@@ -111,7 +111,7 @@ msgstr ""
 #: admin/class-ssa-admin-commissions.php:76
 #: admin/class-ssa-admin-payouts.php:54
 #: admin/class-ssa-admin-ui.php:117
-#: includes/class-ssa-account.php:331
+#: includes/class-ssa-account.php:359
 msgid "Paid"
 msgstr ""
 
@@ -124,15 +124,15 @@ msgid "Void"
 msgstr ""
 
 #: admin/class-ssa-admin-commissions.php:76
-#: admin/class-ssa-admin-partners.php:83
-#: admin/class-ssa-admin-partners.php:173
+#: admin/class-ssa-admin-partners.php:100
+#: admin/class-ssa-admin-partners.php:211
 #: admin/class-ssa-admin-payouts.php:54
 msgid "All"
 msgstr ""
 
 #: admin/class-ssa-admin-commissions.php:81
 #: admin/class-ssa-admin-overview.php:66
-#: admin/class-ssa-admin-partners.php:115
+#: admin/class-ssa-admin-partners.php:132
 msgid "All partners"
 msgstr ""
 
@@ -154,7 +154,7 @@ msgstr ""
 
 #: admin/class-ssa-admin-commissions.php:110
 #: admin/class-ssa-admin-overview.php:83
-#: admin/class-ssa-admin-partners.php:175
+#: admin/class-ssa-admin-partners.php:213
 #: templates/account/sales.php:24
 msgid "Order"
 msgstr ""
@@ -162,20 +162,20 @@ msgstr ""
 #: admin/class-ssa-admin-commissions.php:111
 #: admin/class-ssa-admin-overview.php:69
 #: admin/class-ssa-admin-overview.php:83
-#: admin/class-ssa-admin-partners.php:231
+#: admin/class-ssa-admin-partners.php:269
 #: admin/class-ssa-admin-payouts.php:66
 #: admin/class-ssa-admin-reports.php:59
-#: includes/class-ssa-install.php:49
+#: includes/class-ssa-install.php:80
 msgid "Partner"
 msgstr ""
 
 #: admin/class-ssa-admin-commissions.php:112
-#: admin/class-ssa-admin-partners.php:175
+#: admin/class-ssa-admin-partners.php:213
 msgid "Attribution"
 msgstr ""
 
 #: admin/class-ssa-admin-commissions.php:113
-#: admin/class-ssa-admin-partners.php:175
+#: admin/class-ssa-admin-partners.php:213
 msgid "Basis"
 msgstr ""
 
@@ -188,9 +188,9 @@ msgstr ""
 #: admin/class-ssa-admin-overview.php:34
 #: admin/class-ssa-admin-overview.php:69
 #: admin/class-ssa-admin-overview.php:83
-#: admin/class-ssa-admin-partners.php:141
-#: admin/class-ssa-admin-partners.php:167
-#: admin/class-ssa-admin-partners.php:175
+#: admin/class-ssa-admin-partners.php:178
+#: admin/class-ssa-admin-partners.php:205
+#: admin/class-ssa-admin-partners.php:213
 #: admin/class-ssa-admin-reports.php:21
 #: admin/class-ssa-admin-reports.php:30
 #: admin/class-ssa-admin-reports.php:59
@@ -203,12 +203,12 @@ msgstr ""
 
 #: admin/class-ssa-admin-commissions.php:116
 #: admin/class-ssa-admin-overview.php:83
-#: admin/class-ssa-admin-partners.php:141
-#: admin/class-ssa-admin-partners.php:175
-#: admin/class-ssa-admin-partners.php:190
-#: admin/class-ssa-admin-partners.php:234
+#: admin/class-ssa-admin-partners.php:178
+#: admin/class-ssa-admin-partners.php:213
+#: admin/class-ssa-admin-partners.php:228
+#: admin/class-ssa-admin-partners.php:272
 #: admin/class-ssa-admin-payouts.php:66
-#: templates/account/coupons.php:122
+#: templates/account/coupons.php:123
 #: templates/account/dashboard.php:78
 #: templates/account/earnings.php:36
 #: templates/account/sales.php:28
@@ -224,7 +224,7 @@ msgid "adjustment"
 msgstr ""
 
 #: admin/class-ssa-admin-commissions.php:160
-#: admin/class-ssa-admin-partners.php:141
+#: admin/class-ssa-admin-partners.php:178
 #: admin/class-ssa-admin-reports.php:85
 #: templates/account/dashboard.php:81
 #: templates/account/sales.php:39
@@ -232,14 +232,14 @@ msgid "Code"
 msgstr ""
 
 #: admin/class-ssa-admin-commissions.php:160
-#: admin/class-ssa-admin-partners.php:178
+#: admin/class-ssa-admin-partners.php:216
 #: templates/account/dashboard.php:81
 #: templates/account/sales.php:39
 msgid "Link"
 msgstr ""
 
 #: admin/class-ssa-admin-commissions.php:160
-#: admin/class-ssa-admin-partners.php:178
+#: admin/class-ssa-admin-partners.php:216
 #: templates/account/sales.php:39
 msgid "returning customer"
 msgstr ""
@@ -266,8 +266,8 @@ msgid "Commissions"
 msgstr ""
 
 #: admin/class-ssa-admin-menu.php:25
-#: admin/class-ssa-admin-partners.php:136
-#: admin/class-ssa-admin-partners.php:187
+#: admin/class-ssa-admin-partners.php:153
+#: admin/class-ssa-admin-partners.php:225
 #: admin/class-ssa-settings-page.php:88
 #: templates/account/earnings.php:33
 msgid "Payouts"
@@ -391,7 +391,7 @@ msgstr ""
 
 #: admin/class-ssa-admin-overview.php:34
 #: admin/class-ssa-admin-overview.php:69
-#: admin/class-ssa-admin-partners.php:167
+#: admin/class-ssa-admin-partners.php:205
 #: admin/class-ssa-admin-reports.php:30
 #: admin/class-ssa-admin-reports.php:46
 #: admin/class-ssa-admin-reports.php:59
@@ -461,12 +461,12 @@ msgid "Top partners"
 msgstr ""
 
 #: admin/class-ssa-admin-overview.php:69
-#: admin/class-ssa-admin-partners.php:141
+#: admin/class-ssa-admin-partners.php:178
 #: admin/class-ssa-admin-reports.php:20
 #: admin/class-ssa-admin-reports.php:46
 #: admin/class-ssa-admin-reports.php:59
 #: admin/class-ssa-admin-reports.php:85
-#: templates/account/coupons.php:119
+#: templates/account/coupons.php:120
 #: templates/account/dashboard.php:59
 #: templates/account/links.php:20
 msgid "Orders"
@@ -478,7 +478,7 @@ msgid "No sales in this period"
 msgstr ""
 
 #: admin/class-ssa-admin-overview.php:80
-#: admin/class-ssa-admin-partners.php:173
+#: admin/class-ssa-admin-partners.php:211
 msgid "Recent commissions"
 msgstr ""
 
@@ -499,13 +499,15 @@ msgid "Partner reactivated."
 msgstr ""
 
 #: admin/class-ssa-admin-partners.php:37
-#: includes/class-ssa-account.php:286
-#: includes/class-ssa-partner-coupons.php:325
+#: admin/class-ssa-admin-partners.php:50
+#: includes/class-ssa-account.php:285
+#: includes/class-ssa-account.php:314
+#: includes/class-ssa-partner-coupons.php:330
 msgid "Coupon not found."
 msgstr ""
 
 #: admin/class-ssa-admin-partners.php:41
-#: includes/class-ssa-account.php:289
+#: includes/class-ssa-account.php:317
 msgid "Coupon deleted."
 msgstr ""
 
@@ -514,297 +516,347 @@ msgid "Coupon paused."
 msgstr ""
 
 #: admin/class-ssa-admin-partners.php:44
-#: includes/class-ssa-account.php:292
+#: includes/class-ssa-account.php:320
 msgid "Coupon is live again."
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:60
+#: admin/class-ssa-admin-partners.php:61
+msgid "Coupon updated."
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:77
 msgid "That link code is not available."
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:66
+#: admin/class-ssa-admin-partners.php:83
 msgid "Partner saved."
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:83
+#: admin/class-ssa-admin-partners.php:100
 #: admin/class-ssa-admin-ui.php:115
 msgid "Active"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:83
+#: admin/class-ssa-admin-partners.php:100
 #: admin/class-ssa-admin-ui.php:120
-#: includes/class-ssa-account.php:335
+#: includes/class-ssa-account.php:363
 msgid "Paused"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:83
+#: admin/class-ssa-admin-partners.php:100
 #: admin/class-ssa-admin-ui.php:122
 msgid "Rejected"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:88
+#: admin/class-ssa-admin-partners.php:105
 msgid "Search name, e-mail or code"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:88
+#: admin/class-ssa-admin-partners.php:105
 msgid "Search"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:94
+#: admin/class-ssa-admin-partners.php:111
 msgid "No partners yet"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:94
+#: admin/class-ssa-admin-partners.php:111
 msgid "Approved applications appear here with their coupons and earnings."
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:94
+#: admin/class-ssa-admin-partners.php:111
 msgid "Review applications"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:105
+#: admin/class-ssa-admin-partners.php:122
 #: includes/class-ssa-partners.php:146
 msgid "Partner not found."
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:118
+#: admin/class-ssa-admin-partners.php:135
 msgid "user profile"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:118
+#: admin/class-ssa-admin-partners.php:135
 msgid "since %s"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:119
-#: admin/class-ssa-admin-partners.php:233
+#: admin/class-ssa-admin-partners.php:136
+#: admin/class-ssa-admin-partners.php:271
 msgid "Link code"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:119
+#: admin/class-ssa-admin-partners.php:136
 #: templates/account/dashboard.php:20
 msgid "%d live coupon"
 msgid_plural "%d live coupons"
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/class-ssa-admin-partners.php:122
-#: admin/class-ssa-admin-partners.php:147
-#: admin/class-ssa-admin-partners.php:261
-#: templates/account/coupons.php:142
+#: admin/class-ssa-admin-partners.php:139
+#: admin/class-ssa-admin-partners.php:184
+#: admin/class-ssa-admin-partners.php:299
+#: templates/account/coupons.php:144
 msgid "Pause"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:124
-#: admin/class-ssa-admin-partners.php:263
+#: admin/class-ssa-admin-partners.php:141
+#: admin/class-ssa-admin-partners.php:301
 msgid "Reactivate"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:129
+#: admin/class-ssa-admin-partners.php:146
 #: templates/account/dashboard.php:29
 msgid "Confirmed earnings"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:129
+#: admin/class-ssa-admin-partners.php:146
 msgid "%1$s paid · %2$s awaiting payout"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:130
+#: admin/class-ssa-admin-partners.php:147
 msgid "Estimated (pending)"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:130
+#: admin/class-ssa-admin-partners.php:147
 msgid "inside the hold period"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:131
+#: admin/class-ssa-admin-partners.php:148
 #: templates/account/sales.php:13
 msgid "Approved sales"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:131
+#: admin/class-ssa-admin-partners.php:148
 msgid "%s this month"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:132
+#: admin/class-ssa-admin-partners.php:149
 msgid "Traffic (30 days)"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:132
+#: admin/class-ssa-admin-partners.php:149
 msgid "%d orders from links"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:136
-#: admin/class-ssa-admin-partners.php:232
+#: admin/class-ssa-admin-partners.php:153
+#: admin/class-ssa-admin-partners.php:270
 #: admin/class-ssa-admin-reports.php:46
 #: admin/class-ssa-settings-page.php:179
 msgid "Coupons"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:136
-#: admin/class-ssa-admin-partners.php:236
+#: admin/class-ssa-admin-partners.php:153
+#: admin/class-ssa-admin-partners.php:274
 #: admin/class-ssa-settings-page.php:179
 msgid "Sales"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:136
+#: admin/class-ssa-admin-partners.php:153
 msgid "Details & bank"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:139
-msgid "Partner coupons"
+#: admin/class-ssa-admin-partners.php:161
+#: templates/account/coupons.php:34
+msgid "Edit coupon %s"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:139
-msgid "Share %1$s%% · link rate %2$s%%"
+#: admin/class-ssa-admin-partners.php:161
+#: templates/account/coupons.php:34
+msgid "Cancel"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:141
+#: admin/class-ssa-admin-partners.php:165
+#: admin/class-ssa-admin-partners.php:178
 msgid "Campaign"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:141
+#: admin/class-ssa-admin-partners.php:166
+msgid "Discount %% (%1$s–%2$s)"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:167
+#: admin/class-ssa-admin-partners.php:178
+#: templates/account/coupons.php:119
+msgid "Applies to"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:168
+#: includes/class-ssa-partner-coupons.php:164
+#: templates/account/coupons.php:70
+msgid "Whole store"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:168
+#: templates/account/coupons.php:71
+msgid "Selected products"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:168
+#: templates/account/coupons.php:72
+msgid "Selected categories"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:172
+msgid "Product / category IDs (comma-separated)"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:173
+msgid "End date"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:174
+#: admin/class-ssa-admin-partners.php:256
+#: templates/account/earnings.php:59
+msgid "Save"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:176
+msgid "Partner coupons"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:176
+msgid "Share %1$s%% · link rate %2$s%%"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:178
 #: admin/class-ssa-admin-reports.php:46
 msgid "Discount / commission"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:141
-#: templates/account/coupons.php:118
-msgid "Applies to"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:141
-#: templates/account/coupons.php:121
+#: admin/class-ssa-admin-partners.php:178
+#: templates/account/coupons.php:122
 msgid "Ends"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:149
-#: templates/account/coupons.php:142
+#: admin/class-ssa-admin-partners.php:186
+#: templates/account/coupons.php:144
 msgid "Resume"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:151
+#: admin/class-ssa-admin-partners.php:188
+#: templates/account/coupons.php:142
+msgid "Edit"
+msgstr ""
+
+#: admin/class-ssa-admin-partners.php:189
 msgid "Delete this coupon? Past commissions are kept."
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:151
-#: templates/account/coupons.php:144
+#: admin/class-ssa-admin-partners.php:189
+#: templates/account/coupons.php:146
 msgid "Delete"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:153
+#: admin/class-ssa-admin-partners.php:191
 msgid "WC coupon"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:159
+#: admin/class-ssa-admin-partners.php:197
 msgid "This partner has not created any coupons yet."
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:165
+#: admin/class-ssa-admin-partners.php:203
 msgid "Commission, last 12 months"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:167
+#: admin/class-ssa-admin-partners.php:205
 #: admin/class-ssa-admin-reports.php:30
 msgid "Monthly revenue and commission"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:169
+#: admin/class-ssa-admin-partners.php:207
 msgid "No sales yet"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:175
+#: admin/class-ssa-admin-partners.php:213
 #: templates/account/dashboard.php:78
 #: templates/account/sales.php:23
 msgid "Date"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:178
-#: templates/account/coupons.php:116
+#: admin/class-ssa-admin-partners.php:216
+#: templates/account/coupons.php:117
 msgid "Coupon"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:182
+#: admin/class-ssa-admin-partners.php:220
 msgid "No commissions yet."
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:190
+#: admin/class-ssa-admin-partners.php:228
 #: admin/class-ssa-admin-payouts.php:66
 #: templates/account/earnings.php:36
 msgid "Period"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:190
+#: admin/class-ssa-admin-partners.php:228
 #: admin/class-ssa-admin-payouts.php:66
 #: templates/account/earnings.php:36
 msgid "Amount"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:190
+#: admin/class-ssa-admin-partners.php:228
 #: templates/account/earnings.php:36
 msgid "Paid on"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:196
+#: admin/class-ssa-admin-partners.php:234
 #: templates/account/earnings.php:44
 msgid "No payouts yet."
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:204
+#: admin/class-ssa-admin-partners.php:242
 msgid "Application"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:212
+#: admin/class-ssa-admin-partners.php:250
 msgid "Bank details, link code & notes"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:213
+#: admin/class-ssa-admin-partners.php:251
 #: templates/account/earnings.php:54
 msgid "Account holder"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:213
+#: admin/class-ssa-admin-partners.php:251
 msgid "Company / tax office"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:213
+#: admin/class-ssa-admin-partners.php:251
 #: templates/account/earnings.php:54
 msgid "Tax / ID number"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:213
+#: admin/class-ssa-admin-partners.php:251
 msgid "Issues invoices? (yes/no)"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:216
+#: admin/class-ssa-admin-partners.php:254
 msgid "Link code (?ref=)"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:217
+#: admin/class-ssa-admin-partners.php:255
 msgid "Admin note"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:218
-#: templates/account/earnings.php:59
-msgid "Save"
-msgstr ""
-
-#: admin/class-ssa-admin-partners.php:235
+#: admin/class-ssa-admin-partners.php:273
 msgid "Last 6 months"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:237
+#: admin/class-ssa-admin-partners.php:275
 msgid "Confirmed / Pending"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:259
+#: admin/class-ssa-admin-partners.php:297
 msgid "Profile"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:269
+#: admin/class-ssa-admin-partners.php:307
 msgid "none"
 msgstr ""
 
-#: admin/class-ssa-admin-partners.php:282
+#: admin/class-ssa-admin-partners.php:320
 msgid "pending"
 msgstr ""
 
@@ -976,7 +1028,7 @@ msgstr ""
 
 #: admin/class-ssa-admin-ui.php:110
 #: includes/class-ssa-account.php:118
-#: templates/account/coupons.php:130
+#: templates/account/coupons.php:131
 #: templates/account/dashboard.php:18
 #: templates/account/kit.php:32
 msgid "Copy"
@@ -1290,7 +1342,7 @@ msgid "Partner sales"
 msgstr ""
 
 #: includes/class-ssa-account.php:52
-#: templates/account/coupons.php:112
+#: templates/account/coupons.php:113
 #: templates/account/kit.php:27
 msgid "My coupons"
 msgstr ""
@@ -1313,44 +1365,49 @@ msgid "This area is for program partners."
 msgstr ""
 
 #. translators: %s: coupon code
-#: includes/class-ssa-account.php:277
+#: includes/class-ssa-account.php:295
+msgid "Coupon %s updated."
+msgstr ""
+
+#. translators: %s: coupon code
+#: includes/class-ssa-account.php:305
 msgid "Coupon %s is live. Share it with your followers!"
 msgstr ""
 
-#: includes/class-ssa-account.php:292
+#: includes/class-ssa-account.php:320
 msgid "Coupon paused. It no longer works at checkout."
 msgstr ""
 
-#: includes/class-ssa-account.php:300
+#: includes/class-ssa-account.php:328
 msgid "Payout details saved."
 msgstr ""
 
-#: includes/class-ssa-account.php:317
+#: includes/class-ssa-account.php:345
 msgid "your application is being reviewed."
 msgstr ""
 
-#: includes/class-ssa-account.php:323
+#: includes/class-ssa-account.php:351
 msgid "Create content, share your own coupons and links, and earn on every sale — you decide how much of your share goes to your followers as a discount."
 msgstr ""
 
-#: includes/class-ssa-account.php:323
+#: includes/class-ssa-account.php:351
 msgid "Apply now"
 msgstr ""
 
-#: includes/class-ssa-account.php:332
+#: includes/class-ssa-account.php:360
 #: templates/account/sales.php:14
 msgid "Cancelled"
 msgstr ""
 
-#: includes/class-ssa-account.php:333
+#: includes/class-ssa-account.php:361
 msgid "Scheduled"
 msgstr ""
 
-#: includes/class-ssa-account.php:334
+#: includes/class-ssa-account.php:362
 msgid "Live"
 msgstr ""
 
-#: includes/class-ssa-account.php:336
+#: includes/class-ssa-account.php:364
 msgid "Expired"
 msgstr ""
 
@@ -1595,88 +1652,83 @@ msgstr ""
 msgid "Details: %s"
 msgstr ""
 
-#: includes/class-ssa-install.php:50
-msgid "Active Partner"
-msgstr ""
-
-#: includes/class-ssa-install.php:51
-msgid "Ambassador"
-msgstr ""
-
-#: includes/class-ssa-install.php:56
-msgid "Posts must carry an \"Ad\" / \"Sponsored\" label and tag our account. Posts without the label do not earn commission."
-msgstr ""
-
-#: includes/class-ssa-install.php:67
+#: includes/class-ssa-install.php:77
 msgid "Partner Program"
 msgstr ""
 
-#: includes/class-ssa-install.php:120
-msgid "Main code"
+#: includes/class-ssa-install.php:78
+msgid "Posts must carry an \"Ad\" / \"Sponsored\" label and tag our account. Posts without the label do not earn commission."
 msgstr ""
 
-#: includes/class-ssa-install.php:162
+#: includes/class-ssa-install.php:81
+msgid "Active Partner"
+msgstr ""
+
+#: includes/class-ssa-install.php:82
+msgid "Ambassador"
+msgstr ""
+
+#: includes/class-ssa-install.php:178
 msgid "Affiliate Partner"
 msgstr ""
 
+#: includes/class-ssa-partner-coupons.php:150
+msgid "Main code"
+msgstr ""
+
 #. translators: %d: number of products
-#: includes/class-ssa-partner-coupons.php:153
+#: includes/class-ssa-partner-coupons.php:158
 msgid "%d product"
 msgid_plural "%d products"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %d: number of categories
-#: includes/class-ssa-partner-coupons.php:157
+#: includes/class-ssa-partner-coupons.php:162
 msgid "%d category"
 msgid_plural "%d categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-ssa-partner-coupons.php:159
-#: templates/account/coupons.php:69
-msgid "Whole store"
-msgstr ""
-
-#: includes/class-ssa-partner-coupons.php:244
+#: includes/class-ssa-partner-coupons.php:249
 msgid "Enter a coupon code."
 msgstr ""
 
-#: includes/class-ssa-partner-coupons.php:247
+#: includes/class-ssa-partner-coupons.php:252
 msgid "The code may only contain letters A–Z and digits."
 msgstr ""
 
 #. translators: 1: min, 2: max
-#: includes/class-ssa-partner-coupons.php:251
+#: includes/class-ssa-partner-coupons.php:256
 msgid "The code must be %1$d–%2$d characters long."
 msgstr ""
 
-#: includes/class-ssa-partner-coupons.php:254
+#: includes/class-ssa-partner-coupons.php:259
 msgid "This code is already in use. Try another one."
 msgstr ""
 
 #. translators: 1: min, 2: max
-#: includes/class-ssa-partner-coupons.php:260
+#: includes/class-ssa-partner-coupons.php:265
 msgid "The discount must be between %1$s%% and %2$s%%."
 msgstr ""
 
-#: includes/class-ssa-partner-coupons.php:267
+#: includes/class-ssa-partner-coupons.php:272
 msgid "Choose at least one product."
 msgstr ""
 
-#: includes/class-ssa-partner-coupons.php:267
+#: includes/class-ssa-partner-coupons.php:272
 msgid "Choose at least one category."
 msgstr ""
 
-#: includes/class-ssa-partner-coupons.php:273
+#: includes/class-ssa-partner-coupons.php:278
 msgid "Invalid end date."
 msgstr ""
 
-#: includes/class-ssa-partner-coupons.php:276
+#: includes/class-ssa-partner-coupons.php:281
 msgid "The end date must be today or later."
 msgstr ""
 
-#: includes/class-ssa-partner-coupons.php:287
+#: includes/class-ssa-partner-coupons.php:292
 msgid "Your partnership is paused; you cannot create coupons right now."
 msgstr ""
 
@@ -1722,123 +1774,123 @@ msgstr ""
 msgid "%1$s%% of every sale is your share. The discount you give comes out of it and the rest is your commission — the store's cost is the same either way. Orders through your link without a coupon earn %2$s%%."
 msgstr ""
 
-#: templates/account/coupons.php:43
+#: templates/account/coupons.php:44
 msgid "Coupon code"
 msgstr ""
 
-#: templates/account/coupons.php:45
+#: templates/account/coupons.php:46
+msgid "The code cannot be changed; delete the coupon and create a new one instead."
+msgstr ""
+
+#: templates/account/coupons.php:46
 msgid "Letters and digits, %1$d–%2$d characters. Your followers type this at checkout."
 msgstr ""
 
-#: templates/account/coupons.php:48
+#: templates/account/coupons.php:49
 msgid "Campaign name (optional)"
 msgstr ""
 
-#: templates/account/coupons.php:49
+#: templates/account/coupons.php:50
 msgid "e.g. Instagram reel, September"
 msgstr ""
 
-#: templates/account/coupons.php:54
-#: templates/account/coupons.php:56
-#: templates/account/coupons.php:62
+#: templates/account/coupons.php:55
+#: templates/account/coupons.php:57
+#: templates/account/coupons.php:63
 msgid "Follower discount"
 msgstr ""
 
-#: templates/account/coupons.php:61
+#: templates/account/coupons.php:62
 msgid "Your commission"
 msgstr ""
 
-#: templates/account/coupons.php:67
+#: templates/account/coupons.php:68
 msgid "Where does it apply?"
 msgstr ""
 
-#: templates/account/coupons.php:70
-msgid "Selected products"
-msgstr ""
-
-#: templates/account/coupons.php:71
-msgid "Selected categories"
-msgstr ""
-
-#: templates/account/coupons.php:74
+#: templates/account/coupons.php:75
 msgid "Search products…"
 msgstr ""
 
-#: templates/account/coupons.php:79
+#: templates/account/coupons.php:80
 msgid "The discount applies only to these products; other items in the basket earn your link rate."
 msgstr ""
 
-#: templates/account/coupons.php:82
+#: templates/account/coupons.php:83
 msgid "Choose categories…"
 msgstr ""
 
-#: templates/account/coupons.php:92
+#: templates/account/coupons.php:93
 msgid "End date (optional)"
 msgstr ""
 
-#: templates/account/coupons.php:94
+#: templates/account/coupons.php:95
 msgid "Leave empty for an open-ended coupon. You can pause or delete it any time."
 msgstr ""
 
-#: templates/account/coupons.php:97
+#: templates/account/coupons.php:98
 msgid "Example: a %s basket"
 msgstr ""
 
-#: templates/account/coupons.php:98
+#: templates/account/coupons.php:99
 msgid "Your follower pays"
 msgstr ""
 
-#: templates/account/coupons.php:99
+#: templates/account/coupons.php:100
 msgid "You earn"
 msgstr ""
 
-#: templates/account/coupons.php:100
+#: templates/account/coupons.php:101
 msgid "Through your link, without a coupon"
 msgstr ""
 
-#: templates/account/coupons.php:105
-msgid "Create coupon"
+#: templates/account/coupons.php:106
+msgid "Save changes"
 msgstr ""
 
 #: templates/account/coupons.php:106
+msgid "Create coupon"
+msgstr ""
+
+#: templates/account/coupons.php:107
 msgid "Each customer can use a coupon %d time(s). Coupons work on baskets of %s and above."
 msgstr ""
 
-#: templates/account/coupons.php:117
+#: templates/account/coupons.php:118
 msgid "Discount"
 msgstr ""
 
-#: templates/account/coupons.php:120
+#: templates/account/coupons.php:121
 msgid "Earned"
 msgstr ""
 
-#: templates/account/coupons.php:133
+#: templates/account/coupons.php:134
 msgid "you: %s%%"
 msgstr ""
 
-#: templates/account/coupons.php:140
+#: templates/account/coupons.php:141
 #: templates/account/links.php:37
 #: templates/account/links.php:48
 msgid "Copy link"
 msgstr ""
 
-#: templates/account/coupons.php:144
+#: templates/account/coupons.php:146
 msgid "Delete this coupon? It stops working immediately; past earnings are kept."
 msgstr ""
 
-#: templates/account/coupons.php:151
+#: templates/account/coupons.php:153
 msgid "No coupons yet — create your first campaign above. Each coupon can have its own discount and product scope."
 msgstr ""
 
-#: templates/account/coupons.php:157
+#: templates/account/coupons.php:159
 msgid "Share by product group"
 msgstr ""
 
-#: templates/account/coupons.php:158
+#: templates/account/coupons.php:160
 msgid "Some groups have a smaller share because of their margin; your coupon discount is subtracted from that group's share, so your commission there can be lower."
 msgstr ""
 
-#: templates/account/coupons.php:161
+#: templates/account/coupons.php:163
 msgid "Default"
 msgstr ""
 
