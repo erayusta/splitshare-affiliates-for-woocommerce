@@ -48,7 +48,7 @@ class SSA_Admin_Applications {
 			}
 			echo '</div>';
 			echo '<dl class="ssa-appcard__meta">';
-			foreach ( array( 'followers' => __( 'Followers', 'splitshare-affiliates' ), 'city' => __( 'City', 'splitshare-affiliates' ), 'content_type' => __( 'Creates', 'splitshare-affiliates' ) ) as $key => $label ) {
+			foreach ( array( 'followers' => __( 'Followers', 'splitshare-affiliates' ), 'city' => __( 'City', 'splitshare-affiliates' ), 'content_type' => __( 'Creates', 'splitshare-affiliates' ), 'platforms' => __( 'Platforms', 'splitshare-affiliates' ) ) as $key => $label ) {
 				if ( ! empty( $a[ $key ] ) ) {
 					echo '<div><dt>' . esc_html( $label ) . '</dt><dd>' . esc_html( 'followers' === $key ? number_format_i18n( (float) $a[ $key ] ) : $a[ $key ] ) . '</dd></div>';
 				}

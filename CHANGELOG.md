@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.2 — 2026-08-28
+- Application form: optional "Platforms & followers" field (used by custom landing-page forms; shown on the application card).
+
 ## 1.2.1 — 2026-08-28
 - Partners can edit a coupon (campaign name, discount, scope, end date) from "My coupons"; the code itself stays fixed. Admins get the same edit form in the partner profile.
 

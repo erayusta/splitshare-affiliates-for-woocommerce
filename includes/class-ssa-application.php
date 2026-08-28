@@ -31,6 +31,7 @@ class SSA_Application {
 			'tiktok'       => array( 'label' => __( 'TikTok profile', 'splitshare-affiliates' ), 'type' => 'url', 'required' => false ),
 			'youtube'      => array( 'label' => __( 'YouTube channel', 'splitshare-affiliates' ), 'type' => 'url', 'required' => false ),
 			'followers'    => array( 'label' => __( 'Total followers', 'splitshare-affiliates' ), 'type' => 'number', 'required' => false ),
+			'platforms'    => array( 'label' => __( 'Platforms & followers', 'splitshare-affiliates' ), 'type' => 'text', 'required' => false, 'placeholder' => __( 'e.g. Instagram @name (5k–25k); TikTok @name', 'splitshare-affiliates' ) ),
 			'content_type' => array( 'label' => __( 'What do you create?', 'splitshare-affiliates' ), 'type' => 'text', 'required' => false, 'placeholder' => __( 'e.g. recipes, coffee, lifestyle', 'splitshare-affiliates' ) ),
 			'note'         => array( 'label' => __( 'Anything you want to add', 'splitshare-affiliates' ), 'type' => 'textarea', 'required' => false ),
 		);

@@ -2142,3 +2142,12 @@ msgstr "Değişiklikleri kaydet"
 
 msgid "Influencer affiliate program: partners create their own campaign coupons — the follower discount comes out of a fixed share, the rest is their commission. Link tracking, hold period, monthly payouts, My Account panel."
 msgstr "Influencer satış ortaklığı programı: ortaklar kendi kampanya kuponlarını oluşturur — takipçi indirimi sabit paydan düşer, kalanı komisyonlarıdır. Link takibi, bekleme süresi, aylık hakediş, Hesabım paneli."
+
+msgid "Platforms & followers"
+msgstr "Platformlar ve takipçi"
+
+msgid "e.g. Instagram @name (5k–25k); TikTok @name"
+msgstr "örn. Instagram @ad (5k–25k); TikTok @ad"
+
+msgid "Platforms"
+msgstr "Platformlar"
