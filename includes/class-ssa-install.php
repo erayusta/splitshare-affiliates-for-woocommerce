@@ -45,14 +45,14 @@ class SSA_Install {
 			'campaign_periods'               => array(), // [ {from, to, share} ]
 			'boosters'                       => array(), // [ {product_ids[], pct, from, to} ]
 			'tiers'                          => array(
-				array( 'name' => 'Partner', 'min_sales' => 1 ),
-				array( 'name' => 'Active Partner', 'min_sales' => 26 ),
-				array( 'name' => 'Ambassador', 'min_sales' => 51 ),
+				array( 'name' => __( 'Partner', 'splitshare-affiliates' ), 'min_sales' => 1 ),
+				array( 'name' => __( 'Active Partner', 'splitshare-affiliates' ), 'min_sales' => 26 ),
+				array( 'name' => __( 'Ambassador', 'splitshare-affiliates' ), 'min_sales' => 51 ),
 			),
 			'tier_benefits'                  => '',
 			'apply_page_id'                  => 0,
 			'show_join_card'                 => 'yes',
-			'legal_notice'                   => 'Posts must carry an "Ad" / "Sponsored" label and tag our account. Posts without the label do not earn commission.',
+			'legal_notice'                   => __( 'Posts must carry an "Ad" / "Sponsored" label and tag our account. Posts without the label do not earn commission.', 'splitshare-affiliates' ),
 			'kit_attachments'                => array(),
 			'kit_texts'                      => '',
 			'endpoints'                      => array(
@@ -63,7 +63,7 @@ class SSA_Install {
 				'links'     => 'partner-links',
 				'kit'       => 'partner-kit',
 			),
-			'program_name'                   => 'Partner Program',
+			'program_name'                   => __( 'Partner Program', 'splitshare-affiliates' ),
 		);
 	}
 

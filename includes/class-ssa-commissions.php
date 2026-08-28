@@ -250,6 +250,21 @@ class SSA_Commissions {
 		self::update( $c->id, array( 'status' => 'void', 'reason' => $reason ) );
 	}
 
+	/** İptal/sıfır nedeninin okunur, çevrilmiş karşılığı. */
+	public static function reason_label( $reason ) {
+		$map = array(
+			'below_min'       => __( 'below minimum basket', 'splitshare-affiliates' ),
+			'zero'            => __( 'no commissionable items', 'splitshare-affiliates' ),
+			'refunded'        => __( 'refunded', 'splitshare-affiliates' ),
+			'order_cancelled' => __( 'order cancelled', 'splitshare-affiliates' ),
+			'order_refunded'  => __( 'order refunded', 'splitshare-affiliates' ),
+			'order_failed'    => __( 'payment failed', 'splitshare-affiliates' ),
+			'void'            => __( 'voided by admin', 'splitshare-affiliates' ),
+		);
+		$reason = (string) $reason;
+		return isset( $map[ $reason ] ) ? $map[ $reason ] : str_replace( '_', ' ', $reason );
+	}
+
 	/** Bekleme süresi dolanları onayla (cron). */
 	public static function approve_due( $now = null ) {
 		global $wpdb;

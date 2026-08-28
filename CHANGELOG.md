@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.1 — 2026-08-28
+- Fix: column charts are now HTML/CSS — axis labels stay crisp at every width (SVG scaling made them tiny and blurry)
+- Fix: e-mail titles were translated before `init` (WordPress 6.7+ just-in-time loading) and showed up in English; hook registration no longer translates
+- Fix: commission void reasons (`order cancelled`, `below minimum basket`, …) are now translated in admin and partner panel
+- Fix: partner list — status badge no longer overlaps the tier name; split legend wraps instead of overflowing; overview cards align to top
+- Fix: default tier names, program name and legal notice are translatable
+- Partner panel: spacing after the legal notice on the content kit page
+
 ## 1.1.0 — 2026-08-28
 - Admin: Overview tab with KPI cards (vs previous period), inline SVG charts (monthly revenue/commission, new vs returning, split donut, share groups), date-range presets, needs-attention list
 - Admin: partner list with avatars, code chips, split bars and sparklines; partner profile with KPIs and tabs; application cards; commission/payout summary strips and filters; CSV export for commissions

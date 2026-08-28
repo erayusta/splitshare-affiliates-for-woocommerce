@@ -12,8 +12,9 @@ class SSA_Emails {
 	public static function init() {
 		add_filter( 'woocommerce_email_classes', array( __CLASS__, 'register' ) );
 		// Tetikleyiciler (WC mailer yüklendikten sonra çalışsın diye closure ile).
-		foreach ( self::definitions() as $id => $def ) {
-			add_action( $def['hook'], function ( $arg = null, $extra = null ) use ( $id ) {
+		// Çeviri çağrısı yapmadan (init öncesi) sadece hook eşlemesini kullan.
+		foreach ( self::hooks() as $id => $hook ) {
+			add_action( $hook, function ( $arg = null, $extra = null ) use ( $id ) {
 				$mailer = WC()->mailer();
 				$emails = $mailer->get_emails();
 				$key    = 'SSA_Email_' . $id;
@@ -24,7 +25,19 @@ class SSA_Emails {
 		}
 	}
 
-	/** id => hook, recipient (partner|admin), title, subject, heading. */
+	/** id => hook (çeviri içermez; plugins_loaded'da güvenle çağrılabilir). */
+	public static function hooks() {
+		return array(
+			'application_received' => 'ssa_application_received',
+			'application_admin'    => 'ssa_application_received',
+			'partner_approved'     => 'ssa_partner_approved',
+			'partner_rejected'     => 'ssa_partner_rejected',
+			'code_rotated'         => 'ssa_code_rotated',
+			'payout_paid'          => 'ssa_payout_paid',
+		);
+	}
+
+	/** id => hook, recipient (partner|admin), title, subject, heading. init sonrasında çağrılmalı. */
 	public static function definitions() {
 		return array(
 			'application_received' => array( 'hook' => 'ssa_application_received', 'to' => 'partner', 'title' => __( 'Affiliate: application received', 'splitshare-affiliates' ), 'subject' => __( 'We received your {program} application', 'splitshare-affiliates' ), 'heading' => __( 'Application received', 'splitshare-affiliates' ) ),

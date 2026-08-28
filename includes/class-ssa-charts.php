@@ -34,70 +34,67 @@ class SSA_Charts {
 	}
 
 	/**
-	 * Gruplu sütun grafiği.
+	 * Gruplu sütun grafiği (HTML/CSS; metinler ölçeklenmez, her genişlikte keskin kalır).
 	 *
-	 * @param array $labels  X etiketleri.
+	 * @param array $labels  X etiketleri ('' olanlar gizlenir).
 	 * @param array $series  [ ['name'=>'Ciro','values'=>[...], 'format'=>'money'|'int'|'pct'], ... ] (en fazla 3)
-	 * @param array $opts    height, title, desc, id
+	 * @param array $opts    height, title, desc, id, format
 	 */
 	public static function columns( array $labels, array $series, array $opts = array() ) {
-		$opts   = wp_parse_args( $opts, array( 'height' => 220, 'width' => 720, 'title' => '', 'desc' => '', 'id' => 'ssa-chart-' . wp_rand( 1000, 9999 ), 'format' => 'money' ) );
-		$w      = (int) $opts['width'];
-		$h      = (int) $opts['height'];
-		$padL   = 52;
-		$padR   = 12;
-		$padT   = 12;
-		$padB   = 28;
-		$plotW  = $w - $padL - $padR;
-		$plotH  = $h - $padT - $padB;
-		$n      = max( 1, count( $labels ) );
-		$max    = 0;
+		$opts = wp_parse_args( $opts, array( 'height' => 220, 'title' => '', 'desc' => '', 'id' => 'ssa-chart-' . wp_rand( 1000, 9999 ), 'format' => 'money' ) );
+		$h    = (int) $opts['height'];
+		$max  = 0;
 		foreach ( $series as $s ) {
 			$max = max( $max, $s['values'] ? max( $s['values'] ) : 0 );
 		}
 		list( $ymax, $step ) = self::nice_max( $max );
-		$slot   = $plotW / $n;
-		$k      = max( 1, count( $series ) );
-		$barW   = min( 24, ( $slot * 0.7 - 2 * ( $k - 1 ) ) / $k );
-		$groupW = $barW * $k + 2 * ( $k - 1 );
+		$id = esc_attr( $opts['id'] );
 
-		$svg  = '<figure class="ssa-chart ssa-chart--columns" id="' . esc_attr( $opts['id'] ) . '">';
-		$svg .= '<svg viewBox="0 0 ' . $w . ' ' . $h . '" role="img" aria-labelledby="' . esc_attr( $opts['id'] ) . '-t ' . esc_attr( $opts['id'] ) . '-d" preserveAspectRatio="xMidYMid meet">';
-		$svg .= '<title id="' . esc_attr( $opts['id'] ) . '-t">' . esc_html( $opts['title'] ) . '</title><desc id="' . esc_attr( $opts['id'] ) . '-d">' . esc_html( $opts['desc'] ) . '</desc>';
-		// grid + y ticks
+		$html  = '<figure class="ssa-chart ssa-chart--columns" id="' . $id . '">';
+		$html .= '<div class="ssa-cols" style="--ssa-h:' . $h . 'px" role="img" aria-label="' . esc_attr( trim( $opts['title'] . '. ' . $opts['desc'] ) ) . '">';
+		// Y ekseni + ızgara
+		$ticks = '';
+		$grid  = '';
 		for ( $v = 0; $v <= $ymax + 0.0001; $v += $step ) {
-			$y = $padT + $plotH - ( $v / $ymax ) * $plotH;
-			$svg .= '<line class="ssa-grid" x1="' . $padL . '" x2="' . ( $w - $padR ) . '" y1="' . round( $y, 1 ) . '" y2="' . round( $y, 1 ) . '"/>';
-			$svg .= '<text class="ssa-tick" x="' . ( $padL - 8 ) . '" y="' . round( $y + 4, 1 ) . '" text-anchor="end">' . esc_html( self::compact( $v ) ) . '</text>';
+			$pct    = $ymax > 0 ? round( $v / $ymax * 100, 2 ) : 0;
+			$ticks .= '<span style="bottom:' . $pct . '%">' . esc_html( self::compact( $v ) ) . '</span>';
+			$grid  .= '<i style="bottom:' . $pct . '%"></i>';
 		}
-		// bars
+		$html .= '<div class="ssa-cols__y"><div class="ssa-cols__inner">' . $ticks . '</div></div>';
+		$html .= '<div class="ssa-cols__plot"><div class="ssa-cols__inner ssa-cols__grid">' . $grid . '</div><div class="ssa-cols__inner ssa-cols__groups">';
 		foreach ( $labels as $i => $label ) {
-			$x0 = $padL + $slot * $i + ( $slot - $groupW ) / 2;
+			$html .= '<div class="ssa-cols__group">';
 			foreach ( $series as $j => $s ) {
 				$val = isset( $s['values'][ $i ] ) ? (float) $s['values'][ $i ] : 0;
-				$bh  = $ymax > 0 ? ( $val / $ymax ) * $plotH : 0;
-				$x   = $x0 + $j * ( $barW + 2 );
-				$y   = $padT + $plotH - $bh;
-				$r   = max( 0, min( 4, $bh / 2, $barW / 2 ) );
-				$up  = round( $bh - $r, 1 );
-				// Tabandan yukarı, üst köşeler yuvarlak (4px), taban köşeleri düz.
-				$path = sprintf( 'M%1$s %2$s v-%3$s a%4$s %4$s 0 0 1 %4$s -%4$s h%5$s a%4$s %4$s 0 0 1 %4$s %4$s v%3$s z', round( $x, 1 ), round( $padT + $plotH, 1 ), $up, $r, round( $barW - 2 * $r, 1 ) );
-				$svg .= '<path class="ssa-bar ssa-s' . ( $j + 1 ) . '" d="' . $path . '" data-label="' . esc_attr( $label ) . '" data-series="' . esc_attr( $s['name'] ) . '" data-value="' . esc_attr( self::format( $val, isset( $s['format'] ) ? $s['format'] : $opts['format'] ) ) . '"><title>' . esc_html( $label . ' · ' . $s['name'] . ': ' . self::format( $val, isset( $s['format'] ) ? $s['format'] : $opts['format'] ) ) . '</title></path>';
+				$pct = $ymax > 0 ? round( $val / $ymax * 100, 2 ) : 0;
+				$fmt = self::format( $val, isset( $s['format'] ) ? $s['format'] : $opts['format'] );
+				$html .= '<span class="ssa-bar ssa-s' . ( $j + 1 ) . ( $val > 0 ? '' : ' is-zero' ) . '" style="height:' . $pct . '%" title="' . esc_attr( $label . ' · ' . $s['name'] . ': ' . $fmt ) . '" data-label="' . esc_attr( $label ) . '" data-series="' . esc_attr( $s['name'] ) . '" data-value="' . esc_attr( $fmt ) . '"></span>';
 			}
-			$svg .= '<text class="ssa-tick" x="' . round( $padL + $slot * $i + $slot / 2, 1 ) . '" y="' . ( $h - 10 ) . '" text-anchor="middle">' . esc_html( $label ) . '</text>';
+			$html .= '</div>';
 		}
-		$svg .= '<line class="ssa-axis" x1="' . $padL . '" x2="' . ( $w - $padR ) . '" y1="' . ( $padT + $plotH ) . '" y2="' . ( $padT + $plotH ) . '"/>';
-		$svg .= '</svg>';
+		$html .= '</div></div>';
+		// X etiketleri
+		// Dar konteynerde her ikinci dolu etiket gizlenir (CSS container query).
+		$html .= '<div class="ssa-cols__x">';
+		$nth   = 0;
+		foreach ( $labels as $label ) {
+			$cls = '';
+			if ( '' !== (string) $label ) {
+				$cls = ( ++$nth % 2 === 0 ) ? ' class="ssa-lbl-alt"' : '';
+			}
+			$html .= '<span' . $cls . '>' . esc_html( $label ) . '</span>';
+		}
+		$html .= '</div></div>';
 		if ( count( $series ) > 1 ) {
-			$svg .= '<figcaption class="ssa-legend">';
+			$html .= '<figcaption class="ssa-legend">';
 			foreach ( $series as $j => $s ) {
-				$svg .= '<span><i class="ssa-swatch ssa-s' . ( $j + 1 ) . '"></i>' . esc_html( $s['name'] ) . '</span>';
+				$html .= '<span><i class="ssa-swatch ssa-s' . ( $j + 1 ) . '"></i>' . esc_html( $s['name'] ) . '</span>';
 			}
-			$svg .= '</figcaption>';
+			$html .= '</figcaption>';
 		}
-		$svg .= self::table( $labels, $series, $opts );
-		$svg .= '</figure>';
-		return $svg;
+		$html .= self::table( $labels, $series, $opts );
+		$html .= '</figure>';
+		return $html;
 	}
 
 	/** Erişilebilirlik: grafik verisinin tablo görünümü (details içinde). */

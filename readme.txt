@@ -4,7 +4,7 @@ Tags: woocommerce, affiliate, influencer, referral, commission
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,5 +19,11 @@ A fixed share of every sale is set aside. The partner decides how much of it is 
 3. Create a page with the [ssa_apply] shortcode and select it as the application page.
 
 == Changelog ==
+= 1.1.1 =
+* Fix: crisp HTML column charts, translation loading (e-mail titles), reason labels, partner table layout, translatable defaults.
+
+= 1.1.0 =
+* Admin overview/reports, partner panel with traffic and earnings.
+
 = 1.0.0 =
 * Initial release.

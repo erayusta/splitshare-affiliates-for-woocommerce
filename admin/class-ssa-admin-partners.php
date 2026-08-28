@@ -149,7 +149,7 @@ class SSA_Admin_Partners {
 			echo '<table class="ssa-table"><thead><tr><th>' . esc_html__( 'Date', 'splitshare-affiliates' ) . '</th><th>' . esc_html__( 'Order', 'splitshare-affiliates' ) . '</th><th>' . esc_html__( 'Attribution', 'splitshare-affiliates' ) . '</th><th class="num">' . esc_html__( 'Basis', 'splitshare-affiliates' ) . '</th><th class="num">' . esc_html__( 'Commission', 'splitshare-affiliates' ) . '</th><th>' . esc_html__( 'Status', 'splitshare-affiliates' ) . '</th></tr></thead><tbody>';
 			foreach ( $rows as $c ) {
 				$order = wc_get_order( $c->order_id );
-				echo '<tr><td>' . esc_html( date_i18n( get_option( 'date_format' ), strtotime( $c->created_at ) ) ) . '</td><td>' . ( $order ? '<a href="' . esc_url( $order->get_edit_order_url() ) . '">#' . (int) $c->order_id . '</a>' : '#' . (int) $c->order_id ) . '</td><td>' . esc_html( $c->attribution ) . ( $c->is_new_customer ? '' : '<small>' . esc_html__( 'returning customer', 'splitshare-affiliates' ) . '</small>' ) . '</td><td class="num">' . wp_kses_post( wc_price( $c->order_total_base ) ) . '</td><td class="num"><strong>' . wp_kses_post( wc_price( $c->amount ) ) . '</strong></td><td>' . SSA_Admin_UI::badge( $c->status ) . '</td></tr>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '<tr><td>' . esc_html( date_i18n( get_option( 'date_format' ), strtotime( $c->created_at ) ) ) . '</td><td>' . ( $order ? '<a href="' . esc_url( $order->get_edit_order_url() ) . '">#' . (int) $c->order_id . '</a>' : '#' . (int) $c->order_id ) . '</td><td>' . esc_html( 'coupon' === $c->attribution ? __( 'Code', 'splitshare-affiliates' ) : __( 'Link', 'splitshare-affiliates' ) ) . ( $c->is_new_customer ? '' : '<small>' . esc_html__( 'returning customer', 'splitshare-affiliates' ) . '</small>' ) . '</td><td class="num">' . wp_kses_post( wc_price( $c->order_total_base ) ) . '</td><td class="num"><strong>' . wp_kses_post( wc_price( $c->amount ) ) . '</strong></td><td>' . SSA_Admin_UI::badge( $c->status ) . '</td></tr>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			echo '</tbody></table>';
 		} else {
@@ -249,7 +249,7 @@ class SSA_Partners_Table extends WP_List_Table {
 			case 'split':
 				return SSA_Charts::split_bar( $item->commission_pct, $item->discount_pct, (float) SSA_Settings::get( 'default_share' ) );
 			case 'status':
-				return SSA_Admin_UI::badge( $item->status ) . ( $item->tier ? '<br><small class="ssa-muted">' . esc_html( $item->tier ) . '</small>' : '' );
+				return SSA_Admin_UI::badge( $item->status ) . ( $item->tier ? '<div class="ssa-tier">' . esc_html( $item->tier ) . '</div>' : '' );
 			case 'trend':
 				return SSA_Charts::sparkline( SSA_Reports::partner_spark( $item->id, 6 ) );
 			case 'sales':

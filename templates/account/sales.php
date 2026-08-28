@@ -40,7 +40,7 @@ defined( 'ABSPATH' ) || exit;
 				<td class="num"><strong><?php echo wp_kses_post( wc_price( $c->amount ) ); ?></strong></td>
 				<td><?php echo SSA_Account::status_label( $c->status ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<?php if ( 'pending' === $c->status && $c->available_at ) : ?><br><small class="ssa-muted"><?php printf( esc_html__( 'confirms %s', 'splitshare-affiliates' ), esc_html( date_i18n( 'j M', strtotime( $c->available_at ) ) ) ); ?></small><?php endif; ?>
-					<?php if ( 'void' === $c->status && 'below_min' === $c->reason ) : ?><br><small class="ssa-muted"><?php esc_html_e( 'below minimum basket', 'splitshare-affiliates' ); ?></small><?php endif; ?>
+					<?php if ( 'void' === $c->status && $c->reason ) : ?><br><small class="ssa-muted"><?php echo esc_html( SSA_Commissions::reason_label( $c->reason ) ); ?></small><?php endif; ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

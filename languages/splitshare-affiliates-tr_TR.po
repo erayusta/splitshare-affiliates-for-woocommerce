@@ -5,12 +5,14 @@ msgstr ""
 "Project-Id-Version: SplitShare Affiliates for WooCommerce 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/splitshare-affiliates-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: Turkish\n"
+"Language: tr_TR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-08-28T04:38:45+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-08-28 09:00+0300\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: splitshare-affiliates\n"
 
@@ -1844,3 +1846,43 @@ msgstr "Teşekkürler! Başvurun alındı. Birkaç gün içinde sana döneceğiz
 #: templates/apply-form.php:44
 msgid "I accept the %s terms and will label sponsored posts as required by law."
 msgstr "%s koşullarını kabul ediyor, sponsorlu paylaşımları yasal gerekliliğe uygun etiketleyeceğimi taahhüt ediyorum."
+
+#: includes/class-ssa-commissions.php:257
+msgid "no commissionable items"
+msgstr "komisyona konu ürün yok"
+
+#: includes/class-ssa-commissions.php:258
+msgid "refunded"
+msgstr "iade edildi"
+
+#: includes/class-ssa-commissions.php:259
+msgid "order cancelled"
+msgstr "sipariş iptal edildi"
+
+#: includes/class-ssa-commissions.php:260
+msgid "order refunded"
+msgstr "sipariş iade edildi"
+
+#: includes/class-ssa-commissions.php:261
+msgid "payment failed"
+msgstr "ödeme başarısız"
+
+#: includes/class-ssa-commissions.php:262
+msgid "voided by admin"
+msgstr "yönetici iptal etti"
+
+#: includes/class-ssa-install.php:49
+msgid "Active Partner"
+msgstr "Aktif Ortak"
+
+#: includes/class-ssa-install.php:50
+msgid "Ambassador"
+msgstr "Marka Elçisi"
+
+#: includes/class-ssa-install.php:55
+msgid "Posts must carry an \"Ad\" / \"Sponsored\" label and tag our account. Posts without the label do not earn commission."
+msgstr "Paylaşımlarında \"Reklam\" veya \"Tanıtım\" ibaresi ve hesabımızın etiketi bulunmalı. Etiketi olmayan paylaşımdan komisyon doğmaz."
+
+#: includes/class-ssa-install.php:66
+msgid "Partner Program"
+msgstr "Ortaklık Programı"

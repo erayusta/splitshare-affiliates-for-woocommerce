@@ -90,13 +90,31 @@
 /* Grafikler */
 .ssa-chart { margin: 0; position: relative; }
 .ssa-chart svg { width: 100%; height: auto; display: block; }
-.ssa-chart--columns svg { max-height: 260px; }
 .ssa-grid { stroke: var(--ssa-line-soft); stroke-width: 1; }
 .ssa-axis { stroke: var(--ssa-line); stroke-width: 1; }
 .ssa-tick { font-size: 11px; fill: var(--ssa-muted); font-family: inherit; }
 .ssa-bar { transition: opacity .12s; }
 .ssa-bar.ssa-s1 { fill: var(--ssa-s1); } .ssa-bar.ssa-s2 { fill: var(--ssa-s2); } .ssa-bar.ssa-s3 { fill: var(--ssa-s3); }
 .ssa-chart:hover .ssa-bar { opacity: .55; } .ssa-chart .ssa-bar:hover { opacity: 1; }
+/* Sütun grafiği (HTML) */
+.ssa-cols { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: var(--ssa-h, 220px) auto; column-gap: 8px; }
+.ssa-cols__y, .ssa-cols__plot { position: relative; grid-row: 1; }
+.ssa-cols__y { min-width: 34px; }
+.ssa-cols__inner { position: absolute; left: 0; right: 0; top: 8px; bottom: 0; }
+.ssa-cols__y span { position: absolute; right: 0; transform: translateY(50%); font-size: 11px; line-height: 1; color: var(--ssa-muted); white-space: nowrap; }
+.ssa-cols__plot { border-bottom: 1px solid var(--ssa-line); }
+.ssa-cols__grid i { position: absolute; left: 0; right: 0; border-top: 1px solid var(--ssa-line-soft); }
+.ssa-cols__grid i:first-child { display: none; }
+.ssa-cols__groups { display: flex; align-items: flex-end; }
+.ssa-cols__group { flex: 1 1 0; min-width: 0; height: 100%; display: flex; align-items: flex-end; justify-content: center; gap: 2px; padding: 0 2px; box-sizing: border-box; }
+.ssa-cols .ssa-bar { display: block; flex: 0 1 24px; min-width: 2px; border-radius: 4px 4px 0 0; transition: opacity .12s; cursor: default; }
+.ssa-cols .ssa-bar:not(.is-zero) { min-height: 2px; }
+.ssa-cols__x { grid-column: 2; display: flex; margin-top: 6px; }
+.ssa-cols__x span { flex: 1 1 0; min-width: 0; text-align: center; font-size: 11px; line-height: 1.2; color: var(--ssa-muted); white-space: nowrap; }
+.ssa-chart--columns { container-type: inline-size; }
+@container (max-width: 520px) { .ssa-cols__x .ssa-lbl-alt { visibility: hidden; } }
+.ssa-bar.ssa-s1 { background: var(--ssa-s1); } .ssa-bar.ssa-s2 { background: var(--ssa-s2); } .ssa-bar.ssa-s3 { background: var(--ssa-s3); }
+
 .ssa-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--ssa-ink-2); margin-top: 8px; }
 .ssa-chart-table { margin-top: 8px; font-size: 12px; }
 .ssa-chart-table summary { cursor: pointer; color: var(--ssa-muted); }
@@ -114,12 +132,16 @@
 .ssa-kit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
 .ssa-kit-grid img { width: 100%; height: auto; border-radius: 8px; }
 .ssa-kit-text { white-space: pre-wrap; background: #fafafa; border: 1px solid var(--ssa-line); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
-.ssa-legal-box { border-left: 4px solid #e2001a; background: #fff5f5; padding: 10px 14px; border-radius: 6px; font-size: 13px; }
+.ssa-legal-box { border-left: 4px solid #e2001a; background: #fff5f5; padding: 10px 14px; border-radius: 6px; font-size: 13px; margin-bottom: 16px; }
 .ssa-join-card { border: 1px dashed #f4811f; border-radius: 12px; padding: 16px; margin: 0 0 20px; background: #fff8f2; }
 
 @media (max-width: 900px) {
 	.ssa-hero, .ssa-two { grid-template-columns: 1fr; }
 	.ssa-cards--3, .ssa-cards--4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+	.ssa-panel .ssa-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+	.ssa-panel .ssa-table th, .ssa-panel .ssa-table td { white-space: nowrap; }
 }
 @media (max-width: 520px) {
 	.ssa-hero__stats, .ssa-cards--2, .ssa-cards--3, .ssa-cards--4 { grid-template-columns: 1fr; }

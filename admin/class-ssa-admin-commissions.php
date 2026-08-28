@@ -169,7 +169,7 @@ class SSA_Commissions_Table extends WP_List_Table {
 				if ( 'pending' === $item->status && $item->available_at ) {
 					$html .= '<br><small class="ssa-muted">' . esc_html( sprintf( __( 'approves %s', 'splitshare-affiliates' ), date_i18n( get_option( 'date_format' ), strtotime( $item->available_at ) ) ) ) . '</small>';
 				} elseif ( $item->reason && 'void' === $item->status ) {
-					$html .= '<br><small class="ssa-muted">' . esc_html( str_replace( '_', ' ', $item->reason ) ) . '</small>';
+					$html .= '<br><small class="ssa-muted">' . esc_html( SSA_Commissions::reason_label( $item->reason ) ) . '</small>';
 				}
 				return $html;
 		}
