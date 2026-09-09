@@ -43,10 +43,42 @@ $balance = max( 0, (float) $carry_over );
 	<?php else : ?>
 		<p class="ssa-muted"><?php esc_html_e( 'No payouts yet.', 'splitshare-affiliates' ); ?></p>
 	<?php endif; ?>
+	<?php
+	/*
+	 * 2026-09-09: Ortak "param ne zaman gelecek" sorusunun cevabını panelde
+	 * hiçbir yerde bulamıyordu; takvim yalnızca program PDF'indeydi.
+	 */
+	?>
+	<p class="ssa-hint">
+		<?php
+		printf(
+			/* translators: 1: bekleme günü sayısı, 2: ayın kaçı, 3: minimum tutar */
+			esc_html__( 'How it works: a sale is confirmed %1$d days after it is completed (returns window). Confirmed earnings are paid on day %2$d of the following month. If the total is under %3$s it carries over to the next month instead of being paid.', 'splitshare-affiliates' ),
+			(int) $settings['hold_days'],
+			(int) $settings['payout_day'],
+			esc_html( wp_strip_all_tags( wc_price( $min ) ) )
+		);
+		?>
+	</p>
 </section>
 
 <section class="ssa-block">
 	<h3><?php esc_html_e( 'Bank details', 'splitshare-affiliates' ); ?></h3>
+	<?php
+	/*
+	 * 2026-09-09: IBAN boşsa ödeme yapılamıyor ama panelde bunu söyleyen
+	 * hiçbir şey yoktu — ortak hakedişinin neden gelmediğini anlamıyordu.
+	 * Eksikse uyarı, doluysa bilgi metni gösteriliyor.
+	 */
+	$iban_var = ! empty( $details['iban'] );
+	?>
+	<p class="ssa-hint<?php echo $iban_var ? '' : ' ssa-hint--warn'; ?>">
+		<?php
+		echo $iban_var
+			? esc_html__( 'Payments are sent to this IBAN. If it changes, update it before the 15th — payouts are prepared on that day.', 'splitshare-affiliates' )
+			: esc_html__( 'Add your IBAN to get paid. Without it your earnings keep accruing but no payment can be sent.', 'splitshare-affiliates' );
+		?>
+	</p>
 	<form method="post" class="ssa-payout-form">
 		<?php wp_nonce_field( 'ssa_panel', '_ssa_nonce' ); ?>
 		<input type="hidden" name="ssa_action" value="payout_details" />
@@ -55,7 +87,9 @@ $balance = max( 0, (float) $carry_over );
 			<p class="form-row"><label for="ssa-payout-<?php echo esc_attr( $k ); ?>"><?php echo esc_html( $label ); ?></label><input type="text" id="ssa-payout-<?php echo esc_attr( $k ); ?>" name="payout[<?php echo esc_attr( $k ); ?>]" value="<?php echo esc_attr( isset( $details[ $k ] ) ? $details[ $k ] : '' ); ?>" /></p>
 		<?php endforeach; ?>
 		</div>
-		<p class="form-row"><label><input type="checkbox" name="payout[invoices]" value="yes" <?php checked( isset( $details['invoices'] ) ? $details['invoices'] : '', 'yes' ); ?> /> <?php esc_html_e( 'I issue invoices for my commission', 'splitshare-affiliates' ); ?></label></p>
+		<p class="form-row"><label><input type="checkbox" name="payout[invoices]" value="yes" <?php checked( isset( $details['invoices'] ) ? $details['invoices'] : '', 'yes' ); ?> /> <?php esc_html_e( 'I issue invoices for my commission', 'splitshare-affiliates' ); ?></label>
+			<span class="ssa-hint"><?php esc_html_e( 'Tick this if you are a taxpayer and will invoice us for your commission. If you leave it unticked, the legal deductions are handled on our side.', 'splitshare-affiliates' ); ?></span>
+		</p>
 		<p><button class="button ssa-button"><?php esc_html_e( 'Save', 'splitshare-affiliates' ); ?></button></p>
 	</form>
 </section>

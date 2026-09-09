@@ -2151,3 +2151,67 @@ msgstr "örn. Instagram @ad (5k–25k); TikTok @ad"
 
 msgid "Platforms"
 msgstr "Platformlar"
+
+msgid "No earnings"
+msgstr "Kazanç yok"
+
+msgid "coupon discount is higher than the category share"
+msgstr "kupon indirimi bu ürünlerin kategori payından yüksek"
+
+msgid "Heads up: the bar above assumes the standard %1$s%% share. These categories have a lower share: %2$s. If your discount is higher than a category's share, that sale earns you nothing — the order still goes through, you just get no commission."
+msgstr "Not: yukarıdaki çubuk standart %%%1$s payı üzerinden hesaplanır. Şu kategorilerin payı daha düşük: %2$s. İndirimin bir kategorinin payından yüksekse o satıştan komisyon doğmaz — sipariş normal şekilde tamamlanır, yalnızca sana kazanç yazılmaz."
+
+msgid "cancelled, below minimum or discount over share"
+msgstr "iptal, minimum altı veya indirim payı aşmış"
+
+msgid "How it works: a sale is confirmed %1$d days after it is completed (returns window). Confirmed earnings are paid on day %2$d of the following month. If the total is under %3$s it carries over to the next month instead of being paid."
+msgstr "Nasıl işliyor: bir satış, tamamlandıktan %1$d gün sonra kesinleşir (iade süresi). Kesinleşen kazançlar ertesi ayın %2$d'inde ödenir. Toplam %3$s altındaysa ödeme yapılmaz, sonraki aya devreder."
+
+msgid "Payments are sent to this IBAN. If it changes, update it before the 15th — payouts are prepared on that day."
+msgstr "Ödemeler bu IBAN'a gönderilir. Değişirse ayın 15'inden önce güncelle — hakedişler o gün hazırlanır."
+
+msgid "Add your IBAN to get paid. Without it your earnings keep accruing but no payment can be sent."
+msgstr "Ödeme alabilmek için IBAN'ını gir. IBAN olmadan kazancın birikmeye devam eder ama ödeme gönderilemez."
+
+msgid "Tick this if you are a taxpayer and will invoice us for your commission. If you leave it unticked, the legal deductions are handled on our side."
+msgstr "Mükellefsen ve komisyonun için bize fatura keseceksen işaretle. İşaretlemezsen yasal kesintiler bizim tarafımızda halledilir."
+
+msgid "Pick a product or category and share the link you get. Someone who arrives through it earns you %1$s%% even if they never enter a coupon code, for %2$d days. Your own coupon pays more — use the link where a code would be awkward (stories, bio)."
+msgstr "Bir ürün ya da kategori seç, çıkan linki paylaş. Bu linkten gelen biri kupon kodu hiç girmese bile %2$d gün boyunca sana %%%1$s kazandırır. Kendi kuponun daha çok kazandırır — linki kodun havada kaldığı yerlerde kullan (hikâye, biyografi)."
+
+msgid "Pick your coupon above and the captions fill in with your own code and discount. Copy one as it is or rewrite it in your own voice — only the advertising disclosure above is required."
+msgstr "Yukarıdan kuponunu seç, metinler kendi kodun ve indiriminle dolsun. İstediğini olduğu gibi kopyala ya da kendi diline çevir — zorunlu olan tek şey yukarıdaki reklam ibaresi."
+
+msgid "Selected brands"
+msgstr "Seçili markalar"
+
+msgid "Choose at least one brand."
+msgstr "En az bir marka seç."
+
+msgid "Choose brands…"
+msgstr "Marka seç…"
+
+msgid "The discount applies only to products of these brands; other items in the basket earn your link rate."
+msgstr "İndirim yalnızca bu markaların ürünlerine uygulanır; sepetteki diğer ürünler link oranından kazandırır."
+
+msgid "Anything to leave out? (optional)"
+msgstr "Hariç tutmak istediğin var mı? (isteğe bağlı)"
+
+msgid "Excluded brands"
+msgstr "Hariç markalar"
+
+msgid "None"
+msgstr "Yok"
+
+msgid "Products you leave out are not discounted and earn your link rate instead."
+msgstr "Hariç tuttuğun ürünlere indirim uygulanmaz; onlar link oranından kazandırır."
+
+msgid "%d brand"
+msgid_plural "%d brands"
+msgstr[0] "%d marka"
+msgstr[1] "%d marka"
+
+msgid "Whole store (%d exclusion)"
+msgid_plural "Whole store (%d exclusions)"
+msgstr[0] "Tüm mağaza (%d hariç)"
+msgstr[1] "Tüm mağaza (%d hariç)"

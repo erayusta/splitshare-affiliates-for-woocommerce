@@ -78,7 +78,7 @@ defined( 'ABSPATH' ) || exit;
 			<thead><tr><th><?php esc_html_e( 'Date', 'splitshare-affiliates' ); ?></th><th><?php esc_html_e( 'Basket', 'splitshare-affiliates' ); ?></th><th><?php esc_html_e( 'Via', 'splitshare-affiliates' ); ?></th><th class="num"><?php esc_html_e( 'Commission', 'splitshare-affiliates' ); ?></th><th><?php esc_html_e( 'Status', 'splitshare-affiliates' ); ?></th></tr></thead>
 			<tbody>
 			<?php foreach ( $recent as $c ) : ?>
-				<tr><td><?php echo esc_html( date_i18n( 'j M', strtotime( $c->created_at ) ) ); ?></td><td><?php echo wp_kses_post( wc_price( $c->order_total_base ) ); ?></td><td><?php echo 'coupon' === $c->attribution ? esc_html__( 'Code', 'splitshare-affiliates' ) : esc_html__( 'Link', 'splitshare-affiliates' ); ?></td><td class="num"><strong><?php echo wp_kses_post( wc_price( $c->amount ) ); ?></strong></td><td><?php echo SSA_Account::status_label( $c->status ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td></tr>
+				<tr><td><?php echo esc_html( date_i18n( 'j M', strtotime( $c->created_at ) ) ); ?></td><td><?php echo wp_kses_post( wc_price( $c->order_total_base ) ); ?></td><td><?php echo 'coupon' === $c->attribution ? esc_html__( 'Code', 'splitshare-affiliates' ) : esc_html__( 'Link', 'splitshare-affiliates' ); ?></td><td class="num"><strong><?php echo wp_kses_post( wc_price( $c->amount ) ); ?></strong></td><td><?php echo SSA_Account::status_label( $c->status, $c->reason ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td></tr>
 			<?php endforeach; ?>
 			</tbody>
 		</table>

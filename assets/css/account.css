@@ -57,6 +57,10 @@
 .ssa-status-pending, .ssa-status-open { background: #fff3cd; color: var(--ssa-warn-ink); }
 .ssa-status-approved, .ssa-status-paid { background: #d4f4dd; color: var(--ssa-good-ink); }
 .ssa-status-void { background: #f8d7da; color: #7a1c24; }
+/* 2026-09-09: "komisyon 0 çıktı" ile "sipariş iptal" ayrıldı. Sıfır kazanç
+   bir HATA değil, bilgidir (ör. kupon indirimi kategori payını aşmış) —
+   kırmızı yerine nötr gösterilir, sebep title'da durur. */
+.ssa-status-zero { background: #eef0f5; color: #4a5160; cursor: help; }
 .ssa-pagination a, .ssa-pagination strong { display: inline-block; padding: 4px 10px; margin-right: 4px; border: 1px solid var(--ssa-line); border-radius: 6px; text-decoration: none; }
 
 /* Dağılım çubuğu ve editörü */
@@ -187,4 +191,82 @@
 .ssa-panel .select2-container--default .select2-selection--multiple { border: 1px solid var(--ssa-line); border-radius: 8px; min-height: 42px; padding: 4px 6px; }
 @media (max-width: 640px) {
 	.ssa-coupon-form .ssa-form-grid { grid-template-columns: 1fr; }
+}
+
+/* Form içi kısa açıklamalar (2026-09-09). */
+.ssa-hint { margin: 8px 0 0; font-size: 13px; line-height: 1.55; color: #5c6b76; }
+.ssa-hint--warn {
+	padding: 10px 12px;
+	border-left: 3px solid #e0a04a;
+	border-radius: 0 8px 8px 0;
+	background: #fff8ee;
+	color: #6b4a12;
+}
+
+/* ---------------------------------------------------------------
+   Panel taşma düzeltmeleri — 2026-09-09
+
+   Ölçüldü (858px genişlikte hesap içerik sütunu):
+     · .ssa-panel-coupons 871/796  → "Kuponlarım" tablosunun işlem linkleri
+       (Linki kopyala / Düzenle / Durakla) sağdan KESİLİYORDU.
+     · .ssa-chart--columns 370/356 → panel grafiği kabından taşıyordu.
+     · hakedişlerde bir <input> 275/241.
+   Panel WooCommerce "Hesabım" içeriğine gömülü olduğu için genişlik temaya
+   göre değişiyor; sabit bir genişlik yerine tablolar kendi içinde yatay
+   kaydırılabilir yapıldı ve hiçbir öğe kabını aşmıyor.
+   --------------------------------------------------------------- */
+.ssa-panel,
+.ssa-panel .ssa-block {
+	max-width: 100%;
+	min-width: 0;
+}
+/* Tablolar: dar kapta yatay kaydırılsın, sayfayı taşırmasın. */
+.ssa-panel .ssa-table-wrap,
+.ssa-panel .ssa-block > table,
+.ssa-panel table.ssa-table {
+	display: block;
+	max-width: 100%;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+.ssa-panel table.ssa-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+/* İşlem linkleri alt alta düşebilsin. */
+.ssa-panel table.ssa-table td:last-child {
+	white-space: normal;
+}
+.ssa-panel table.ssa-table td:last-child a + a {
+	margin-left: 10px;
+}
+/* Grafikler kabını aşmasın. `overflow:hidden` sütun grafiğinin son
+   etiketini KIRPIYORDU (370/356); veri kaybetmemek için kaydırılabilir. */
+.ssa-panel .ssa-chart,
+.ssa-panel figure {
+	max-width: 100%;
+}
+.ssa-panel .ssa-cols {
+	max-width: 100%;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+.ssa-panel input,
+.ssa-panel select,
+.ssa-panel textarea {
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+/* Kapsam panelindeki iç ızgara (hariç tutulacaklar) — 2026-09-09.
+   `.ssa-coupon-form .ssa-form-grid` 1fr 1fr + 20px gap ile dış kabı 792/762
+   taşırıyordu; iç ızgarada min genişlik verilip taşma engelleniyor. */
+.ssa-scope-panel .ssa-form-grid {
+	grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+	max-width: 100%;
+}
+.ssa-scope-panel .ssa-form-grid > * { min-width: 0; }
+.ssa-scope-panel select,
+.ssa-scope-panel .select2-container {
+	max-width: 100%;
 }

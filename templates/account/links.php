@@ -23,6 +23,22 @@ $code = $partner->code;
 
 <section class="ssa-block">
 	<h3><?php esc_html_e( 'Link generator', 'splitshare-affiliates' ); ?></h3>
+	<?php
+	/*
+	 * 2026-09-09: Link ile kupon arasındaki komisyon farkı hiçbir yerde
+	 * yazmıyordu; ortak "linkten neden daha az kazandım" diye soruyordu.
+	 */
+	?>
+	<p class="ssa-hint">
+		<?php
+		printf(
+			/* translators: 1: link oranı, 2: cookie gün sayısı */
+			esc_html__( 'Pick a product or category and share the link you get. Someone who arrives through it earns you %1$s%% even if they never enter a coupon code, for %2$d days. Your own coupon pays more — use the link where a code would be awkward (stories, bio).', 'splitshare-affiliates' ),
+			esc_html( wc_format_decimal( min( (float) $settings['link_commission_pct'], (float) $settings['default_share'] ), 1 ) ),
+			(int) $settings['cookie_days']
+		);
+		?>
+	</p>
 	<div class="ssa-link-generator" data-code="<?php echo esc_attr( $code ); ?>">
 		<div class="ssa-form-grid">
 			<p class="form-row"><label for="ssa-link-product"><?php esc_html_e( 'Search a product', 'splitshare-affiliates' ); ?></label>

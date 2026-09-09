@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit;
 
 class SSA_Install {
 
-	const DB_VERSION = '1.2.0';
+	const DB_VERSION = '1.3.0';
 	const ROLE       = 'ssa_partner';
 
 	/** Tam tablo adları. */
@@ -109,6 +109,11 @@ class SSA_Install {
 			if ( '0' !== $installed && version_compare( $installed, '1.2.0', '<' ) ) {
 				self::migrate_120();
 			}
+			/*
+			 * 1.3.0: yeni `exclude_ids` sütunu. `activate()` içindeki dbDelta
+			 * sütunu ekler; veri dönüşümü gerekmiyor (boş = hariç tutulan yok),
+			 * bu yüzden ayrı bir migrate fonksiyonu yok.
+			 */
 		}
 		if ( ! wp_next_scheduled( 'ssa_daily' ) ) {
 			self::schedule_cron();
@@ -266,6 +271,7 @@ class SSA_Install {
 			discount_pct decimal(5,2) NOT NULL DEFAULT 0,
 			scope_type varchar(20) NOT NULL DEFAULT 'all',
 			scope_ids longtext NULL,
+			exclude_ids longtext NULL,
 			status varchar(20) NOT NULL DEFAULT 'active',
 			expires_at datetime NULL,
 			uses int(11) NOT NULL DEFAULT 0,

@@ -110,8 +110,15 @@
 		syncScope();
 
 		productSearch(document.getElementById('ssa-c-products'), true);
-		var cats = document.getElementById('ssa-c-categories');
-		if (cats && $ && $.fn.selectWoo) { $(cats).selectWoo({ width: '100%', multiple: true, placeholder: cats.dataset.placeholder || '' }); }
+
+		/* 2026-09-09: kategori, marka ve "hariç tutulacaklar" listelerinin
+		   hepsi aynı bileşen; tek tek id yerine sınıfla bağlanıyor ki yeni bir
+		   liste eklendiğinde burayı güncellemek gerekmesin. */
+		if ($ && $.fn.selectWoo) {
+			form.querySelectorAll('select.ssa-category-select').forEach(function (sel) {
+				$(sel).selectWoo({ width: '100%', multiple: true, placeholder: sel.dataset.placeholder || '' });
+			});
+		}
 	}
 
 	/* Link üreteci */

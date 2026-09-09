@@ -154,7 +154,13 @@ class SSA_Commissions {
 					$cats[] = (int) $anc;
 				}
 			}
-			$items[] = array( 'product_id' => $pid, 'category_ids' => array_values( array_unique( $cats ) ), 'paid_total' => round( $paid, 4 ) );
+			// 2026-09-09: marka kapsamı ve marka bazlı hariç tutma için marka kimlikleri de taşınır.
+			$items[] = array(
+				'product_id'   => $pid,
+				'category_ids' => array_values( array_unique( $cats ) ),
+				'brand_ids'    => SSA_Partner_Coupons::brand_ids( $pid ),
+				'paid_total'   => round( $paid, 4 ),
+			);
 		}
 		return $items;
 	}
@@ -256,11 +262,32 @@ class SSA_Commissions {
 		self::update( $c->id, array( 'status' => 'void', 'reason' => $reason ) );
 	}
 
+	/**
+	 * Kaydın GERÇEKTEN iptal olup olmadığını söyler.
+	 *
+	 * 2026-09-09: `void` durumu iki bambaşka şeyi temsil ediyordu — (a) sipariş
+	 * iptal/iade/başarısız, (b) sipariş geçerli ama komisyon 0 çıktı. Arayüz
+	 * ikisine de "İptal" diyordu; tamamlanmış siparişini "iptal" gören ortaklar
+	 * haklı olarak şikâyet etti (canlı örnek: sipariş 10473, completed, 800,91₺,
+	 * pay %8 – indirim %10 → komisyon 0). Ayrım burada yapılıyor.
+	 *
+	 * @param string $reason Kayıttaki sebep kodu.
+	 * @return bool Sipariş kaynaklı gerçek bir iptal ise true.
+	 */
+	public static function is_cancelled_reason( $reason ) {
+		return in_array(
+			(string) $reason,
+			array( 'order_cancelled', 'order_refunded', 'order_failed', 'refunded', 'void' ),
+			true
+		);
+	}
+
 	/** İptal/sıfır nedeninin okunur, çevrilmiş karşılığı. */
 	public static function reason_label( $reason ) {
 		$map = array(
-			'below_min'       => __( 'below minimum basket', 'splitshare-affiliates' ),
-			'zero'            => __( 'no commissionable items', 'splitshare-affiliates' ),
+			'below_min'           => __( 'below minimum basket', 'splitshare-affiliates' ),
+			'zero'                => __( 'no commissionable items', 'splitshare-affiliates' ),
+			'discount_over_share' => __( 'coupon discount is higher than the category share', 'splitshare-affiliates' ),
 			'refunded'        => __( 'refunded', 'splitshare-affiliates' ),
 			'order_cancelled' => __( 'order cancelled', 'splitshare-affiliates' ),
 			'order_refunded'  => __( 'order refunded', 'splitshare-affiliates' ),

@@ -41,18 +41,40 @@ class SSA_Calculator {
 	 * @param int        $product_id   Ana ürün id'si.
 	 * @param int[]      $category_ids Kategoriler + ataları.
 	 */
-	public static function covers( $coupon, $product_id, array $category_ids ) {
+	public static function covers( $coupon, $product_id, array $category_ids, array $brand_ids = array() ) {
 		if ( ! $coupon ) {
 			return false;
 		}
 		$type = isset( $coupon['scope_type'] ) ? (string) $coupon['scope_type'] : 'all';
 		$ids  = array_map( 'intval', (array) ( isset( $coupon['scope_ids'] ) ? $coupon['scope_ids'] : array() ) );
+
 		if ( 'products' === $type ) {
 			return in_array( (int) $product_id, $ids, true );
 		}
 		if ( 'categories' === $type ) {
 			return (bool) array_intersect( array_map( 'intval', $category_ids ), $ids );
 		}
+		if ( 'brands' === $type ) {
+			return (bool) array_intersect( array_map( 'intval', $brand_ids ), $ids );
+		}
+
+		/*
+		 * 'all' kapsamı: hariç tutulanlar düşülür (2026-09-09).
+		 * Kupon tüm mağazada geçerlidir ama ortak birkaç ürün/kategori/markayı
+		 * dışarıda bırakmış olabilir; komisyon hesabı da aynı kapsamı görmeli,
+		 * aksi hâlde WooCommerce indirim uygulamazken biz uygulanmış sayardık.
+		 */
+		$haric = isset( $coupon['exclude_ids'] ) ? (array) $coupon['exclude_ids'] : array();
+		if ( ! empty( $haric['products'] ) && in_array( (int) $product_id, array_map( 'intval', (array) $haric['products'] ), true ) ) {
+			return false;
+		}
+		if ( ! empty( $haric['categories'] ) && array_intersect( array_map( 'intval', $category_ids ), array_map( 'intval', (array) $haric['categories'] ) ) ) {
+			return false;
+		}
+		if ( ! empty( $haric['brands'] ) && array_intersect( array_map( 'intval', $brand_ids ), array_map( 'intval', (array) $haric['brands'] ) ) ) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -92,7 +114,7 @@ class SSA_Calculator {
 					$share += (float) $b['pct'];
 				}
 			}
-			$covered = self::covers( $coupon, (int) $it['product_id'], (array) $it['category_ids'] );
+			$covered = self::covers( $coupon, (int) $it['product_id'], (array) $it['category_ids'], (array) ( isset( $it['brand_ids'] ) ? $it['brand_ids'] : array() ) );
 			$eff     = $covered ? max( 0.0, $share - $discount ) : max( 0.0, min( $link_pct, $share ) );
 			$amt     = (float) $it['paid_total'] * $eff / 100;
 
@@ -118,7 +140,25 @@ class SSA_Calculator {
 		$rounding      = isset( $rules['rounding'] ) ? $rules['rounding'] : 'lira';
 		$out['amount'] = ( 'kurus' === $rounding ) ? round( $total, 2 ) : (float) round( $total, 0 );
 		if ( 0.0 === $out['amount'] && null === $out['reason'] ) {
-			$out['reason'] = 'zero';
+			/*
+			 * 2026-09-09: Tek bir "zero" sebebi ortağa hiçbir şey anlatmıyordu.
+			 * En sık karşılaşılan durum, kupon indiriminin o ürünlerin grup
+			 * payını AŞMASI: pay %8 iken ortak %10 indirim verirse
+			 * komisyon = max(0, 8 - 10) = 0 olur. Bu, siparişin iptal olması
+			 * DEĞİLDİR ve ortağın aksiyon alabileceği bir durumdur; ayrı
+			 * sebep koduyla işaretleniyor ki arayüz doğru mesajı gösterebilsin.
+			 */
+			$kapsanan = 0;
+			$asilan   = 0;
+			foreach ( $out['breakdown'] as $satir ) {
+				if ( ! empty( $satir['covered'] ) ) {
+					$kapsanan++;
+					if ( (float) $satir['share'] <= $discount ) {
+						$asilan++;
+					}
+				}
+			}
+			$out['reason'] = ( $kapsanan > 0 && $kapsanan === $asilan ) ? 'discount_over_share' : 'zero';
 		}
 		return $out;
 	}

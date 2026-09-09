@@ -61,7 +61,27 @@ class SSA_Coupon {
 		$coupon->set_individual_use( true );
 		$coupon->set_usage_limit_per_user( (int) SSA_Settings::get( 'coupon_usage_limit_per_user' ) );
 		$coupon->set_minimum_amount( (float) SSA_Settings::get( 'min_order' ) );
-		$coupon->set_excluded_product_categories( array_map( 'intval', (array) SSA_Settings::get( 'excluded_categories', array() ) ) );
+		/*
+		 * 2026-09-09: Kapsam ve hariç tutulanlar.
+		 *
+		 * Program genelindeki hariç kategoriler + ortağın "Tüm mağaza"
+		 * kapsamında kendi seçtiği hariç ürün/kategoriler birleşir.
+		 * MARKA kısıtını WooCommerce natif desteklemez; o yüzden marka
+		 * kapsamı ve marka bazlı hariç tutma
+		 * `woocommerce_coupon_is_valid_for_product` ile uygulanır
+		 * (bkz. self::brand_scope_check).
+		 */
+		$haric = isset( $row->exclude_ids ) ? (array) $row->exclude_ids : array();
+
+		$haric_kategori = array_map( 'intval', (array) SSA_Settings::get( 'excluded_categories', array() ) );
+		if ( ! empty( $haric['categories'] ) ) {
+			$haric_kategori = array_merge( $haric_kategori, array_map( 'intval', (array) $haric['categories'] ) );
+		}
+		$coupon->set_excluded_product_categories( array_values( array_unique( $haric_kategori ) ) );
+		$coupon->set_excluded_product_ids(
+			! empty( $haric['products'] ) ? array_map( 'intval', (array) $haric['products'] ) : array()
+		);
+
 		$coupon->set_product_ids( 'products' === $row->scope_type ? $row->scope_ids : array() );
 		$coupon->set_product_categories( 'categories' === $row->scope_type ? $row->scope_ids : array() );
 		$coupon->set_date_expires( $row->expires_at ? (int) get_gmt_from_date( $row->expires_at, 'U' ) : null );

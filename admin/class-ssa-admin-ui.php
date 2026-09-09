@@ -110,7 +110,24 @@ class SSA_Admin_UI {
 		return '<span class="ssa-codechip"><code>' . esc_html( $code ) . '</code><button type="button" class="ssa-copy" data-copy="' . esc_attr( $code ) . '" title="' . esc_attr__( 'Copy', 'splitshare-affiliates' ) . '">' . self::icon( 'copy' ) . '</button></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
-	public static function badge( $status ) {
+	/**
+	 * Durum rozeti.
+	 *
+	 * 2026-09-09: `void` hem gerçek iptali hem "komisyon 0 çıktı"yı temsil
+	 * ediyor; ikisi de kırmızı "Void" görünüyordu ve yönetici tamamlanmış
+	 * siparişi iptal sanıyordu. Sebep verilirse ayrım yapılır.
+	 *
+	 * @param string $status Durum.
+	 * @param string $reason Sebep kodu (varsa).
+	 * @return string
+	 */
+	public static function badge( $status, $reason = '' ) {
+		if ( 'void' === $status && $reason && class_exists( 'SSA_Commissions' )
+			&& ! SSA_Commissions::is_cancelled_reason( $reason ) ) {
+			return '<span class="ssa-pill ssa-pill--muted"><i></i>'
+				. esc_html__( 'No earnings', 'splitshare-affiliates' ) . '</span>';
+		}
+
 		$map = array(
 			'active'   => array( __( 'Active', 'splitshare-affiliates' ), 'good' ),
 			'approved' => array( __( 'Approved', 'splitshare-affiliates' ), 'good' ),

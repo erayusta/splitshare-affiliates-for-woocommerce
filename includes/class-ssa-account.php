@@ -175,6 +175,7 @@ class SSA_Account {
 				$args['link_pct']   = min( (float) SSA_Settings::get( 'link_commission_pct' ), $args['share'] );
 				$args['kpis']       = SSA_Partner_Coupons::partner_kpis( $partner->id, 30 );
 				$args['categories'] = self::category_choices();
+				$args['brands']     = self::brand_choices();
 				$args['groups']     = self::group_rows();
 				$args['edit']       = null;
 				if ( ! empty( $_GET['edit'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -182,7 +183,7 @@ class SSA_Account {
 					if ( $row && $row->partner_id === $partner->id ) {
 						$args['edit'] = $row;
 						if ( ! $args['old'] ) {
-							$args['old'] = array( 'code' => $row->code, 'name' => $row->name, 'discount_pct' => $row->discount_pct, 'scope_type' => $row->scope_type, 'scope_ids' => $row->scope_ids, 'expires_at' => $row->expires_at ? substr( $row->expires_at, 0, 10 ) : '' );
+							$args['old'] = array( 'code' => $row->code, 'name' => $row->name, 'discount_pct' => $row->discount_pct, 'scope_type' => $row->scope_type, 'scope_ids' => $row->scope_ids, 'exclude_ids' => isset( $row->exclude_ids ) ? (array) $row->exclude_ids : array(), 'expires_at' => $row->expires_at ? substr( $row->expires_at, 0, 10 ) : '' );
 						}
 					}
 				}
@@ -217,6 +218,31 @@ class SSA_Account {
 	}
 
 	/** Kategori seçenekleri (hiyerarşik sıra, girintili ad). */
+	/**
+	 * Marka seçenekleri (2026-09-09).
+	 *
+	 * Markalar `product_brand` taksonomisinde. Taksonomi yoksa boş döner ve
+	 * form marka bölümünü hiç göstermez — eklenti markasız kurulumlarda da
+	 * çalışmaya devam eder.
+	 *
+	 * @return array term_id => ad
+	 */
+	public static function brand_choices() {
+		$tax = SSA_Partner_Coupons::BRAND_TAX;
+		if ( ! taxonomy_exists( $tax ) ) {
+			return array();
+		}
+		$terms = get_terms( array( 'taxonomy' => $tax, 'hide_empty' => true ) );
+		if ( is_wp_error( $terms ) ) {
+			return array();
+		}
+		$out = array();
+		foreach ( $terms as $t ) {
+			$out[ $t->term_id ] = $t->name;
+		}
+		return $out;
+	}
+
 	public static function category_choices() {
 		$terms = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => true ) );
 		if ( is_wp_error( $terms ) ) {
@@ -270,6 +296,9 @@ class SSA_Account {
 				$ids = array_map( 'intval', (array) $_POST['scope_products'] );
 			} elseif ( 'categories' === $scope && ! empty( $_POST['scope_categories'] ) ) {
 				$ids = array_map( 'intval', (array) $_POST['scope_categories'] );
+			} elseif ( 'brands' === $scope && ! empty( $_POST['scope_brands'] ) ) {
+				// 2026-09-09: marka kapsamı.
+				$ids = array_map( 'intval', (array) $_POST['scope_brands'] );
 			}
 			$data = array(
 				'code'         => isset( $_POST['code'] ) ? sanitize_text_field( wp_unslash( $_POST['code'] ) ) : '',
@@ -277,6 +306,10 @@ class SSA_Account {
 				'discount_pct' => isset( $_POST['discount_pct'] ) ? sanitize_text_field( wp_unslash( $_POST['discount_pct'] ) ) : '',
 				'scope_type'   => $scope,
 				'scope_ids'    => $ids,
+				// 2026-09-09: "Tüm mağaza" kapsamında hariç tutulacaklar.
+				'exclude_categories' => isset( $_POST['exclude_categories'] ) ? array_map( 'intval', (array) $_POST['exclude_categories'] ) : array(),
+				'exclude_brands'     => isset( $_POST['exclude_brands'] ) ? array_map( 'intval', (array) $_POST['exclude_brands'] ) : array(),
+				'exclude_products'   => isset( $_POST['exclude_products'] ) ? array_map( 'intval', (array) $_POST['exclude_products'] ) : array(),
 				'expires_at'   => isset( $_POST['expires_at'] ) ? sanitize_text_field( wp_unslash( $_POST['expires_at'] ) ) : '',
 			);
 			if ( 'coupon_update' === $action ) {
@@ -351,8 +384,20 @@ class SSA_Account {
 		echo '<div class="ssa-join-card"><strong>' . esc_html( SSA_Settings::get( 'program_name' ) ) . '</strong><br>' . esc_html__( 'Create content, share your own coupons and links, and earn on every sale — you decide how much of your share goes to your followers as a discount.', 'splitshare-affiliates' ) . ' <a href="' . esc_url( $url ) . '">' . esc_html__( 'Apply now', 'splitshare-affiliates' ) . ' →</a></div>';
 	}
 
-	/** Şablonlarda kullanılan yardımcılar. */
-	public static function status_label( $status ) {
+	/**
+	 * Durum rozeti.
+	 *
+	 * 2026-09-09: `void` hem "sipariş iptal oldu" hem "komisyon 0 çıktı" için
+	 * kullanılıyor ve ikisine de "İptal" deniyordu. Tamamlanmış siparişini
+	 * "iptal" olarak gören ortaklar şikâyet etti. Sebep verildiğinde ayrım
+	 * yapılıyor: gerçek iptalde "İptal" (kırmızı), aksi hâlde "Kazanç yok"
+	 * (nötr) — sipariş geçerlidir, yalnızca bu satıştan komisyon doğmamıştır.
+	 *
+	 * @param string $status Kayıt durumu.
+	 * @param string $reason Kayıttaki sebep kodu (varsa).
+	 * @return string
+	 */
+	public static function status_label( $status, $reason = '' ) {
 		$map = array(
 			'pending'  => __( 'Pending', 'splitshare-affiliates' ),
 			'approved' => __( 'Approved', 'splitshare-affiliates' ),
@@ -363,6 +408,21 @@ class SSA_Account {
 			'paused'   => __( 'Paused', 'splitshare-affiliates' ),
 			'expired'  => __( 'Expired', 'splitshare-affiliates' ),
 		);
-		return '<span class="ssa-status ssa-status-' . esc_attr( $status ) . '">' . esc_html( isset( $map[ $status ] ) ? $map[ $status ] : $status ) . '</span>';
+
+		$sinif  = $status;
+		$etiket = isset( $map[ $status ] ) ? $map[ $status ] : $status;
+		$baslik = '';
+
+		if ( 'void' === $status && ! SSA_Commissions::is_cancelled_reason( $reason ) ) {
+			$sinif  = 'zero';
+			$etiket = __( 'No earnings', 'splitshare-affiliates' );
+			$baslik = $reason ? SSA_Commissions::reason_label( $reason ) : '';
+		} elseif ( 'void' === $status && $reason ) {
+			$baslik = SSA_Commissions::reason_label( $reason );
+		}
+
+		return '<span class="ssa-status ssa-status-' . esc_attr( $sinif ) . '"'
+			. ( $baslik ? ' title="' . esc_attr( $baslik ) . '"' : '' )
+			. '>' . esc_html( $etiket ) . '</span>';
 	}
 }

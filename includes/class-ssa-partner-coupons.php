@@ -9,7 +9,16 @@ defined( 'ABSPATH' ) || exit;
 
 class SSA_Partner_Coupons {
 
-	const SCOPES = array( 'all', 'products', 'categories' );
+	/**
+	 * 2026-09-09: 'brands' eklendi (kullanıcı isteği). Markalar `product_brand`
+	 * taksonomisinde tutuluyor; WooCommerce kuponları marka kısıtını NATIF
+	 * DESTEKLEMEDİĞİ için kapsam `woocommerce_coupon_is_valid_for_product`
+	 * ile uygulanıyor (bkz. SSA_Coupon).
+	 */
+	const SCOPES = array( 'all', 'products', 'categories', 'brands' );
+
+	/** Marka taksonomisi. */
+	const BRAND_TAX = 'product_brand';
 
 	private static function table() {
 		return SSA_Install::tables()['coupons'];
@@ -61,6 +70,9 @@ class SSA_Partner_Coupons {
 		$row->discount_pct = (float) $row->discount_pct;
 		$row->uses         = (int) $row->uses;
 		$row->scope_ids    = is_string( $row->scope_ids ) ? array_map( 'intval', (array) json_decode( $row->scope_ids, true ) ) : (array) $row->scope_ids;
+		$row->exclude_ids  = isset( $row->exclude_ids ) && is_string( $row->exclude_ids )
+			? (array) json_decode( $row->exclude_ids, true )
+			: (array) ( isset( $row->exclude_ids ) ? $row->exclude_ids : array() );
 		return $row;
 	}
 
@@ -138,11 +150,31 @@ class SSA_Partner_Coupons {
 
 	/** Hesaplayıcı bağlamı. */
 	public static function to_ctx( $row ) {
-		return $row ? array( 'discount_pct' => (float) $row->discount_pct, 'scope_type' => $row->scope_type, 'scope_ids' => $row->scope_ids ) : null;
+		return $row ? array(
+			'discount_pct' => (float) $row->discount_pct,
+			'scope_type'   => $row->scope_type,
+			'scope_ids'    => $row->scope_ids,
+			'exclude_ids'  => isset( $row->exclude_ids ) ? (array) $row->exclude_ids : array(),
+		) : null;
 	}
 
-	public static function covers( $row, $product_id, array $category_ids ) {
-		return SSA_Calculator::covers( self::to_ctx( $row ), $product_id, $category_ids );
+	public static function covers( $row, $product_id, array $category_ids, array $brand_ids = array() ) {
+		return SSA_Calculator::covers( self::to_ctx( $row ), $product_id, $category_ids, $brand_ids );
+	}
+
+	/**
+	 * Ürünün marka terim kimlikleri.
+	 *
+	 * @param int $product_id Ürün.
+	 * @return int[]
+	 */
+	public static function brand_ids( $product_id ) {
+		if ( ! taxonomy_exists( self::BRAND_TAX ) ) {
+			return array();
+		}
+		$terimler = wp_get_post_terms( (int) $product_id, self::BRAND_TAX, array( 'fields' => 'ids' ) );
+
+		return is_wp_error( $terimler ) ? array() : array_map( 'intval', $terimler );
 	}
 
 	/** Kampanya adı (geçişte yazılan "Main code" çevrilir). */
@@ -161,6 +193,22 @@ class SSA_Partner_Coupons {
 			/* translators: %d: number of categories */
 			return sprintf( _n( '%d category', '%d categories', $n, 'splitshare-affiliates' ), $n );
 		}
+		if ( 'brands' === $row->scope_type ) {
+			/* translators: %d: number of brands */
+			return sprintf( _n( '%d brand', '%d brands', $n, 'splitshare-affiliates' ), $n );
+		}
+
+		// 'all' — hariç tutulan varsa etikette belirtilir.
+		$haric = isset( $row->exclude_ids ) ? (array) $row->exclude_ids : array();
+		$adet  = 0;
+		foreach ( array( 'products', 'categories', 'brands' ) as $tur ) {
+			$adet += count( (array) ( $haric[ $tur ] ?? array() ) );
+		}
+		if ( $adet > 0 ) {
+			/* translators: %d: number of exclusions */
+			return sprintf( _n( 'Whole store (%d exclusion)', 'Whole store (%d exclusions)', $adet, 'splitshare-affiliates' ), $adet );
+		}
+
 		return __( 'Whole store', 'splitshare-affiliates' );
 	}
 
@@ -172,6 +220,11 @@ class SSA_Partner_Coupons {
 				$p = wc_get_product( $id );
 				if ( $p ) {
 					$names[] = $p->get_name();
+				}
+			} elseif ( 'brands' === $row->scope_type ) {
+				$t = get_term( (int) $id, self::BRAND_TAX );
+				if ( $t && ! is_wp_error( $t ) ) {
+					$names[] = $t->name;
 				}
 			} elseif ( 'categories' === $row->scope_type ) {
 				$t = get_term( $id, 'product_cat' );
@@ -266,10 +319,33 @@ class SSA_Partner_Coupons {
 		}
 		$scope = isset( $data['scope_type'] ) && in_array( $data['scope_type'], self::SCOPES, true ) ? $data['scope_type'] : 'all';
 		$ids   = array_values( array_filter( array_map( 'intval', (array) ( isset( $data['scope_ids'] ) ? $data['scope_ids'] : array() ) ) ) );
+		$hatalar = array(
+			'products'   => __( 'Choose at least one product.', 'splitshare-affiliates' ),
+			'categories' => __( 'Choose at least one category.', 'splitshare-affiliates' ),
+			'brands'     => __( 'Choose at least one brand.', 'splitshare-affiliates' ),
+		);
 		if ( 'all' === $scope ) {
 			$ids = array();
 		} elseif ( ! $ids ) {
-			return new WP_Error( 'ssa_scope', 'products' === $scope ? __( 'Choose at least one product.', 'splitshare-affiliates' ) : __( 'Choose at least one category.', 'splitshare-affiliates' ) );
+			return new WP_Error( 'ssa_scope', isset( $hatalar[ $scope ] ) ? $hatalar[ $scope ] : $hatalar['products'] );
+		}
+
+		/*
+		 * 2026-09-09: "Tüm mağaza" kapsamındayken hariç tutulacaklar.
+		 * Ortak tüm mağazaya kupon verip birkaç kategoriyi/markayı dışarıda
+		 * bırakabilsin diye eklendi. Yalnızca 'all' kapsamında anlamlı —
+		 * dar kapsamda zaten seçilenler dışına çıkılmıyor.
+		 */
+		$haric = array();
+		if ( 'all' === $scope ) {
+			foreach ( array( 'products', 'categories', 'brands' ) as $tur ) {
+				$anahtar = 'exclude_' . $tur;
+				$deger   = isset( $data[ $anahtar ] ) ? (array) $data[ $anahtar ] : array();
+				$deger   = array_values( array_unique( array_filter( array_map( 'intval', $deger ) ) ) );
+				if ( $deger ) {
+					$haric[ $tur ] = $deger;
+				}
+			}
 		}
 		$expires = null;
 		if ( ! empty( $data['expires_at'] ) ) {
@@ -283,7 +359,7 @@ class SSA_Partner_Coupons {
 			$expires = gmdate( 'Y-m-d 23:59:59', $ts );
 		}
 		$name = isset( $data['name'] ) ? mb_substr( sanitize_text_field( $data['name'] ), 0, 120 ) : '';
-		return compact( 'code', 'name', 'discount_pct', 'scope', 'ids', 'expires' ) + array( 'discount_pct' => $discount, 'scope_type' => $scope, 'scope_ids' => $ids, 'expires_at' => $expires );
+		return compact( 'code', 'name', 'discount_pct', 'scope', 'ids', 'expires' ) + array( 'discount_pct' => $discount, 'scope_type' => $scope, 'scope_ids' => $ids, 'exclude_ids' => $haric, 'expires_at' => $expires );
 	}
 
 	/** @return int|WP_Error kupon satır id'si */
@@ -305,6 +381,7 @@ class SSA_Partner_Coupons {
 			'discount_pct' => $v['discount_pct'],
 			'scope_type'   => $v['scope_type'],
 			'scope_ids'    => wp_json_encode( $v['scope_ids'] ),
+			'exclude_ids'  => wp_json_encode( $v['exclude_ids'] ),
 			'status'       => 'active',
 			'expires_at'   => $v['expires_at'],
 			'uses'         => 0,
@@ -340,6 +417,7 @@ class SSA_Partner_Coupons {
 			'discount_pct' => $v['discount_pct'],
 			'scope_type'   => $v['scope_type'],
 			'scope_ids'    => wp_json_encode( $v['scope_ids'] ),
+			'exclude_ids'  => wp_json_encode( $v['exclude_ids'] ),
 			'expires_at'   => $v['expires_at'],
 			'status'       => 'expired' === $row->status ? 'active' : $row->status,
 			'updated_at'   => current_time( 'mysql' ),

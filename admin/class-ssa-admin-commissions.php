@@ -165,7 +165,7 @@ class SSA_Commissions_Table extends WP_List_Table {
 			case 'amount':
 				return '<strong>' . wp_kses_post( wc_price( $item->amount ) ) . '</strong>';
 			case 'status':
-				$html = SSA_Admin_UI::badge( $item->status );
+				$html = SSA_Admin_UI::badge( $item->status, $item->reason );
 				if ( 'pending' === $item->status && $item->available_at ) {
 					$html .= '<br><small class="ssa-muted">' . esc_html( sprintf( __( 'approves %s', 'splitshare-affiliates' ), date_i18n( get_option( 'date_format' ), strtotime( $item->available_at ) ) ) ) . '</small>';
 				} elseif ( $item->reason && 'void' === $item->status ) {

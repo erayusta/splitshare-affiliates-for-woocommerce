@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || exit;
 $example = 1000;
-$old     = wp_parse_args( $old, array( 'code' => '', 'name' => '', 'discount_pct' => '', 'scope_type' => 'all', 'scope_ids' => array(), 'expires_at' => '' ) );
+$old     = wp_parse_args( $old, array( 'code' => '', 'name' => '', 'discount_pct' => '', 'scope_type' => 'all', 'scope_ids' => array(), 'exclude_ids' => array(), 'expires_at' => '' ) );
 $def_d   = '' !== $old['discount_pct'] ? (float) $old['discount_pct'] : min( $limits['max_discount'], max( $limits['min_discount'], round( $share / 3, 1 ) ) );
 $old_products = array();
 if ( 'products' === $old['scope_type'] ) {
@@ -62,6 +62,39 @@ if ( 'products' === $old['scope_type'] ) {
 				<span><i class="ssa-swatch ssa-swatch--c"></i><?php esc_html_e( 'Your commission', 'splitshare-affiliates' ); ?>: <output id="ssa-c-commission"></output>%</span>
 				<span><i class="ssa-swatch ssa-swatch--d"></i><?php esc_html_e( 'Follower discount', 'splitshare-affiliates' ); ?>: <output id="ssa-c-discount"></output>%</span>
 			</div>
+			<?php
+			/*
+			 * 2026-09-09: Yukarıdaki çubuk VARSAYILAN payı (%15) baz alıyor, ama
+			 * bazı kategorilerin payı daha düşük. Gerçek bir örnek: ortak %10
+			 * indirimli kupon yaptı, satış Kahveler'den (pay %8) geldi ve
+			 * komisyon max(0, 8-10) = 0 oldu; sipariş tamamlandığı hâlde panelde
+			 * "kazanç yok" göründü. Ortağın bunu ÖNCEDEN bilmesi için düşük
+			 * paylı kategoriler burada listeleniyor.
+			 */
+			$dusuk = array();
+			foreach ( (array) SSA_Settings::get( 'group_shares' ) as $g ) {
+				$pay = (float) $g['pct'];
+				if ( $pay >= (float) $share ) {
+					continue;
+				}
+				$terim = get_term( (int) $g['category'], 'product_cat' );
+				if ( $terim && ! is_wp_error( $terim ) ) {
+					$dusuk[] = sprintf( '%s (%%%s)', $terim->name, wc_format_decimal( $pay, 0 ) );
+				}
+			}
+			if ( $dusuk ) :
+				?>
+				<p class="ssa-hint ssa-hint--warn">
+					<?php
+					printf(
+						/* translators: 1: varsayılan pay, 2: düşük paylı kategori listesi */
+						esc_html__( 'Heads up: the bar above assumes the standard %1$s%% share. These categories have a lower share: %2$s. If your discount is higher than a category\'s share, that sale earns you nothing — the order still goes through, you just get no commission.', 'splitshare-affiliates' ),
+						esc_html( wc_format_decimal( $share, 0 ) ),
+						esc_html( implode( ', ', $dusuk ) )
+					);
+					?>
+				</p>
+			<?php endif; ?>
 		</div>
 
 		<div class="ssa-field">
@@ -70,6 +103,9 @@ if ( 'products' === $old['scope_type'] ) {
 				<label class="ssa-scope__opt"><input type="radio" name="scope_type" value="all" <?php checked( $old['scope_type'], 'all' ); ?> /> <?php esc_html_e( 'Whole store', 'splitshare-affiliates' ); ?></label>
 				<label class="ssa-scope__opt"><input type="radio" name="scope_type" value="products" <?php checked( $old['scope_type'], 'products' ); ?> /> <?php esc_html_e( 'Selected products', 'splitshare-affiliates' ); ?></label>
 				<label class="ssa-scope__opt"><input type="radio" name="scope_type" value="categories" <?php checked( $old['scope_type'], 'categories' ); ?> /> <?php esc_html_e( 'Selected categories', 'splitshare-affiliates' ); ?></label>
+				<?php if ( ! empty( $brands ) ) : ?>
+					<label class="ssa-scope__opt"><input type="radio" name="scope_type" value="brands" <?php checked( $old['scope_type'], 'brands' ); ?> /> <?php esc_html_e( 'Selected brands', 'splitshare-affiliates' ); ?></label>
+				<?php endif; ?>
 			</div>
 			<div class="ssa-scope-panel" data-scope="products">
 				<select id="ssa-c-products" name="scope_products[]" multiple="multiple" class="ssa-product-search" data-placeholder="<?php esc_attr_e( 'Search products…', 'splitshare-affiliates' ); ?>">
@@ -85,6 +121,52 @@ if ( 'products' === $old['scope_type'] ) {
 						<option value="<?php echo (int) $cid; ?>" <?php selected( 'categories' === $old['scope_type'] && in_array( (int) $cid, array_map( 'intval', (array) $old['scope_ids'] ), true ) ); ?>><?php echo esc_html( $cname ); ?></option>
 					<?php endforeach; ?>
 				</select>
+			</div>
+			<?php if ( ! empty( $brands ) ) : ?>
+				<div class="ssa-scope-panel" data-scope="brands">
+					<select id="ssa-c-brands" name="scope_brands[]" multiple="multiple" class="ssa-category-select" data-placeholder="<?php esc_attr_e( 'Choose brands…', 'splitshare-affiliates' ); ?>">
+						<?php foreach ( $brands as $bid => $bname ) : ?>
+							<option value="<?php echo (int) $bid; ?>" <?php selected( 'brands' === $old['scope_type'] && in_array( (int) $bid, array_map( 'intval', (array) $old['scope_ids'] ), true ) ); ?>><?php echo esc_html( $bname ); ?></option>
+						<?php endforeach; ?>
+					</select>
+					<small class="ssa-muted"><?php esc_html_e( 'The discount applies only to products of these brands; other items in the basket earn your link rate.', 'splitshare-affiliates' ); ?></small>
+				</div>
+			<?php endif; ?>
+
+			<?php
+			/*
+			 * 2026-09-09: "Tüm mağaza" kapsamında hariç tutulacaklar.
+			 * Ortak bütün mağazaya kupon verip birkaç ürünü/kategoriyi/markayı
+			 * dışarıda bırakabilsin diye eklendi. Yalnızca 'all' seçiliyken
+			 * görünür — dar kapsamda zaten seçilenler dışına çıkılmıyor.
+			 */
+			$haric_eski = isset( $old['exclude_ids'] ) ? (array) $old['exclude_ids'] : array();
+			$haric_kat  = array_map( 'intval', (array) ( $haric_eski['categories'] ?? array() ) );
+			$haric_mar  = array_map( 'intval', (array) ( $haric_eski['brands'] ?? array() ) );
+			?>
+			<div class="ssa-scope-panel" data-scope="all">
+				<span class="ssa-label"><?php esc_html_e( 'Anything to leave out? (optional)', 'splitshare-affiliates' ); ?></span>
+				<div class="ssa-form-grid">
+					<p class="form-row">
+						<label for="ssa-c-ex-categories"><?php esc_html_e( 'Excluded categories', 'splitshare-affiliates' ); ?></label>
+						<select id="ssa-c-ex-categories" name="exclude_categories[]" multiple="multiple" class="ssa-category-select" data-placeholder="<?php esc_attr_e( 'None', 'splitshare-affiliates' ); ?>">
+							<?php foreach ( $categories as $cid => $cname ) : ?>
+								<option value="<?php echo (int) $cid; ?>" <?php selected( in_array( (int) $cid, $haric_kat, true ) ); ?>><?php echo esc_html( $cname ); ?></option>
+							<?php endforeach; ?>
+						</select>
+					</p>
+					<?php if ( ! empty( $brands ) ) : ?>
+						<p class="form-row">
+							<label for="ssa-c-ex-brands"><?php esc_html_e( 'Excluded brands', 'splitshare-affiliates' ); ?></label>
+							<select id="ssa-c-ex-brands" name="exclude_brands[]" multiple="multiple" class="ssa-category-select" data-placeholder="<?php esc_attr_e( 'None', 'splitshare-affiliates' ); ?>">
+								<?php foreach ( $brands as $bid => $bname ) : ?>
+									<option value="<?php echo (int) $bid; ?>" <?php selected( in_array( (int) $bid, $haric_mar, true ) ); ?>><?php echo esc_html( $bname ); ?></option>
+								<?php endforeach; ?>
+							</select>
+						</p>
+					<?php endif; ?>
+				</div>
+				<small class="ssa-muted"><?php esc_html_e( 'Products you leave out are not discounted and earn your link rate instead.', 'splitshare-affiliates' ); ?></small>
 			</div>
 		</div>
 

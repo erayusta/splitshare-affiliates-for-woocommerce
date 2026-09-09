@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0 — 2026-09-09
+- **Brand scope for partner coupons.** Alongside whole store / products / categories, a coupon can now target selected **brands** (`product_brand`). WooCommerce has no native brand restriction, so it is enforced through `woocommerce_coupon_is_valid_for_product`; the commission calculator applies the same rule, so what the customer is charged and what the partner earns can no longer disagree.
+- **Exclusions on whole-store coupons.** A store-wide coupon can now exclude individual products, categories or brands. Program-wide excluded categories and the partner's own exclusions are merged. New `exclude_ids` column (`ssa_db_version` 1.3.0).
+- **Clearer "no commission" reason.** A single `zero` reason told partners nothing. The most common case — the coupon discount exceeding the line's share group (8% share, 10% discount → 0) — now has its own `discount_over_share` reason and reads "Kazanç yok" instead of "İptal", which is a different thing and was misleading.
+- Partner panel and admin: scope labels list brands; coupon form gains brand and exclusion pickers; short explanations added across coupons, earnings, links, kit and sales pages so each figure says where it comes from.
+
 ## 1.2.2 — 2026-08-28
 - Application form: optional "Platforms & followers" field (used by custom landing-page forms; shown on the application card).
 

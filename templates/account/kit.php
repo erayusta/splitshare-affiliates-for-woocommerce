@@ -14,6 +14,13 @@ $first = $coupons ? $coupons[0] : null;
 
 <?php if ( $texts ) : ?>
 	<h3><?php esc_html_e( 'Ready-made captions', 'splitshare-affiliates' ); ?></h3>
+	<?php
+	/*
+	 * 2026-09-09: Metinlerin kuponla otomatik doldurulduğu ve olduğu gibi
+	 * kullanılmasının zorunlu OLMADIĞI yazmıyordu.
+	 */
+	?>
+	<p class="ssa-hint"><?php esc_html_e( 'Pick your coupon above and the captions fill in with your own code and discount. Copy one as it is or rewrite it in your own voice — only the advertising disclosure above is required.', 'splitshare-affiliates' ); ?></p>
 	<?php if ( $coupons ) : ?>
 		<p class="ssa-kit-pick">
 			<label for="ssa-kit-coupon"><?php esc_html_e( 'Fill in with coupon:', 'splitshare-affiliates' ); ?></label>
